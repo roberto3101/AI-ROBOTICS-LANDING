@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://airobotics.com.pe',
   output: 'server',
-  adapter: node({ mode: 'standalone' }),
+  adapter: vercel(),
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
