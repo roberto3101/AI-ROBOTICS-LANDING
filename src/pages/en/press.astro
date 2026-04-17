@@ -1,0 +1,66 @@
+---
+import Principal from '@layout/Principal.astro';
+import HeroNosotros from '@componentes/nosotros/HeroNosotros.astro';
+import EncabezadoSeccion from '@componentes/ui/EncabezadoSeccion.astro';
+import ProyectoEnCurso from '@componentes/prensa/ProyectoEnCurso.astro';
+import { cargarDatos } from '@helpers/idiomas';
+
+const idioma = 'en';
+const datos = await cargarDatos<any>(idioma, 'prensa');
+const seo = await cargarDatos<any>(idioma, 'seo');
+---
+
+<Principal
+  idioma={idioma}
+  seo={{
+    titulo: seo.paginas.prensa.titulo,
+    descripcion: seo.paginas.prensa.descripcion,
+  }}
+>
+  <HeroNosotros
+    etiqueta={datos.hero.etiqueta}
+    titulo={datos.hero.titulo}
+    subtitulo={datos.hero.subtitulo}
+    imagen="/imagenes/hero/empresa-2.jpg"
+  />
+
+  <section class="bg-[var(--color-carbon-claro)] py-[var(--spacing-seccion)] border-y border-white/5">
+    <div class="contenedor">
+      <EncabezadoSeccion etiqueta={datos.proyectosEnCurso.etiqueta} titulo={datos.proyectosEnCurso.titulo} />
+      <div class="mt-14 flex flex-col gap-8">
+        {datos.proyectosEnCurso.items.map((p: any, idx: number) => (
+          <ProyectoEnCurso proyecto={p} invertir={idx % 2 === 1} textoSiguientes="Next steps" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="releases" class="bg-[var(--color-carbon)] py-[var(--spacing-seccion)]">
+    <div class="contenedor">
+      <EncabezadoSeccion etiqueta={datos.comunicados.etiqueta} titulo={datos.comunicados.titulo} />
+      {datos.comunicados.items.length === 0 ? (
+        <div class="mt-12 tarjeta p-10 text-center max-w-2xl">
+          <p class="text-base text-white/75">{datos.comunicados.vacioMensaje}</p>
+        </div>
+      ) : (
+        <div class="mt-12 grid lg:grid-cols-2 gap-6">
+          {datos.comunicados.items.map((c: any) => (
+            <article class="tarjeta p-6">
+              <p class="font-mono text-xs text-[var(--color-acero-claro)] mb-2">{c.fecha}</p>
+              <h3 class="text-xl font-semibold mb-3">{c.titulo}</h3>
+              <p class="text-sm text-white/75 leading-relaxed">{c.resumen}</p>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="bg-[var(--color-carbon-claro)] py-16 border-t border-white/5">
+    <div class="contenedor max-w-3xl text-center">
+      <h2 class="text-2xl md:text-3xl font-semibold mb-3">{datos.contactoPrensa.titulo}</h2>
+      <p class="text-base text-white/80 mb-6">{datos.contactoPrensa.descripcion}</p>
+      <a href={datos.contactoPrensa.ctaRuta} class="boton boton-primario">{datos.contactoPrensa.ctaEtiqueta}</a>
+    </div>
+  </section>
+</Principal>

@@ -1,0 +1,19 @@
+---
+interface Paso { numero: string; titulo: string; descripcion: string; }
+interface Props {
+  pasos: Paso[];
+}
+
+const { pasos } = Astro.props;
+---
+
+<ol class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+  {pasos.map((paso, idx) => (
+    <li class="relative pl-0 pt-8 border-t border-white/15">
+      <span class="absolute -top-px left-0 right-0 h-px bg-[var(--color-primario)]" style={`width: ${((idx + 1) / pasos.length) * 100}%`} aria-hidden="true"></span>
+      <div class="font-mono text-xs text-[var(--color-acero-claro)] mb-3">{paso.numero}</div>
+      <h3 class="text-lg lg:text-xl font-semibold mb-2">{paso.titulo}</h3>
+      <p class="text-sm text-white/70 leading-relaxed">{paso.descripcion}</p>
+    </li>
+  ))}
+</ol>

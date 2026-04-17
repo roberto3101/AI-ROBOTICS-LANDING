@@ -1,0 +1,46 @@
+---
+interface DatoContacto {
+  icono: string;
+  etiqueta: string;
+  valor: string;
+  enlace: string | null;
+}
+interface Props {
+  items: DatoContacto[];
+}
+
+const { items } = Astro.props;
+
+const ICONOS: Record<string, string> = {
+  mail: 'M2 4h20v16H2zM2 4l10 8 10-8',
+  phone: 'M3 5l4-2 3 5-2 2a14 14 0 006 6l2-2 5 3-2 4a4 4 0 01-4 2C9 23 1 15 1 7a4 4 0 012-2z',
+  whatsapp: 'M5 19l-1.5 5L9 22.5A10 10 0 1019 5 10 10 0 005 19z M9 9c1 4 2 5 6 6',
+  pin: 'M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z M12 7a2 2 0 100 4 2 2 0 000-4z',
+  clock: 'M12 2a10 10 0 100 20 10 10 0 000-20z M12 6v6l4 2',
+};
+---
+
+<ul class="flex flex-col gap-6">
+  {items.map((dato) => {
+    const path = ICONOS[dato.icono] ?? ICONOS.mail;
+    return (
+      <li class="flex items-start gap-5 py-4 border-b border-b-[#363636]">
+        <span class="flex-shrink-0 w-11 h-11 border border-primary grid place-items-center">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-primary" aria-hidden="true">
+            <path d={path} />
+          </svg>
+        </span>
+        <div>
+          <p class="sub-title text-steel mb-1">[{dato.etiqueta.toUpperCase()}]</p>
+          {dato.enlace ? (
+            <a href={dato.enlace} class="text-base lg:text-lg text-white hover:text-primary transition" target={dato.enlace.startsWith('http') ? '_blank' : undefined} rel={dato.enlace.startsWith('http') ? 'noopener noreferrer' : undefined}>
+              {dato.valor}
+            </a>
+          ) : (
+            <p class="text-base lg:text-lg text-white">{dato.valor}</p>
+          )}
+        </div>
+      </li>
+    );
+  })}
+</ul>

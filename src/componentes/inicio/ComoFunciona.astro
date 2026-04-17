@@ -1,0 +1,22 @@
+---
+import EncabezadoSeccion from '../ui/EncabezadoSeccion.astro';
+import Pasos from '../ui/Pasos.astro';
+
+interface Paso { numero: string; titulo: string; descripcion: string; }
+interface Props {
+  etiqueta: string;
+  titulo: string;
+  pasos: Paso[];
+}
+
+const { etiqueta, titulo, pasos } = Astro.props;
+---
+
+<section class="bg-[var(--color-carbon-claro)] py-[var(--spacing-seccion)] border-y border-white/5">
+  <div class="contenedor">
+    <EncabezadoSeccion etiqueta={etiqueta} titulo={titulo} />
+    <div class="mt-14">
+      <Pasos pasos={pasos} />
+    </div>
+  </div>
+</section>

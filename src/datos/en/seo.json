@@ -1,0 +1,86 @@
+{
+  "global": {
+    "siteName": "AI Robotics",
+    "tituloPorDefecto": "AI Robotics — Autonomy and defense with artificial intelligence",
+    "tituloFormato": "%s · AI Robotics",
+    "descripcionPorDefecto": "We build drones, turrets and AI surveillance systems designed to detect threats and deploy a response before damage occurs. A Codeplex company.",
+    "palabrasClave": [
+      "AI Robotics",
+      "Codeplex",
+      "defense drone",
+      "AI surveillance",
+      "weapon detection",
+      "autonomous turret",
+      "smart security",
+      "AI defense",
+      "municipal surveillance",
+      "autonomous defense system"
+    ],
+    "imagenOg": "/imagenes/hero/hero-vigilancia.jpg",
+    "twitter": "@airobotics",
+    "locale": "en_US",
+    "tipo": "website"
+  },
+  "paginas": {
+    "inicio": {
+      "titulo": "Autonomy and defense with artificial intelligence",
+      "descripcion": "Drones, turrets and AI surveillance: we detect threats and deploy a response before damage occurs. Designed and manufactured in Peru.",
+      "ruta": "/en/"
+    },
+    "nosotros": {
+      "titulo": "Who we are",
+      "descripcion": "AI Robotics is the technology innovation arm of Codeplex, dedicated to autonomous defense with AI.",
+      "ruta": "/en/about"
+    },
+    "productos": {
+      "titulo": "Products · Autonomous AI systems",
+      "descripcion": "AI Surveillance System, Defense Drone, and Autonomous Turret. Three autonomous solutions with the same AI brain.",
+      "ruta": "/en/products"
+    },
+    "vigilancia": {
+      "titulo": "AI Surveillance System",
+      "descripcion": "Turn any IP camera into an intelligent sensor connected to an automated response drone.",
+      "ruta": "/en/products/ai-surveillance-system"
+    },
+    "dron": {
+      "titulo": "Defense Drone",
+      "descripcion": "Autonomous response drone integrated with the AI surveillance system. Designed and programmed in Peru.",
+      "ruta": "/en/products/defense-drone"
+    },
+    "torreta": {
+      "titulo": "Autonomous Turret",
+      "descripcion": "Perimeter-defense turret with edge processing. Detects weapons and perimeter-fence breaches.",
+      "ruta": "/en/products/defense-turret"
+    },
+    "equipo": {
+      "titulo": "Team",
+      "descripcion": "Meet the engineering, AI and hardware team behind AI Robotics.",
+      "ruta": "/en/team"
+    },
+    "prensa": {
+      "titulo": "Newsroom",
+      "descripcion": "Public progress updates on AI Robotics' prototypes: autonomous turret and defense drone.",
+      "ruta": "/en/press"
+    },
+    "contacto": {
+      "titulo": "Contact",
+      "descripcion": "Let's discuss how to apply our technology to your organization. Request a demo, a quote or a partnership.",
+      "ruta": "/en/contact"
+    },
+    "privacidad": {
+      "titulo": "Privacy policy",
+      "descripcion": "How we collect, use and protect your personal data at AI Robotics.",
+      "ruta": "/en/privacy"
+    },
+    "terminos": {
+      "titulo": "Terms of use",
+      "descripcion": "Terms and conditions of use for the AI Robotics website.",
+      "ruta": "/en/terms"
+    },
+    "libroReclamaciones": {
+      "titulo": "Complaints book",
+      "descripcion": "Electronic complaints book of AI Robotics S.A.C., in compliance with Peru's Consumer Protection Code.",
+      "ruta": "/en/claims-book"
+    }
+  }
+}

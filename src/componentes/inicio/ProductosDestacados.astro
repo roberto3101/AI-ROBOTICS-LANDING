@@ -1,0 +1,44 @@
+---
+import EncabezadoSeccion from '../ui/EncabezadoSeccion.astro';
+import TarjetaProducto from '../ui/TarjetaProducto.astro';
+
+interface Producto {
+  id: string;
+  etiqueta: string;
+  titulo: string;
+  descripcion: string;
+  imagen: string;
+  puntos: string[];
+  ctaEtiqueta: string;
+  ctaRuta: string;
+}
+
+interface Props {
+  etiqueta: string;
+  titulo: string;
+  descripcion: string;
+  items: Producto[];
+}
+
+const { etiqueta, titulo, descripcion, items } = Astro.props;
+---
+
+<section class="bg-[var(--color-carbon)] py-[var(--spacing-seccion)] border-t border-white/5">
+  <div class="contenedor">
+    <EncabezadoSeccion etiqueta={etiqueta} titulo={titulo} descripcion={descripcion} />
+    <div class="mt-14 grid lg:grid-cols-3 gap-6">
+      {items.map((p) => (
+        <TarjetaProducto
+          etiqueta={p.etiqueta}
+          titulo={p.titulo}
+          descripcion={p.descripcion}
+          imagen={p.imagen}
+          imagenAlt={p.titulo}
+          puntos={p.puntos}
+          ctaEtiqueta={p.ctaEtiqueta}
+          ctaRuta={p.ctaRuta}
+        />
+      ))}
+    </div>
+  </div>
+</section>

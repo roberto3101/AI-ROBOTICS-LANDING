@@ -1,0 +1,28 @@
+---
+interface Valor { icono: string; titulo: string; descripcion: string; }
+interface Props {
+  etiqueta: string;
+  titulo: string;
+  items: Valor[];
+}
+
+const { etiqueta, titulo, items } = Astro.props;
+---
+
+<section class="bg-cloud relative z-[3] text-black py-20 lg:py-32">
+  <div class="container js-scroll-activate">
+    <p class="sub-title sub-title--black">[{etiqueta}]</p>
+    <h3 class="section-title mt-6 lg:mt-10 max-w-[900px]">{titulo}</h3>
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-14">
+      {items.map((v) => (
+        <li class="bg-carbon text-white p-8 lg:p-10 min-h-[280px] flex flex-col justify-between">
+          <img src={v.icono} alt="" class="w-12 h-12 object-contain" loading="lazy" />
+          <div class="mt-8">
+            <h4 class="text-white">{v.titulo}</h4>
+            <p class="mt-3 text-[15px] opacity-80">{v.descripcion}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

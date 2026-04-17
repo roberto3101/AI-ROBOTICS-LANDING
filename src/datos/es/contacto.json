@@ -1,0 +1,36 @@
+{
+  "hero": {
+    "etiqueta": "CONTACTO",
+    "titulo": "Conversemos.",
+    "subtitulo": "Escríbenos para una demo, una alianza o simplemente para conversar sobre cómo aplicar nuestra tecnología a tu organización."
+  },
+  "tiposConsulta": [
+    { "valor": "general", "etiqueta": "Consulta general" },
+    { "valor": "demo", "etiqueta": "Solicitar una demo" },
+    { "valor": "ventas", "etiqueta": "Cotización / ventas" },
+    { "valor": "alianza", "etiqueta": "Alianza estratégica" },
+    { "valor": "prensa", "etiqueta": "Prensa y medios" },
+    { "valor": "trabajo", "etiqueta": "Trabajar con nosotros" }
+  ],
+  "datosContacto": [
+    { "icono": "mail", "etiqueta": "Correo general", "valor": "contacto@airobotics.com.pe", "enlace": "mailto:contacto@airobotics.com.pe" },
+    { "icono": "phone", "etiqueta": "Teléfono", "valor": "+51 999 999 999", "enlace": "tel:+51999999999" },
+    { "icono": "whatsapp", "etiqueta": "WhatsApp", "valor": "+51 999 999 999", "enlace": "https://wa.me/51999999999" },
+    { "icono": "pin", "etiqueta": "Oficina", "valor": "Av. Principal 123, San Isidro, Lima — Perú", "enlace": "https://maps.google.com/?q=Av.+Principal+123,+San+Isidro,+Lima" },
+    { "icono": "clock", "etiqueta": "Horario de atención", "valor": "Lunes a viernes · 9:00 a 18:00 (GMT-5)", "enlace": null }
+  ],
+  "formulario": {
+    "titulo": "Envíanos un mensaje",
+    "descripcion": "Te responderemos en menos de 24 horas hábiles.",
+    "campos": [
+      { "id": "nombre", "etiqueta": "Nombre completo", "tipo": "text", "obligatorio": true, "placeholder": "Tu nombre" },
+      { "id": "email", "etiqueta": "Correo electrónico", "tipo": "email", "obligatorio": true, "placeholder": "tu@empresa.com" },
+      { "id": "telefono", "etiqueta": "Teléfono", "tipo": "tel", "obligatorio": false, "placeholder": "+51 999 999 999" },
+      { "id": "empresa", "etiqueta": "Empresa u organización", "tipo": "text", "obligatorio": false, "placeholder": "Nombre de tu empresa" },
+      { "id": "tipoConsulta", "etiqueta": "Tipo de consulta", "tipo": "select", "obligatorio": true, "opcionesRef": "tiposConsulta" },
+      { "id": "mensaje", "etiqueta": "Mensaje", "tipo": "textarea", "obligatorio": true, "placeholder": "Cuéntanos qué necesitas proteger o sobre qué quieres conversar." },
+      { "id": "aceptoPrivacidad", "etiqueta": "Acepto los términos y la política de privacidad.", "tipo": "checkbox", "obligatorio": true }
+    ],
+    "boton": "Enviar mensaje"
+  }
+}

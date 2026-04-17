@@ -1,0 +1,29 @@
+---
+import EncabezadoSeccion from '../ui/EncabezadoSeccion.astro';
+
+interface Caso { icono: string; titulo: string; descripcion: string; }
+interface Props {
+  etiqueta: string;
+  titulo: string;
+  items: Caso[];
+}
+
+const { etiqueta, titulo, items } = Astro.props;
+---
+
+<section class="bg-[var(--color-carbon)] py-[var(--spacing-seccion)]">
+  <div class="contenedor">
+    <EncabezadoSeccion etiqueta={etiqueta} titulo={titulo} />
+    <div class="mt-14 grid md:grid-cols-3 gap-6">
+      {items.map((caso) => (
+        <article class="tarjeta p-8 flex flex-col gap-4">
+          <div class="w-12 h-12 rounded-xl bg-[var(--color-primario)]/10 grid place-items-center">
+            <img src={caso.icono} alt="" class="w-7 h-7 opacity-90" loading="lazy" />
+          </div>
+          <h3 class="text-xl lg:text-2xl font-semibold leading-tight">{caso.titulo}</h3>
+          <p class="text-sm text-white/75 leading-relaxed">{caso.descripcion}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,48 @@
+---
+interface Principio {
+  titulo: string;
+  descripcion: string;
+}
+
+interface Props {
+  etiqueta?: string;
+  titulo?: string;
+  principios?: Principio[];
+}
+
+const { etiqueta, titulo, principios = [] } = Astro.props;
+---
+
+<section class="bg-cloud relative z-[3] py-20 lg:py-32">
+  <div class="container js-scroll-activate">
+
+    {etiqueta && (
+      <p class="sub-title sub-title--black">[{etiqueta}]</p>
+    )}
+
+    {titulo && (
+      <h3 class="section-title mt-6 lg:mt-10 max-w-[900px]">
+        {titulo}
+      </h3>
+    )}
+
+    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mt-14">
+      {principios.map((p) => (
+        <li class="bg-carbon p-6 lg:p-8 flex flex-col justify-end min-h-[220px]">
+          
+          {/* TÍTULO */}
+          <h4 class="!text-white text-lg font-semibold">
+            {p.titulo}
+          </h4>
+
+          {/* 🔥 DESCRIPCIÓN (FIX DEFINITIVO) */}
+          <p class="mt-3 leading-relaxed text-[15px] !text-white">
+            {p.descripcion}
+          </p>
+
+        </li>
+      ))}
+    </ul>
+
+  </div>
+</section>

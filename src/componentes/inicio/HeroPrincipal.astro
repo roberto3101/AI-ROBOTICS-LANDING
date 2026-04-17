@@ -1,0 +1,68 @@
+---
+interface CTA { etiqueta: string; ruta: string; estilo: 'primario' | 'secundario' }
+interface Props {
+  etiqueta: string;
+  titulo: string;
+  subtitulo: string;
+  ctas: CTA[];
+  video?: string;
+  imagenFallback: string;
+  altVideo?: string;
+}
+
+const { etiqueta, titulo, subtitulo, ctas, video, imagenFallback, altVideo = 'Video de fondo' } = Astro.props;
+---
+
+<section class="relative min-h-[88vh] lg:min-h-[100vh] flex items-end overflow-hidden">
+  {video ? (
+    <video
+      class="absolute inset-0 w-full h-full object-cover"
+      autoplay
+      muted
+      playsinline
+      loop
+      preload="metadata"
+      poster={imagenFallback}
+      aria-label={altVideo}
+    >
+      <source src={video} type="video/mp4" />
+    </video>
+  ) : (
+    <img
+      src={imagenFallback}
+      alt={altVideo}
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="eager"
+    />
+  )}
+
+  <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-carbon)] via-[var(--color-carbon)]/70 to-[var(--color-carbon)]/20"></div>
+
+  <div class="contenedor relative z-10 pb-16 lg:pb-24 pt-32">
+    <div class="max-w-4xl">
+      <p class="etiqueta-mono mb-6 inline-flex items-center gap-2">
+        <span class="block w-8 h-px bg-[var(--color-primario)]" aria-hidden="true"></span>
+        {etiqueta}
+      </p>
+      <h1 class="titulo-hero mb-6">{titulo}</h1>
+      <p class="text-lg lg:text-xl text-white/85 max-w-2xl leading-relaxed">{subtitulo}</p>
+      <div class="mt-10 flex flex-wrap gap-3">
+        {ctas.map((cta) => (
+          <a href={cta.ruta} class:list={['boton', `boton-${cta.estilo}`]}>{cta.etiqueta}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <a
+    href="#manifiesto"
+    class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 inline-flex flex-col items-center gap-2 text-white/70 hover:text-[var(--color-primario)] transition"
+    aria-label="Bajar a la siguiente sección"
+  >
+    <span class="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+    <svg width="14" height="22" viewBox="0 0 14 22" aria-hidden="true">
+      <rect x="0.5" y="0.5" width="13" height="21" rx="6.5" fill="none" stroke="currentColor"/>
+      <circle cx="7" cy="6" r="1.5" fill="currentColor"/>
+    </svg>
+  </a>
+</section>

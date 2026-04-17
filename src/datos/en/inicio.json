@@ -1,0 +1,162 @@
+{
+  "hero": {
+    "etiqueta": "AUTONOMY · DEFENSE · ARTIFICIAL INTELLIGENCE",
+    "titulo": "Autonomous technology to protect what matters most.",
+    "subtitulo": "We build drones, turrets and AI video surveillance systems designed to respond, not just observe.",
+    "ctas": [
+      { "etiqueta": "Explore our products", "ruta": "/en/products", "estilo": "primario" },
+      { "etiqueta": "Schedule a demo", "ruta": "/en/contact?subject=demo", "estilo": "secundario" }
+    ],
+    "video": "/theme/uploads/ai-robotics/hero-aerial.mp4",
+    "videoFallback": "/imagenes/hero/hero-vigilancia.jpg",
+    "diapositivas": [
+      {
+        "id": "vigilancia",
+        "etiqueta": "AI SURVEILLANCE SYSTEM",
+        "titulo": "Real-time autonomous threat detection.",
+        "descripcion": "We process faces, vehicles, objects and weapons from any of the client's existing IP cameras.",
+        "video": "/theme/uploads/ai-robotics/camara-seguridad.mp4",
+        "imagen": "/imagenes/hero/hero-vigilancia.jpg",
+        "ctaEtiqueta": "Explore the system",
+        "ctaRuta": "/en/products/ai-surveillance-system"
+      },
+      {
+        "id": "dron",
+        "etiqueta": "DEFENSE DRONE",
+        "titulo": "Autonomous response from hangar to target.",
+        "descripcion": "When the central system detects a threat, the drone deploys automatically and hands control to the operator.",
+        "video": "/theme/uploads/ai-robotics/dron-closeup.mp4",
+        "imagen": "/imagenes/hero/hero-pilot.jpg",
+        "ctaEtiqueta": "Explore the drone",
+        "ctaRuta": "/en/products/defense-drone"
+      },
+      {
+        "id": "torreta",
+        "etiqueta": "AUTONOMOUS TURRET",
+        "titulo": "Perimeter defense that doesn't wait for confirmation.",
+        "descripcion": "30 cm tall, swiveling camera and on-device processing: it spots a weapon or breached perimeter and acts.",
+        "video": "/theme/uploads/ai-robotics/cyber-tech.mp4",
+        "imagen": "/imagenes/hero/hero-comando.jpg",
+        "ctaEtiqueta": "Explore the turret",
+        "ctaRuta": "/en/products/defense-turret"
+      }
+    ]
+  },
+  "barraEstadisticas": [
+    { "valor": "0 ms", "etiqueta": "Human latency — the turret decides on the edge" },
+    { "valor": "24/7", "etiqueta": "Autonomous perimeter surveillance" },
+    { "valor": "100%", "etiqueta": "Compatible with existing IP cameras" },
+    { "valor": "Lima · PE", "etiqueta": "Designed and manufactured in Peru" }
+  ],
+  "manifiesto": {
+    "etiqueta": "MANIFESTO",
+    "titulo": "Cameras of the past only watched. Ours act.",
+    "parrafo": "AI Robotics is a Codeplex division dedicated to new technologies: devices that don't yet exist on the market, or that exist without the capabilities reality demands. Today we are building an AI surveillance system for municipalities and private companies, a defense drone that automatically launches from its hangar when a robbery is detected, and an autonomous turret that defends commercial premises without human confirmation.",
+    "ctaEtiqueta": "About the company",
+    "ctaRuta": "/en/about"
+  },
+  "productosDestacados": {
+    "etiqueta": "PRODUCTS",
+    "titulo": "One platform. Three autonomous responses.",
+    "descripcion": "Every product solves a different scenario, but they all share the same brain: computer vision trained to detect what traditional cameras miss.",
+    "items": [
+      {
+        "id": "vigilancia",
+        "etiqueta": "DETECTION + AERIAL RESPONSE",
+        "titulo": "AI Surveillance System",
+        "descripcion": "Processes the feed from any IP camera registered with GPS. When a criminal event is detected, it dispatches a drone to the location automatically.",
+        "imagen": "/imagenes/productos/sistema-vigilancia.png",
+        "puntos": [
+          "Detection of faces, vehicles, objects and weapons",
+          "Automatic dispatch of the response drone",
+          "Hand-over to the operator for action assessment"
+        ],
+        "ctaEtiqueta": "View details",
+        "ctaRuta": "/en/products/ai-surveillance-system"
+      },
+      {
+        "id": "dron",
+        "etiqueta": "AUTONOMOUS AERIAL RESPONSE",
+        "titulo": "Defense Drone",
+        "descripcion": "Leaves the hangar without manual input. Carries an integrated speaker for warnings, live transmission and an operator-authorized neutralization module.",
+        "imagen": "/imagenes/productos/dron-defensa-detalle.png",
+        "puntos": [
+          "Autonomous deployment in under a minute",
+          "Integrated speaker for deterrent warnings",
+          "Fire only with human confirmation"
+        ],
+        "ctaEtiqueta": "View details",
+        "ctaRuta": "/en/products/defense-drone"
+      },
+      {
+        "id": "torreta",
+        "etiqueta": "PERIMETER DEFENSE",
+        "titulo": "Autonomous Turret",
+        "descripcion": "30 × 20 cm. Swiveling camera with configurable sweep and on-device AI. If it detects a weapon or a breach of the perimeter fence during restricted hours, it acts.",
+        "imagen": "/imagenes/productos/torreta-detalle.png",
+        "puntos": [
+          "Software-defined virtual perimeter fences and time windows",
+          "Edge processing — no server required",
+          "Built for warehouses, retail and critical zones"
+        ],
+        "ctaEtiqueta": "View details",
+        "ctaRuta": "/en/products/defense-turret"
+      }
+    ]
+  },
+  "comoFunciona": {
+    "etiqueta": "HOW IT WORKS",
+    "titulo": "From camera to drone, no human input until the final step.",
+    "pasos": [
+      {
+        "numero": "01",
+        "titulo": "Detection",
+        "descripcion": "The system processes feeds from existing IP cameras and recognizes weapons, intrusions and aggressive behavior."
+      },
+      {
+        "numero": "02",
+        "titulo": "Notify the central",
+        "descripcion": "The signal reaches the central. The system dispatches the drone from its hangar and positions the camera over the target."
+      },
+      {
+        "numero": "03",
+        "titulo": "Human confirmation",
+        "descripcion": "The operator receives the alert, evaluates the live scenario and authorizes — or cancels — the response."
+      },
+      {
+        "numero": "04",
+        "titulo": "Action",
+        "descripcion": "The drone issues a deterrent warning through its speaker or, if needed, neutralizes the threat with the authorized module."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "etiqueta": "USE CASES",
+    "titulo": "Built for those who can't watch screens 24/7.",
+    "items": [
+      {
+        "icono": "/iconos/sistema-ia.svg",
+        "titulo": "Municipalities",
+        "descripcion": "Smart surveillance over the urban camera network. Aerial response to ongoing robberies."
+      },
+      {
+        "icono": "/iconos/comando.svg",
+        "titulo": "Private companies",
+        "descripcion": "Programmed drone patrols on extensive properties. Perimeter defense with autonomous turrets."
+      },
+      {
+        "icono": "/iconos/desarrollo.svg",
+        "titulo": "Malls & warehouses",
+        "descripcion": "Virtual perimeter fences. Allowed time windows. Autonomous defense when the venue is closed."
+      }
+    ]
+  },
+  "ctaCierre": {
+    "etiqueta": "TAKE THE NEXT STEP",
+    "titulo": "Let's design an autonomous defense scheme together.",
+    "descripcion": "Tell us what you protect and we'll design a demo in your own operational environment.",
+    "ctaPrimario": { "etiqueta": "Request a demo", "ruta": "/en/contact?subject=demo" },
+    "ctaSecundario": { "etiqueta": "Meet the team", "ruta": "/en/team" },
+    "imagen": "/imagenes/hero/cta.jpg"
+  }
+}

@@ -1,0 +1,46 @@
+---
+import type { SeoComputado } from '@helpers/seo';
+
+interface Props {
+  seo: SeoComputado;
+  siteName: string;
+  twitter?: string;
+}
+
+const { seo, siteName, twitter } = Astro.props;
+---
+
+<title>{seo.tituloFinal}</title>
+<meta name="description" content={seo.descripcion} />
+{seo.canonical
+  ? <link rel="canonical" href={seo.canonical} />
+  : <link rel="canonical" href={seo.url} />}
+{seo.noindex && <meta name="robots" content="noindex,nofollow" />}
+
+<!-- Hreflang -->
+{seo.hreflangs.map((h) => (
+  <link rel="alternate" hreflang={h.lang} href={h.href} />
+))}
+
+<!-- Open Graph -->
+<meta property="og:type" content={seo.tipo ?? 'website'} />
+<meta property="og:title" content={seo.tituloFinal} />
+<meta property="og:description" content={seo.descripcion} />
+<meta property="og:url" content={seo.url} />
+<meta property="og:image" content={seo.imagenAbsoluta} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={seo.locale} />
+<meta property="og:locale:alternate" content={seo.alternateLocale} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={seo.tituloFinal} />
+<meta name="twitter:description" content={seo.descripcion} />
+<meta name="twitter:image" content={seo.imagenAbsoluta} />
+{twitter && <meta name="twitter:site" content={twitter} />}
+
+{seo.jsonLd && (
+  Array.isArray(seo.jsonLd)
+    ? seo.jsonLd.map((j) => <script type="application/ld+json" set:html={JSON.stringify(j)} />)
+    : <script type="application/ld+json" set:html={JSON.stringify(seo.jsonLd)} />
+)}

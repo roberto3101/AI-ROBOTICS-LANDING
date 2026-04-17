@@ -1,0 +1,76 @@
+---
+import Principal from '@layout/Principal.astro';
+import HeroProducto from '@componentes/productos/HeroProducto.astro';
+import SeccionProducto from '@componentes/productos/SeccionProducto.astro';
+import Especificaciones from '@componentes/productos/Especificaciones.astro';
+import CtaCierre from '@componentes/inicio/CtaCierre.astro';
+import { cargarDatos, cargarTextosUi } from '@helpers/idiomas';
+
+export const prerender = false;
+
+const idioma = 'en';
+const { slug } = Astro.params;
+
+const datos = await cargarDatos<any>(idioma, 'productos');
+const inicio = await cargarDatos<any>(idioma, 'inicio');
+const seo = await cargarDatos<any>(idioma, 'seo');
+const textosUi = await cargarTextosUi<any>(idioma);
+
+const producto = datos.lista.find((p: any) => p.slugEn === slug);
+if (!producto) {
+  return Astro.redirect('/en/products', 302);
+}
+
+const claveSeo = producto.id === 'sistema-vigilancia-ia' ? 'vigilancia' : producto.id === 'dron-defensa' ? 'dron' : 'torreta';
+const seoPagina = seo.paginas[claveSeo];
+
+const productoJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: producto.titulo,
+  description: producto.descripcionCorta,
+  image: `${(import.meta.env.PUBLIC_SITE_URL ?? '').replace(/\/$/, '')}${producto.imagenHero}`,
+  brand: { '@type': 'Brand', name: 'AI Robotics' },
+  category: producto.categoria,
+};
+---
+
+<Principal
+  idioma={idioma}
+  seo={{
+    titulo: seoPagina.titulo,
+    descripcion: seoPagina.descripcion,
+    imagen: producto.imagenHero,
+    tipo: 'product',
+    jsonLd: productoJsonLd,
+  }}
+>
+  <HeroProducto
+    etiqueta={producto.etiquetaCorta}
+    titulo={producto.titulo}
+    tagline={producto.tagline}
+    descripcion={producto.descripcionCorta}
+    estado={producto.estado}
+    publicoObjetivo={producto.publicoObjetivo}
+    video={producto.video}
+    imagen={producto.imagenHero}
+    textosUi={textosUi}
+    rutaContacto="/en/contact"
+    rutaDemo="/en/contact?subject=demo"
+  />
+
+  {producto.secciones.map((s: any, idx: number) => (
+    <SeccionProducto seccion={s} variante={idx % 2 === 0 ? 'oscuro-suave' : 'oscuro'} />
+  ))}
+
+  <Especificaciones items={producto.especificaciones} titulo="Specifications" />
+
+  <CtaCierre
+    etiqueta={inicio.ctaCierre.etiqueta}
+    titulo={inicio.ctaCierre.titulo}
+    descripcion={inicio.ctaCierre.descripcion}
+    ctaPrimario={inicio.ctaCierre.ctaPrimario}
+    ctaSecundario={inicio.ctaCierre.ctaSecundario}
+    imagen={inicio.ctaCierre.imagen}
+  />
+</Principal>

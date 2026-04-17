@@ -1,0 +1,155 @@
+---
+import type { Idioma } from '@helpers/idiomas';
+import { obtenerRutaEquivalente } from '@helpers/idiomas';
+
+interface ItemSubmenu { etiqueta: string; ruta: string; descripcion?: string; icono?: string; }
+interface ItemMenu {
+  etiqueta: string;
+  ruta: string;
+  destacado?: boolean;
+  submenu?: ItemSubmenu[];
+}
+
+interface NavegacionData {
+  logo: { src: string; alt: string; ancho: number; alto: number };
+  menu: ItemMenu[];
+  ctaPrincipal: { etiqueta: string; ruta: string };
+  selectorIdioma: { etiqueta: string; opciones: { codigo: Idioma; etiqueta: string; bandera: string; ruta: string }[] };
+  anuncio?: { etiqueta: string; texto: string; ruta: string };
+}
+
+interface Props {
+  navegacion: NavegacionData;
+  idioma: Idioma;
+  pathActual: string;
+  rutaInicio: string;
+  textosUi: { comun: { abrirMenu: string; cerrarMenu: string; cambiarIdioma: string } };
+}
+
+const { navegacion, idioma, pathActual, textosUi } = Astro.props;
+const otroIdioma: Idioma = idioma === 'es' ? 'en' : 'es';
+const rutaOtro = obtenerRutaEquivalente(pathActual, otroIdioma);
+const banderaActual = `/banderas/${idioma}.svg`;
+const banderaOtro = `/banderas/${otroIdioma}.svg`;
+const textoCambio = idioma === 'es' ? 'Cambiar a inglés' : 'Switch to Spanish';
+const anuncioEtiqueta = navegacion.anuncio?.etiqueta ?? (idioma === 'es' ? '[NOTICIAS]' : '[NEWS]');
+const anuncioTexto = navegacion.anuncio?.texto ?? (idioma === 'es'
+  ? 'Nuevo sistema autónomo de vigilancia con IA disponible para municipalidades.'
+  : 'New AI-powered autonomous surveillance system available for municipalities.');
+const anuncioRuta = navegacion.anuncio?.ruta ?? `/${idioma}/prensa`;
+---
+
+<header class="header fixed w-full z-20" id="js-header">
+  <div class="header__banner w-full pl-5 lg:pr-5 py-3 bg-[#050506] border-b border-b-[#363636] border-opacity-100" id="js-top-banner">
+    <div class="lg:grid lg:grid-cols-3 items-center">
+      <p class="sub-title text-[13px] lg:text-sm text-steel mb-0 pl-4 opacity-100 relative">{anuncioEtiqueta}</p>
+      <div class="header__banner-marquee relative mt-5 lg:mt-0 overflow-hidden lg:overflow-visible lg:text-center">
+        <a href={anuncioRuta} class="header__banner-link lg:text-center text-[15px] lg:text-[16px] relative block w-max lg:-ml-8 lg:w-auto pr-5 lg:pr-0 text-white text-pretty">
+          <span class="header__banner-text">{anuncioTexto}</span>
+          <div class="button__top button__top--banner"></div>
+        </a>
+      </div>
+      <a href="#" class="schedule-demo__close schedule-demo__close--banner absolute lg:relative top-2.5 lg:top-0 right-4 lg:right-0 ml-auto" id="js-hide-banner">
+        <i></i>
+        <div class="button__top"></div>
+        <div class="button__bottom"></div>
+      </a>
+    </div>
+  </div>
+  <div class="container flex items-center justify-between pt-6 lg:pt-10 pb-6 lg:pb-6">
+    <a href={`/${idioma}/`} class="w-[180px] lg:w-[240px] block">
+      <img src={navegacion.logo.src} alt={navegacion.logo.alt} class="w-full h-auto" />
+    </a>
+    <nav class="header__main">
+      <ul class="relative gap-x-7 hidden lg:flex">
+        {navegacion.menu.map((item) => (
+          <li>
+            {item.submenu && item.submenu.length > 0 ? (
+              <>
+                <a href="#" class="relative js-toggle-nav">
+                  {item.etiqueta}
+                  <div class="button__top"></div>
+                  <div class="button__bottom"></div>
+                </a>
+                <div class="header__nav header__nav--alt container hidden js-nav-item">
+                  <div class="js-nav-overlay"></div>
+                  <div class="flex flex-wrap bg-carbon relative z-[1]">
+                    <ul class="rhs">
+                      {item.submenu.map((sub) => (
+                        <li class={`group !w-1/${Math.max(2, Math.min(4, item.submenu!.length))}`}>
+                          <a href={sub.ruta} class="group-hover:!bg-white">
+                            {sub.descripcion && <span class="sub-title transition-colors relative z-[1]">[{sub.descripcion.slice(0, 40).toUpperCase()}]</span>}
+                            <div class="w-full relative z-[1]">
+                              <h4 class="transition-colors">{sub.etiqueta}</h4>
+                              {sub.descripcion && <p class="mt-3 transition-colors">{sub.descripcion}</p>}
+                            </div>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <a href={item.ruta} class="relative">
+                {item.etiqueta}
+                <div class="button__top"></div>
+                <div class="button__bottom"></div>
+              </a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="header__right flex items-center gap-3">
+      <a
+        href={rutaOtro}
+        class="selector-idioma"
+        aria-label={textoCambio}
+        hreflang={otroIdioma}
+        title={textoCambio}
+      >
+        <img class="selector-idioma__desde" src={banderaActual} alt="" aria-hidden="true" />
+        <span class="selector-idioma__label">{idioma.toUpperCase()}</span>
+        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5h10M7 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <img src={banderaOtro} alt="" aria-hidden="true" />
+      </a>
+      <a href={navegacion.ctaPrincipal.ruta} class="button button--red px-6 py-[1.05rem] text-[12px] hidden lg:block">
+        {navegacion.ctaPrincipal.etiqueta}
+      </a>
+    </div>
+    <div class="header__hamburger js-toggle-nav"></div>
+  </div>
+</header>
+
+<div class="menu" id="js-menu">
+  <div class="container flex flex-wrap content-between pb-5">
+    <ul class="menu__nav">
+      {navegacion.menu.map((item) => (
+        <li class="py-7 border-b border-b-carbon border-opacity-100">
+          {item.submenu && item.submenu.length > 0 ? (
+            <>
+              <a href="#" class="sub-title text-[15px] tracking-[.11em] opacity-100 js-toggle-sub">{item.etiqueta}</a>
+              <ul class="menu__sub js-menu-sub">
+                {item.submenu.map((sub) => (
+                  <li><a href={sub.ruta}>{sub.etiqueta}</a></li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <a href={item.ruta} class="sub-title text-[15px] tracking-[.11em] opacity-100">{item.etiqueta}</a>
+          )}
+        </li>
+      ))}
+      <li class="py-7 border-b border-b-carbon border-opacity-100">
+        <a href={rutaOtro} class="sub-title text-[15px] tracking-[.11em] opacity-100 inline-flex items-center gap-3" hreflang={otroIdioma}>
+          <img src={banderaOtro} alt="" width="22" height="16" class="h-4 w-[22px] object-cover" aria-hidden="true" />
+          {otroIdioma === 'en' ? 'English' : 'Español'}
+        </a>
+      </li>
+    </ul>
+    <a href={navegacion.ctaPrincipal.ruta} class="button button--red w-full mt-10 px-6 py-[1.05rem] text-[13px]">
+      {navegacion.ctaPrincipal.etiqueta}
+    </a>
+  </div>
+</div>

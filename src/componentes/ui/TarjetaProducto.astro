@@ -1,0 +1,77 @@
+---
+interface Props {
+  etiqueta?: string;
+  titulo: string;
+  descripcion: string;
+  imagen?: string;
+  imagenAlt?: string;
+  puntos?: string[];
+  ctaEtiqueta?: string;
+  ctaRuta?: string;
+  variante?: 'oscuro' | 'claro';
+}
+
+const {
+  etiqueta,
+  titulo,
+  descripcion,
+  imagen,
+  imagenAlt = '',
+  puntos,
+  ctaEtiqueta,
+  ctaRuta,
+  variante = 'oscuro',
+} = Astro.props;
+
+const claseTarjeta = variante === 'claro' ? 'tarjeta-clara' : 'tarjeta';
+---
+
+<article class:list={[claseTarjeta, 'flex flex-col h-full group']}>
+  {imagen && (
+    <div class="aspect-[4/3] overflow-hidden bg-black/20 relative">
+      <img
+        src={imagen}
+        alt={imagenAlt}
+        loading="lazy"
+        class="w-full h-full object-cover transition duration-700 group-hover:scale-[1.04]"
+      />
+    </div>
+  )}
+  <div class="p-6 lg:p-8 flex flex-col flex-1 gap-4">
+    {etiqueta && <span class="etiqueta-mono">{etiqueta}</span>}
+    <h3 class="text-2xl lg:text-3xl font-semibold leading-tight tracking-tight">{titulo}</h3>
+    <p class:list={[
+      'text-base leading-relaxed',
+      variante === 'claro' ? 'text-[var(--color-acero)]' : 'text-white/80',
+    ]}>{descripcion}</p>
+
+    {puntos && puntos.length > 0 && (
+      <ul class:list={[
+        'flex flex-col gap-2 mt-2',
+        variante === 'claro' ? 'text-[var(--color-acero)]' : 'text-white/80',
+      ]}>
+        {puntos.map((p) => (
+          <li class="flex items-start gap-3 text-sm">
+            <span class="flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--color-primario)]" aria-hidden="true"></span>
+            <span>{p}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {ctaRuta && ctaEtiqueta && (
+      <a
+        href={ctaRuta}
+        class:list={[
+          'mt-auto pt-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider',
+          'text-[var(--color-primario)] hover:translate-x-1 transition',
+        ]}
+      >
+        {ctaEtiqueta}
+        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+          <path d="M2 7h10M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    )}
+  </div>
+</article>

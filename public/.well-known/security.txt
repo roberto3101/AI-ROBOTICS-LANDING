@@ -1,0 +1,4 @@
+Contact: mailto:seguridad@airobotics.com.pe
+Expires: 2027-12-31T23:59:59z
+Preferred-Languages: es, en
+Canonical: https://airobotics.com.pe/.well-known/security.txt

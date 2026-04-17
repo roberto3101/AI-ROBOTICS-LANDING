@@ -1,0 +1,46 @@
+---
+import Principal from '@layout/Principal.astro';
+import HeroNosotros from '@componentes/nosotros/HeroNosotros.astro';
+import Equipo from '@componentes/nosotros/Equipo.astro';
+import Valores from '@componentes/nosotros/Valores.astro';
+import CtaCierre from '@componentes/inicio/CtaCierre.astro';
+import { cargarDatos } from '@helpers/idiomas';
+
+const idioma = 'es';
+const datos = await cargarDatos<any>(idioma, 'equipo');
+const seo = await cargarDatos<any>(idioma, 'seo');
+---
+
+<Principal
+  idioma={idioma}
+  seo={{
+    titulo: seo.paginas.equipo.titulo,
+    descripcion: seo.paginas.equipo.descripcion,
+  }}
+>
+  <HeroNosotros
+    etiqueta={datos.hero.etiqueta}
+    titulo={datos.hero.titulo}
+    subtitulo={datos.hero.subtitulo}
+    imagen="/imagenes/hero/bandera-peru.jpg"
+  />
+  <Equipo
+    miembros={datos.miembros}
+    notaPlaceholder={datos.notaPlaceholder}
+  />
+  <Valores
+    etiqueta={datos.cultura.etiqueta}
+    titulo={datos.cultura.titulo}
+    items={datos.cultura.principios.map((p: { titulo: string; descripcion: string }) => ({
+      icono: '/iconos/sistema-ia.svg',
+      titulo: p.titulo,
+      descripcion: p.descripcion,
+    }))}
+  />
+  <CtaCierre
+    etiqueta="HABLEMOS"
+    titulo="¿Quieres trabajar con nosotros?"
+    descripcion="Escríbenos y conversemos sobre tu perfil y cómo podrías sumarte al equipo."
+    ctaPrimario={{ etiqueta: 'Contáctanos', ruta: '/es/contacto?asunto=general' }}
+  />
+</Principal>

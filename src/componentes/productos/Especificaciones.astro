@@ -1,0 +1,23 @@
+---
+interface Especificacion { etiqueta: string; valor: string; }
+interface Props {
+  titulo?: string;
+  items: Especificacion[];
+}
+
+const { titulo = 'Especificaciones', items } = Astro.props;
+---
+
+<div class="bg-[#050506] py-20 lg:py-32 relative z-[1]">
+  <div class="container js-scroll-activate">
+    <h3 class="section-title section-title--mobile">{titulo}</h3>
+    <dl class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#363636] border border-[#363636] mt-12">
+      {items.map((it) => (
+        <div class="bg-carbon p-6 lg:p-8 flex flex-col gap-3">
+          <dt class="sub-title text-steel">[{it.etiqueta}]</dt>
+          <dd class="text-base lg:text-lg text-white">{it.valor}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</div>

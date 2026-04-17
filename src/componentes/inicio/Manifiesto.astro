@@ -1,0 +1,30 @@
+---
+interface Props {
+  etiqueta: string;
+  titulo: string;
+  parrafo: string;
+  ctaEtiqueta: string;
+  ctaRuta: string;
+}
+
+const { etiqueta, titulo, parrafo, ctaEtiqueta, ctaRuta } = Astro.props;
+---
+
+<section id="manifiesto" class="bg-[var(--color-carbon)] py-[var(--spacing-seccion)]">
+  <div class="contenedor">
+    <div class="grid lg:grid-cols-[auto_1fr] gap-12 lg:gap-20 max-w-6xl">
+      <div>
+        <p class="etiqueta-mono">— {etiqueta}</p>
+      </div>
+      <div>
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight tracking-tight mb-8">
+          {titulo}
+        </h2>
+        <p class="text-base lg:text-lg leading-relaxed text-white/80 max-w-3xl">{parrafo}</p>
+        <a href={ctaRuta} class="boton boton-fantasma mt-8">
+          {ctaEtiqueta}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

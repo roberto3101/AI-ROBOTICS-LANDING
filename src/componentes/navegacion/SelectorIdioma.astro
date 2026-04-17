@@ -1,0 +1,89 @@
+---
+import type { Idioma } from '@helpers/idiomas';
+import { obtenerRutaEquivalente } from '@helpers/idiomas';
+
+interface Opcion {
+  codigo: Idioma;
+  etiqueta: string;
+  bandera: string;
+  ruta: string;
+}
+
+interface Props {
+  idiomaActivo: Idioma;
+  opciones: Opcion[];
+  pathActual: string;
+  etiquetaAria?: string;
+}
+
+const { idiomaActivo, opciones, pathActual, etiquetaAria = 'Cambiar idioma' } = Astro.props;
+const opcionActiva = opciones.find((o) => o.codigo === idiomaActivo) ?? opciones[0];
+---
+
+<div class="relative" data-selector-idioma>
+  <button
+    type="button"
+    class="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 hover:border-[var(--color-primario)] transition text-sm font-mono uppercase tracking-wider"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-label={etiquetaAria}
+    data-disparador
+  >
+    <img src={opcionActiva.bandera} alt="" width="20" height="14" class="h-3.5 w-5 rounded-sm object-cover" />
+    <span>{opcionActiva.codigo.toUpperCase()}</span>
+    <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3 L5 7 L9 3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+  </button>
+  <ul
+    class="absolute right-0 mt-2 min-w-[10rem] bg-[var(--color-carbon-claro)] border border-[var(--color-borde-claro)] rounded-lg overflow-hidden shadow-2xl hidden"
+    role="listbox"
+    data-menu
+  >
+    {opciones.map((opcion) => {
+      const ruta = obtenerRutaEquivalente(pathActual, opcion.codigo);
+      const activo = opcion.codigo === idiomaActivo;
+      return (
+        <li role="option" aria-selected={activo}>
+          <a
+            href={ruta}
+            class:list={[
+              'flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-white/5 transition',
+              activo ? 'text-[var(--color-primario)]' : 'text-white',
+            ]}
+            hreflang={opcion.codigo}
+          >
+            <img src={opcion.bandera} alt="" width="22" height="14" class="h-3.5 w-5 rounded-sm object-cover" />
+            <span>{opcion.etiqueta}</span>
+            {activo && <span class="ml-auto text-[var(--color-primario)]">●</span>}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</div>
+
+<script>
+  document.querySelectorAll('[data-selector-idioma]').forEach((root) => {
+    const disparador = root.querySelector('[data-disparador]');
+    const menu = root.querySelector('[data-menu]');
+    if (!disparador || !menu) return;
+    const cerrar = () => {
+      menu.classList.add('hidden');
+      disparador.setAttribute('aria-expanded', 'false');
+    };
+    disparador.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const abierto = !menu.classList.contains('hidden');
+      if (abierto) cerrar();
+      else {
+        menu.classList.remove('hidden');
+        disparador.setAttribute('aria-expanded', 'true');
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (!root.contains(e.target as Node)) cerrar();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') cerrar();
+    });
+  });
+</script>

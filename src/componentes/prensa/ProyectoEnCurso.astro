@@ -1,0 +1,51 @@
+---
+interface Proyecto {
+  id: string;
+  titulo: string;
+  estadoActual: string;
+  etapa: string;
+  descripcion: string;
+  imagen: string;
+  video?: string;
+  siguientesPasos: string[];
+}
+
+interface Props {
+  proyecto: Proyecto;
+  invertir?: boolean;
+  textoSiguientes?: string;
+}
+
+const { proyecto, invertir = false, textoSiguientes = 'Siguientes pasos' } = Astro.props;
+---
+
+<div class="py-16 lg:py-24 bg-[#050506] relative z-[1]">
+  <div class="container js-scroll-activate">
+    <div class={`lg:flex justify-between gap-16 items-center ${invertir ? 'flex-row-reverse' : ''}`}>
+      <div class="w-full lg:w-[50%] relative">
+        {proyecto.video ? (
+          <video src={proyecto.video} autoplay muted playsinline loop preload="metadata" poster={proyecto.imagen} class="w-full aspect-[16/10] object-cover" aria-label={proyecto.titulo}></video>
+        ) : (
+          <img src={proyecto.imagen} alt={proyecto.titulo} class="w-full aspect-[16/10] object-cover" loading="lazy" />
+        )}
+      </div>
+      <div class="w-full lg:w-[50%] pt-8 lg:pt-0">
+        <p class="sub-title text-primary">[{proyecto.etapa.toUpperCase()}]</p>
+        <h3 class="section-title section-title--mobile mt-5">{proyecto.titulo}</h3>
+        <p class="sub-title opacity-70 mt-4">{proyecto.estadoActual}</p>
+        <p class="mt-5 text-balance">{proyecto.descripcion}</p>
+        <div class="mt-8">
+          <p class="sub-title">[{textoSiguientes.toUpperCase()}]</p>
+          <ul class="mt-4 flex flex-col gap-2">
+            {proyecto.siguientesPasos.map((p) => (
+              <li class="flex items-start gap-3 text-[15px]">
+                <span class="flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true"></span>
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

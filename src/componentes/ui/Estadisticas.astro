@@ -1,0 +1,23 @@
+---
+interface Estadistica { valor: string; etiqueta: string; }
+interface Props {
+  items: Estadistica[];
+  variante?: 'oscuro' | 'claro';
+}
+
+const { items, variante = 'oscuro' } = Astro.props;
+const claseValor = variante === 'claro' ? 'text-[var(--color-carbon)]' : 'text-white';
+const claseEtiqueta = variante === 'claro' ? 'text-[var(--color-acero)]' : 'text-[var(--color-acero-claro)]';
+---
+
+<dl class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+  {items.map((item) => (
+    <div class:list={[
+      variante === 'claro' ? 'bg-[var(--color-cloud)]' : 'bg-[var(--color-carbon)]',
+      'p-6 lg:p-8 flex flex-col gap-2',
+    ]}>
+      <dt class:list={['etiqueta-mono', claseEtiqueta]}>{item.etiqueta}</dt>
+      <dd class:list={['text-3xl lg:text-4xl font-mono font-semibold leading-tight', claseValor]}>{item.valor}</dd>
+    </div>
+  ))}
+</dl>

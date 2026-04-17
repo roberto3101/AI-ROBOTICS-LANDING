@@ -1,0 +1,32 @@
+---
+interface Props {
+  variante?: 'oscuro' | 'claro' | 'oscuro-suave';
+  contenedor?: boolean;
+  paddingY?: 'sm' | 'md' | 'lg' | 'none';
+  id?: string;
+  className?: string;
+}
+
+const { variante = 'oscuro', contenedor = true, paddingY = 'lg', id, className = '' } = Astro.props;
+
+const claseFondo = {
+  oscuro: 'bg-[var(--color-carbon)] text-white',
+  'oscuro-suave': 'bg-[var(--color-carbon-claro)] text-white',
+  claro: 'bg-[var(--color-cloud)] text-[var(--color-carbon)]',
+}[variante];
+
+const clasePadding = {
+  none: '',
+  sm: 'py-12',
+  md: 'py-16 lg:py-24',
+  lg: 'py-[var(--spacing-seccion)]',
+}[paddingY];
+---
+
+<section id={id} class:list={[claseFondo, clasePadding, className]}>
+  {contenedor ? (
+    <div class="contenedor">
+      <slot />
+    </div>
+  ) : <slot />}
+</section>

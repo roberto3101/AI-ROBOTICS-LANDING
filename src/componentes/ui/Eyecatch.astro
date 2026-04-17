@@ -1,0 +1,54 @@
+---
+interface Props {
+  etiqueta?: string;
+  titulo: string;
+  descripcion?: string;
+  imagen?: string;
+  imagenAlt?: string;
+  ctaPrimario?: { etiqueta: string; ruta: string };
+  ctaSecundario?: { etiqueta: string; ruta: string };
+  variante?: 'oscuro' | 'claro';
+  invertirOrden?: boolean;
+}
+
+const {
+  etiqueta,
+  titulo,
+  descripcion,
+  imagen,
+  imagenAlt = '',
+  ctaPrimario,
+  ctaSecundario,
+  variante = 'oscuro',
+} = Astro.props;
+
+const fondo = variante === 'claro' ? 'bg-cloud text-black' : 'bg-carbon text-white';
+---
+
+<div class={`eyecatch ${variante === 'oscuro' ? 'eyecatch--dark' : ''} ${fondo}`}>
+  <div class="pt-28 lg:pt-36 pb-24 lg:py-16 js-scroll-activate">
+    <div class="container flex flex-wrap justify-between">
+      <div class="w-full lg:w-1/2">
+        {etiqueta && <p class={`sub-title ${variante === 'claro' ? 'sub-title--black' : ''}`}>[{etiqueta}]</p>}
+        <h2 class="section-title section-title--mobile text-balance mt-6">{titulo}</h2>
+        {descripcion && <p class="mt-5 lg:mt-8 text-balance max-w-[600px]">{descripcion}</p>}
+        {(ctaPrimario || ctaSecundario) && (
+          <div class="mt-8 flex flex-wrap gap-3">
+            {ctaPrimario && (
+              <a href={ctaPrimario.ruta} class={`button ${variante === 'claro' ? 'button--white' : ''}`}>{ctaPrimario.etiqueta.toUpperCase()}</a>
+            )}
+            {ctaSecundario && (
+              <a href={ctaSecundario.ruta} class={`button ${variante === 'claro' ? 'button--white' : ''}`}>{ctaSecundario.etiqueta.toUpperCase()}</a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+    {imagen && (
+      <div class="container">
+        <img src={imagen} alt={imagenAlt} class="hidden lg:block mt-12 w-full aspect-[1.6/1] object-cover" loading="lazy" />
+        <img src={imagen} alt={imagenAlt} class="lg:hidden w-full object-cover aspect-[.96/1] mt-5" loading="lazy" />
+      </div>
+    )}
+  </div>
+</div>

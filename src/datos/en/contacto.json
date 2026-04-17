@@ -1,0 +1,36 @@
+{
+  "hero": {
+    "etiqueta": "CONTACT",
+    "titulo": "Let's talk.",
+    "subtitulo": "Reach out for a demo, a partnership, or simply to discuss how to apply our technology to your organization."
+  },
+  "tiposConsulta": [
+    { "valor": "general", "etiqueta": "General inquiry" },
+    { "valor": "demo", "etiqueta": "Request a demo" },
+    { "valor": "ventas", "etiqueta": "Quote / sales" },
+    { "valor": "alianza", "etiqueta": "Strategic partnership" },
+    { "valor": "prensa", "etiqueta": "Press and media" },
+    { "valor": "trabajo", "etiqueta": "Work with us" }
+  ],
+  "datosContacto": [
+    { "icono": "mail", "etiqueta": "General email", "valor": "contact@airobotics.com.pe", "enlace": "mailto:contact@airobotics.com.pe" },
+    { "icono": "phone", "etiqueta": "Phone", "valor": "+51 999 999 999", "enlace": "tel:+51999999999" },
+    { "icono": "whatsapp", "etiqueta": "WhatsApp", "valor": "+51 999 999 999", "enlace": "https://wa.me/51999999999" },
+    { "icono": "pin", "etiqueta": "Office", "valor": "Av. Principal 123, San Isidro, Lima — Peru", "enlace": "https://maps.google.com/?q=Av.+Principal+123,+San+Isidro,+Lima" },
+    { "icono": "clock", "etiqueta": "Hours", "valor": "Monday to Friday · 9:00 to 18:00 (GMT-5)", "enlace": null }
+  ],
+  "formulario": {
+    "titulo": "Send us a message",
+    "descripcion": "We'll get back to you within one business day.",
+    "campos": [
+      { "id": "nombre", "etiqueta": "Full name", "tipo": "text", "obligatorio": true, "placeholder": "Your name" },
+      { "id": "email", "etiqueta": "Email", "tipo": "email", "obligatorio": true, "placeholder": "you@company.com" },
+      { "id": "telefono", "etiqueta": "Phone", "tipo": "tel", "obligatorio": false, "placeholder": "+1 555 555 5555" },
+      { "id": "empresa", "etiqueta": "Company or organization", "tipo": "text", "obligatorio": false, "placeholder": "Your company name" },
+      { "id": "tipoConsulta", "etiqueta": "Inquiry type", "tipo": "select", "obligatorio": true, "opcionesRef": "tiposConsulta" },
+      { "id": "mensaje", "etiqueta": "Message", "tipo": "textarea", "obligatorio": true, "placeholder": "Tell us what you want to protect or what you'd like to discuss." },
+      { "id": "aceptoPrivacidad", "etiqueta": "I accept the terms and the privacy policy.", "tipo": "checkbox", "obligatorio": true }
+    ],
+    "boton": "Send message"
+  }
+}

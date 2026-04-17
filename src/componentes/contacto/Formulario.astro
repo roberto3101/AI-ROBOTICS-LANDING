@@ -1,0 +1,323 @@
+---
+interface Campo {
+  id: string;
+  etiqueta: string;
+  tipo: 'text' | 'email' | 'tel' | 'select' | 'textarea' | 'checkbox';
+  obligatorio?: boolean;
+  placeholder?: string;
+  opcionesRef?: string;
+}
+
+interface Opcion { valor: string; etiqueta: string; }
+
+interface FormularioData {
+  titulo: string;
+  descripcion: string;
+  campos: Campo[];
+  boton: string;
+}
+
+interface Props {
+  formulario: FormularioData;
+  tiposConsulta: Opcion[];
+  textosUi: {
+    formulario: {
+      enviando: string;
+      exito: string;
+      error: string;
+      errorCaptcha: string;
+      campoRequerido: string;
+      emailInvalido: string;
+    };
+    comun: { obligatorio: string };
+  };
+  asuntoInicial?: string;
+  endpoint?: string;
+}
+
+const {
+  formulario,
+  tiposConsulta,
+  textosUi,
+  asuntoInicial,
+  endpoint = '/api/contacto',
+} = Astro.props;
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const turnstileHabilitado = String(import.meta.env.TURNSTILE_ENABLED ?? 'true').toLowerCase() !== 'false';
+const timestampRender = Date.now();
+
+const atrPorCampo: Record<string, Record<string, string | number>> = {
+  nombre: { minlength: 2, maxlength: 120, pattern: "[\\p{L}\\p{M}' .\\-]+", title: 'Solo letras, espacios, guiones y apóstrofes.' },
+  email: { maxlength: 254, autocomplete: 'email' },
+  telefono: { maxlength: 32, pattern: '[+\\d\\s\\-().]{6,}', title: 'Entre 6 y 20 dígitos.', inputmode: 'tel' },
+  empresa: { maxlength: 160 },
+  mensaje: { minlength: 10, maxlength: 4000 },
+};
+---
+
+<div class="bg-carbon border border-[#363636] p-6 lg:p-10 max-w-2xl contact-form">
+  <div class="mb-8">
+    <h2 class="text-white text-2xl lg:text-3xl tracking-tighter leading-[1.1] mb-3">{formulario.titulo}</h2>
+    <p class="text-[15px] opacity-80">{formulario.descripcion}</p>
+  </div>
+
+  <form
+    class="flex flex-col gap-5"
+    method="POST"
+    action={endpoint}
+    data-formulario-contacto
+    data-mensaje-enviando={textosUi.formulario.enviando}
+    data-mensaje-exito={textosUi.formulario.exito}
+    data-mensaje-error={textosUi.formulario.error}
+    data-mensaje-error-captcha={textosUi.formulario.errorCaptcha}
+    novalidate
+  >
+    {formulario.campos.map((campo) => {
+      const id = `campo-${campo.id}`;
+      const obligatorio = campo.obligatorio === true;
+
+      const atr = atrPorCampo[campo.id] ?? {};
+
+      if (campo.tipo === 'select') {
+        const opciones = campo.opcionesRef === 'tiposConsulta' ? tiposConsulta : [];
+        return (
+          <div class="flex flex-col gap-2" data-campo-wrap={campo.id}>
+            <label for={id} class="text-sm font-medium">
+              {campo.etiqueta}
+              {obligatorio && <span class="text-[var(--color-primario)] ml-1">{textosUi.comun.obligatorio}</span>}
+            </label>
+            <select id={id} name={campo.id} required={obligatorio} class="campo-input">
+              <option value="">—</option>
+              {opciones.map((op) => (
+                <option value={op.valor} selected={asuntoInicial === op.valor}>{op.etiqueta}</option>
+              ))}
+            </select>
+            <p class="campo-error hidden text-xs text-[var(--color-rojo)]" data-campo-error={campo.id}></p>
+          </div>
+        );
+      }
+
+      if (campo.tipo === 'textarea') {
+        return (
+          <div class="flex flex-col gap-2" data-campo-wrap={campo.id}>
+            <label for={id} class="text-sm font-medium">
+              {campo.etiqueta}
+              {obligatorio && <span class="text-[var(--color-primario)] ml-1">{textosUi.comun.obligatorio}</span>}
+            </label>
+            <textarea
+              id={id}
+              name={campo.id}
+              rows="5"
+              placeholder={campo.placeholder}
+              required={obligatorio}
+              class="campo-input resize-y"
+              {...atr}
+            ></textarea>
+            <p class="campo-error hidden text-xs text-[var(--color-rojo)]" data-campo-error={campo.id}></p>
+          </div>
+        );
+      }
+
+      if (campo.tipo === 'checkbox') {
+        return (
+          <div class="flex flex-col gap-2" data-campo-wrap={campo.id}>
+            <label for={id} class="flex items-start gap-3 text-sm text-white/85 cursor-pointer">
+              <input
+                id={id}
+                name={campo.id}
+                type="checkbox"
+                required={obligatorio}
+                class="mt-1 w-4 h-4 accent-[var(--color-primario)]"
+              />
+              <span>{campo.etiqueta}</span>
+            </label>
+            <p class="campo-error hidden text-xs text-[var(--color-rojo)] pl-7" data-campo-error={campo.id}></p>
+          </div>
+        );
+      }
+
+      return (
+        <div class="flex flex-col gap-2" data-campo-wrap={campo.id}>
+          <label for={id} class="text-sm font-medium">
+            {campo.etiqueta}
+            {obligatorio && <span class="text-[var(--color-primario)] ml-1">{textosUi.comun.obligatorio}</span>}
+          </label>
+          <input
+            id={id}
+            name={campo.id}
+            type={campo.tipo}
+            placeholder={campo.placeholder}
+            required={obligatorio}
+            class="campo-input"
+            {...atr}
+          />
+          <p class="campo-error hidden text-xs text-[var(--color-rojo)]" data-campo-error={campo.id}></p>
+        </div>
+      );
+    })}
+
+    {/* Honeypot anti-bot: escondido con CSS + aria-hidden + autocomplete off */}
+    <div class="honeypot" aria-hidden="true">
+      <label for="campo-website">Website</label>
+      <input id="campo-website" type="text" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    {/* Timestamp de render para detectar envíos de bots en < 2s */}
+    <input type="hidden" name="_ts" value={String(timestampRender)} />
+
+    {turnstileHabilitado && (
+      <div class="flex flex-col gap-2">
+        <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="dark" data-callback="onTurnstileSuccess"></div>
+        <input type="hidden" name="cf-turnstile-response" data-turnstile-response />
+      </div>
+    )}
+
+    <button type="submit" class="button button--red w-full justify-center mt-2" data-boton-enviar>
+      {formulario.boton.toUpperCase()}
+    </button>
+
+    <p class="text-sm leading-relaxed mt-2 hidden" role="status" data-feedback></p>
+  </form>
+</div>
+
+{turnstileHabilitado && (
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+)}
+
+<script>
+  const formularios = document.querySelectorAll<HTMLFormElement>('[data-formulario-contacto]');
+
+  // Callback global usado por Turnstile
+  (window as unknown as { onTurnstileSuccess?: (token: string) => void }).onTurnstileSuccess = (token: string) => {
+    document.querySelectorAll<HTMLInputElement>('[data-turnstile-response]').forEach((input) => {
+      input.value = token;
+    });
+  };
+
+  formularios.forEach((form) => {
+    const boton = form.querySelector<HTMLButtonElement>('[data-boton-enviar]');
+    const feedback = form.querySelector<HTMLParagraphElement>('[data-feedback]');
+    const tokenInput = form.querySelector<HTMLInputElement>('[data-turnstile-response]');
+    const labelEnviar = boton?.textContent?.trim() ?? 'Enviar';
+    const enviando = form.dataset.mensajeEnviando ?? 'Enviando…';
+    const exito = form.dataset.mensajeExito ?? 'Enviado.';
+    const error = form.dataset.mensajeError ?? 'Error.';
+    const errorCaptcha = form.dataset.mensajeErrorCaptcha ?? 'CAPTCHA inválido.';
+
+    const setFeedback = (texto: string, tipo: 'exito' | 'error') => {
+      if (!feedback) return;
+      feedback.textContent = texto;
+      feedback.className = `text-sm leading-relaxed mt-2 ${tipo === 'exito' ? 'text-[var(--color-primario)]' : 'text-[var(--color-rojo)]'}`;
+    };
+
+    const limpiarErrores = () => {
+      form.querySelectorAll<HTMLElement>('[data-campo-error]').forEach((el) => {
+        el.textContent = '';
+        el.classList.add('hidden');
+      });
+      form.querySelectorAll<HTMLElement>('.campo-input').forEach((el) => {
+        el.classList.remove('campo-input--error');
+      });
+    };
+
+    const mostrarError = (campo: string, msg: string) => {
+      const el = form.querySelector<HTMLElement>(`[data-campo-error="${campo}"]`);
+      if (el) {
+        el.textContent = msg;
+        el.classList.remove('hidden');
+      }
+      const input = form.querySelector<HTMLElement>(`[name="${campo}"]`);
+      input?.classList.add('campo-input--error');
+    };
+
+    const validarCliente = (): boolean => {
+      limpiarErrores();
+      let ok = true;
+      const obtener = (n: string) => {
+        const el = form.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(`[name="${n}"]`);
+        return (el?.value ?? '').trim();
+      };
+      const nombre = obtener('nombre');
+      if (!nombre || nombre.length < 2) { mostrarError('nombre', 'Mínimo 2 caracteres.'); ok = false; }
+      else if (nombre.length > 120) { mostrarError('nombre', 'Máximo 120 caracteres.'); ok = false; }
+      else if (!/^[\p{L}\p{M}' .\-]+$/u.test(nombre)) { mostrarError('nombre', 'Solo letras y espacios.'); ok = false; }
+
+      const email = obtener('email');
+      if (!email) { mostrarError('email', 'Correo obligatorio.'); ok = false; }
+      else if (email.length > 254 || !/^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i.test(email)) { mostrarError('email', 'Correo con formato inválido.'); ok = false; }
+
+      const telefono = obtener('telefono');
+      if (telefono) {
+        const dig = telefono.replace(/\D/g, '');
+        if (dig.length < 6 || dig.length > 20) { mostrarError('telefono', 'Entre 6 y 20 dígitos.'); ok = false; }
+        else if (!/^[+\d\s\-().]+$/.test(telefono)) { mostrarError('telefono', 'Caracteres no válidos.'); ok = false; }
+      }
+
+      const empresa = obtener('empresa');
+      if (empresa.length > 160) { mostrarError('empresa', 'Máximo 160 caracteres.'); ok = false; }
+
+      const mensaje = obtener('mensaje');
+      if (mensaje.length < 10) { mostrarError('mensaje', 'Mínimo 10 caracteres.'); ok = false; }
+      else if (mensaje.length > 4000) { mostrarError('mensaje', 'Máximo 4000 caracteres.'); ok = false; }
+
+      const acepta = form.querySelector<HTMLInputElement>('[name="aceptoPrivacidad"]');
+      if (acepta && !acepta.checked) { mostrarError('aceptoPrivacidad', 'Debes aceptar la política.'); ok = false; }
+
+      return ok;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!boton) return;
+
+      if (!validarCliente()) {
+        const primero = form.querySelector<HTMLElement>('.campo-input--error');
+        primero?.focus();
+        return;
+      }
+
+      // Si hay Turnstile y no hay token, frenar
+      if (tokenInput && !tokenInput.value) {
+        setFeedback(errorCaptcha, 'error');
+        return;
+      }
+
+      boton.disabled = true;
+      boton.textContent = enviando;
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        feedback.textContent = enviando;
+        feedback.className = 'text-sm leading-relaxed mt-2 text-white/70';
+      }
+
+      try {
+        const data = new FormData(form);
+        const respuesta = await fetch(form.action, {
+          method: form.method,
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        const json = (await respuesta.json().catch(() => ({}))) as { ok: boolean; mensaje?: string; errores?: Record<string, string> };
+        if (!respuesta.ok || !json.ok) {
+          if (json.errores) {
+            limpiarErrores();
+            Object.entries(json.errores).forEach(([k, v]) => mostrarError(k, v));
+          }
+          throw new Error(json.mensaje ?? `HTTP ${respuesta.status}`);
+        }
+        setFeedback(exito, 'exito');
+        form.reset();
+        if (tokenInput) tokenInput.value = '';
+        // resetear Turnstile si está disponible
+        const ts = (window as unknown as { turnstile?: { reset: () => void } }).turnstile;
+        ts?.reset?.();
+      } catch (err) {
+        console.error(err);
+        setFeedback(error, 'error');
+      } finally {
+        boton.disabled = false;
+        boton.textContent = labelEnviar;
+      }
+    });
+  });
+</script>

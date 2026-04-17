@@ -1,0 +1,21 @@
+---
+interface Props {
+  logo: { src: string; alt: string; ancho: number; alto: number };
+  href: string;
+  variante?: 'claro' | 'oscuro';
+}
+
+const { logo, href, variante = 'claro' } = Astro.props;
+---
+
+<a href={href} class="inline-flex items-center gap-2" aria-label={logo.alt}>
+  <img
+    src={logo.src}
+    alt={logo.alt}
+    width={logo.ancho}
+    height={logo.alto}
+    style={variante === 'oscuro' ? 'color:#050506' : 'color:#ffffff'}
+    class="h-8 w-auto"
+    loading="eager"
+  />
+</a>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  etiqueta?: string;
+  titulo: string;
+  descripcion?: string;
+  alineacion?: 'izquierda' | 'centro';
+  invertido?: boolean;
+}
+
+const { etiqueta, titulo, descripcion, alineacion = 'izquierda', invertido = false } = Astro.props;
+const claseAlineacion = alineacion === 'centro' ? 'text-center mx-auto' : 'text-left';
+---
+
+<header class={`flex flex-col gap-4 max-w-[900px] ${claseAlineacion}`}>
+  {etiqueta && (
+    <p class={`sub-title ${invertido ? 'sub-title--black' : ''}`}>[{etiqueta}]</p>
+  )}
+  <h2 class="section-title section-title--mobile mt-4">{titulo}</h2>
+  {descripcion && <p class={`text-base lg:text-lg leading-relaxed ${invertido ? '' : 'opacity-80'} mt-4`}>{descripcion}</p>}
+</header>
