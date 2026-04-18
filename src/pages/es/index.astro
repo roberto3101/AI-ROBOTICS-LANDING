@@ -4,7 +4,6 @@ import { cargarDatos } from '@helpers/idiomas';
 
 const idioma = 'es';
 const inicio = await cargarDatos<any>(idioma, 'inicio');
-const prensa = await cargarDatos<any>(idioma, 'prensa');
 const seo = await cargarDatos<{ paginas: { inicio: { titulo: string; descripcion: string } } }>(idioma, 'seo');
 
 const diapositivas = inicio.hero.diapositivas ?? [];
@@ -106,45 +105,6 @@ const carruselProductos = [
     </div>
   </div>
 
-  <!-- PROYECTOS EN CURSO -->
-  <div class="bg-[var(--ai-noche)] py-20 lg:py-32 relative z-[1]" id="proyectos-en-curso">
-    <div class="container js-scroll-activate">
-      <div class="flex flex-wrap justify-between items-end gap-6">
-        <div>
-          <p class="sub-title text-teal">[{prensa.proyectosEnCurso.etiqueta}]</p>
-          <h3 class="section-title mt-4 max-w-[900px]">{prensa.proyectosEnCurso.titulo}</h3>
-        </div>
-        <a href="/es/prensa" class="button">Ver sala de prensa</a>
-      </div>
-      <ul class="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {prensa.proyectosEnCurso.items.map((p: any) => (
-          <li class="border border-[var(--ai-borde)] overflow-hidden bg-[var(--ai-noche-suave)]">
-            <div class="aspect-[16/10] relative overflow-hidden">
-              {p.video ? (
-                <video src={p.video} autoplay muted playsinline loop preload="metadata" poster={p.imagen} class="absolute inset-0 w-full h-full object-cover"></video>
-              ) : (
-                <img src={p.imagen} alt={p.titulo} class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-              )}
-              <span class="absolute top-4 left-4 sub-title text-teal bg-[var(--ai-noche)]/85 px-3 py-1 border border-teal">[{p.etapa.toUpperCase()}]</span>
-            </div>
-            <div class="p-6 lg:p-8">
-              <h4 class="text-white text-xl lg:text-2xl tracking-tight leading-tight">{p.titulo}</h4>
-              <p class="sub-title opacity-70 mt-3">{p.estadoActual}</p>
-              <p class="mt-4 text-[15px] opacity-85">{p.descripcion}</p>
-              <ul class="mt-6 flex flex-col gap-2">
-                {p.siguientesPasos.map((paso: string) => (
-                  <li class="flex items-start gap-3 text-[14px]">
-                    <span class="flex-shrink-0 mt-1.5 w-1.5 h-1.5 bg-teal rounded-full" style="background-color:var(--ai-teal)" aria-hidden="true"></span>
-                    <span class="opacity-85">{paso}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
 
   <!-- BLOQUE CTA ENTERPRISE (bg-cloud) -->
   <div class="bg-cloud py-12 lg:pt-80 lg:pb-32 text-black relative z-[3]">
