@@ -1,7 +1,0 @@
----
-// Redirige la raíz al idioma por defecto. Puede negociarse por Accept-Language.
-const cabeceraIdioma = Astro.request.headers.get('accept-language') ?? '';
-const prefiereIngles = /\ben(?![A-Za-z])/.test(cabeceraIdioma) && !/\bes(?![A-Za-z])/.test(cabeceraIdioma);
-const destino = prefiereIngles ? '/en/' : '/es/';
-return Astro.redirect(destino, 308);
----
