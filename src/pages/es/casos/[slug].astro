@@ -1,0 +1,135 @@
+---
+import Principal from '@layout/Principal.astro';
+import HeroNosotros from '@componentes/nosotros/HeroNosotros.astro';
+import { cargarDatos } from '@helpers/idiomas';
+
+export const prerender = false;
+
+const idioma = 'es';
+const { slug } = Astro.params;
+
+const casos = await cargarDatos<any>(idioma, 'casos');
+const productosData = await cargarDatos<any>(idioma, 'productos');
+
+const caso = casos[slug as string];
+if (!caso) {
+  return Astro.redirect('/es/', 302);
+}
+
+const productosRelacionados = (caso.productos ?? [])
+  .map((id: string) => productosData.lista.find((p: any) => p.id === id))
+  .filter(Boolean);
+---
+
+<Principal
+  idioma={idioma}
+  seo={{
+    titulo: `${caso.hero.titulo} — AI Robotics`,
+    descripcion: caso.hero.subtitulo,
+    imagen: caso.hero.imagen,
+  }}
+>
+  <HeroNosotros
+    etiqueta={caso.hero.etiqueta}
+    titulo={caso.hero.titulo}
+    subtitulo={caso.hero.subtitulo}
+    imagen={caso.hero.imagen}
+  />
+
+  <!-- PROBLEMA -->
+  <section class="bg-[#050506] py-20 lg:py-32 relative z-[1]">
+    <div class="container">
+      <div class="lg:grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
+        <div>
+          <p class="sub-title">[{caso.problema.etiqueta}]</p>
+          <h2 class="section-title section-title--mobile mt-6">{caso.problema.titulo}</h2>
+        </div>
+        <div class="mt-8 lg:mt-0">
+          <p class="text-balance text-lg">{caso.problema.descripcion}</p>
+          <ul class="mt-8 flex flex-col gap-3">
+            {caso.problema.puntos.map((p: string) => (
+              <li class="flex gap-3 items-start">
+                <span class="text-primary font-mono text-sm mt-1">✕</span>
+                <span class="text-white/80">{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUCIÓN -->
+  <section class="bg-cloud text-black py-20 lg:py-32 relative z-[3]">
+    <div class="container">
+      <p class="sub-title sub-title--black">[{caso.solucion.etiqueta}]</p>
+      <h2 class="section-title mt-6 lg:mt-10 max-w-[900px]">{caso.solucion.titulo}</h2>
+      <p class="mt-5 max-w-[800px] text-balance">{caso.solucion.descripcion}</p>
+
+      <ol class="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {caso.solucion.pasos.map((paso: any, idx: number) => (
+          <li class="bg-carbon text-white p-8 min-h-[240px] flex flex-col justify-between">
+            <span class="font-mono text-primary text-sm">0{idx + 1}</span>
+            <div class="mt-8">
+              <h4 class="text-white">{paso.titulo}</h4>
+              <p class="mt-3 text-[15px] opacity-80">{paso.descripcion}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section class="bg-[#050506] py-20 lg:py-32 relative z-[1]">
+    <div class="container">
+      <p class="sub-title">[BENEFICIOS]</p>
+      <h2 class="section-title section-title--mobile mt-6 max-w-[900px]">Qué obtienes al implementarlo.</h2>
+      <div class="mt-14 grid md:grid-cols-3 gap-6">
+        {caso.beneficios.map((b: any) => (
+          <article class="border border-white/10 p-8">
+            <h3 class="text-2xl text-primary">{b.titulo}</h3>
+            <p class="mt-4 text-white/80 text-[15px]">{b.descripcion}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS RELACIONADOS -->
+  {productosRelacionados.length > 0 && (
+    <section class="bg-carbon py-20 lg:py-32 relative z-[1]">
+      <div class="container">
+        <p class="sub-title">[PRODUCTOS PARA ESTE CASO]</p>
+        <h2 class="section-title section-title--mobile mt-6 max-w-[900px]">Qué usamos para resolverlo.</h2>
+        <div class="mt-14 grid md:grid-cols-2 gap-6">
+          {productosRelacionados.map((p: any) => (
+            <a href={`/es/productos/${p.slugEs}`} class="block group border border-white/10 hover:border-primary transition-colors">
+              <img src={p.imagenHero} alt={p.titulo} class="w-full aspect-[16/9] object-cover" loading="lazy" />
+              <div class="p-6 lg:p-8">
+                <p class="sub-title text-primary">[{p.etiquetaCorta}]</p>
+                <h3 class="text-2xl lg:text-3xl mt-4 group-hover:text-primary transition-colors">{p.titulo}</h3>
+                <p class="mt-3 text-white/75">{p.descripcionCorta}</p>
+                <span class="inline-block mt-6 font-mono text-xs uppercase tracking-[0.18em] text-primary">Ver producto →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="bg-cloud text-black py-20 lg:py-28 relative z-[3]">
+    <div class="container flex flex-wrap justify-between items-start gap-8">
+      <div class="lg:w-1/2">
+        <p class="sub-title sub-title--black">[DAR EL SIGUIENTE PASO]</p>
+        <h2 class="section-title mt-6 lg:mt-10 text-balance">{caso.cta.titulo}</h2>
+        <p class="mt-5 max-w-[600px]">{caso.cta.descripcion}</p>
+      </div>
+      <a href={caso.cta.ruta} class="button button--white mt-4">
+        {caso.cta.etiqueta.toUpperCase()}
+      </a>
+    </div>
+  </section>
+</Principal>

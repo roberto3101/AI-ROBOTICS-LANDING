@@ -1,0 +1,12 @@
+const hero = {"etiqueta":"EQUIPO","titulo":"Un equipo construido para hacer cosas que aún no existen.","subtitulo":"Ingenieros de software, electrónica, visión por computadora y mecatrónica trabajando juntos en un mismo edificio."};
+const miembros = [{"nombre":"Equipo de Liderazgo","cargo":"Dirección Codeplex / AI Robotics","bio":"Los fundadores de Codeplex lideran la dirección estratégica de AI Robotics y el roadmap de producto.","foto":"/imagenes/equipo/equipo-1.jpg","categoria":"liderazgo"},{"nombre":"Equipo de Ingeniería","cargo":"Software, IA y visión por computadora","bio":"Diseñan los modelos de detección, los sistemas de despacho automatizado y la integración con cámaras IP de terceros.","foto":"/imagenes/equipo/equipo-2.jpg","categoria":"ingenieria"},{"nombre":"Equipo de Hardware","cargo":"Mecatrónica, electrónica y prototipado","bio":"Diseñan, ensamblan y prueban la torreta y el dron. Iteran prototipos físicos hasta validar comportamiento operativo.","foto":"/imagenes/equipo/equipo-3.jpg","categoria":"hardware"}];
+const notaPlaceholder = "Las fotos y biografías individuales se actualizarán a medida que el equipo autorice su publicación.";
+const cultura = {"etiqueta":"CÓMO TRABAJAMOS","titulo":"Pequeños equipos. Iteración rápida. Pruebas reales.","principios":[{"titulo":"Construye y prueba en una semana","descripcion":"Cada hito de prototipo se valida en la realidad antes de pasar a la siguiente etapa."},{"titulo":"El operador humano es parte del sistema","descripcion":"Diseñamos pensando en cómo el operador toma la decisión final, no en reemplazarlo."},{"titulo":"Documentamos en público","descripcion":"Compartimos el avance del proyecto en nuestra sala de prensa y redes."},{"titulo":"Software y hardware en la misma mesa","descripcion":"Las decisiones de electrónica afectan al modelo, y viceversa. Trabajamos juntos."}]};
+const equipo = {
+  hero,
+  miembros,
+  notaPlaceholder,
+  cultura,
+};
+
+export { cultura, equipo as default, hero, miembros, notaPlaceholder };

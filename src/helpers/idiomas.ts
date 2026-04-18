@@ -48,6 +48,9 @@ const MAPA_RUTAS: Record<string, string> = {
   privacidad: 'privacy',
   terminos: 'terms',
   'libro-reclamaciones': 'claims-book',
+  'casos/municipalidades': 'cases/municipalities',
+  'casos/empresas-privadas': 'cases/private-companies',
+  'casos/centros-comerciales': 'cases/retail',
 };
 
 const MAPA_INVERSO: Record<string, string> = Object.fromEntries(

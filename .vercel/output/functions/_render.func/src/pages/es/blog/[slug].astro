@@ -1,0 +1,72 @@
+---
+import Principal from '@layout/Principal.astro';
+import { obtenerPostPorSlug } from '@helpers/cms';
+
+export const prerender = false;
+
+const idioma = 'es';
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect('/es/blog', 302);
+
+const post = await obtenerPostPorSlug(idioma, slug);
+if (!post) return Astro.redirect('/es/blog', 302);
+
+const formatoFecha = new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: 'long', year: 'numeric' });
+---
+
+<Principal
+  idioma={idioma}
+  seo={{
+    titulo: post.seo?.titulo ?? `${post.titulo} — Blog AI Robotics`,
+    descripcion: post.seo?.descripcion ?? post.resumen,
+    imagen: post.seo?.imagen ?? post.portada,
+    tipo: 'article',
+  }}
+>
+  <article class="bg-[var(--color-carbon)] pt-32 pb-[var(--spacing-seccion)]">
+    <div class="contenedor max-w-3xl">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--ai-teal)] mb-6">
+        [{post.categoria}]
+      </p>
+      <h1 class="titulo-hero mb-6">{post.titulo}</h1>
+      <div class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-acero-claro)] mb-10">
+        <time datetime={post.fecha}>{formatoFecha.format(new Date(post.fecha))}</time>
+        <span>·</span>
+        <span>{post.lectura}</span>
+        {post.autor && (
+          <>
+            <span>·</span>
+            <span>{post.autor.nombre}</span>
+          </>
+        )}
+      </div>
+
+      {post.portada && (
+        <img src={post.portada} alt="" class="w-full aspect-[16/9] object-cover mb-10" loading="eager" />
+      )}
+
+      <div class="prose-airobotics" set:html={post.contenido}></div>
+
+      <div class="mt-16 pt-8 border-t border-white/10">
+        <a href="/es/blog" class="font-mono text-xs uppercase tracking-[0.18em] text-[var(--ai-teal)]">
+          ← Volver al blog
+        </a>
+      </div>
+    </div>
+  </article>
+</Principal>
+
+<style is:global>
+  .prose-airobotics { color: rgba(255, 255, 255, 0.85); line-height: 1.7; font-size: 1.05rem; }
+  .prose-airobotics h2 { font-size: 1.75rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; color: #fff; }
+  .prose-airobotics h3 { font-size: 1.375rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: #fff; }
+  .prose-airobotics p { margin-bottom: 1.25rem; }
+  .prose-airobotics a { color: var(--ai-teal); text-decoration: underline; text-underline-offset: 3px; }
+  .prose-airobotics ul, .prose-airobotics ol { margin: 1rem 0 1.5rem 1.5rem; }
+  .prose-airobotics li { margin-bottom: 0.5rem; }
+  .prose-airobotics blockquote { border-left: 2px solid var(--ai-teal); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: rgba(255, 255, 255, 0.7); }
+  .prose-airobotics code { background: rgba(255, 255, 255, 0.08); padding: 0.15em 0.4em; border-radius: 4px; font-family: var(--font-mono); font-size: 0.9em; }
+  .prose-airobotics pre { background: rgba(0, 0, 0, 0.4); padding: 1rem 1.25rem; border-radius: 8px; overflow-x: auto; margin: 1.5rem 0; }
+  .prose-airobotics pre code { background: transparent; padding: 0; }
+  .prose-airobotics img { max-width: 100%; height: auto; margin: 2rem 0; border-radius: 8px; }
+</style>

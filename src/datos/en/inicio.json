@@ -137,17 +137,20 @@
       {
         "icono": "/iconos/sistema-ia.svg",
         "titulo": "Municipalities",
-        "descripcion": "Smart surveillance over the urban camera network. Aerial response to ongoing robberies."
+        "descripcion": "Smart surveillance over the urban camera network. Aerial response to ongoing robberies.",
+        "ruta": "/en/cases/municipalities"
       },
       {
         "icono": "/iconos/comando.svg",
         "titulo": "Private companies",
-        "descripcion": "Programmed drone patrols on extensive properties. Perimeter defense with autonomous turrets."
+        "descripcion": "Programmed drone patrols on extensive properties. Perimeter defense with autonomous turrets.",
+        "ruta": "/en/cases/private-companies"
       },
       {
         "icono": "/iconos/desarrollo.svg",
         "titulo": "Malls & warehouses",
-        "descripcion": "Virtual perimeter fences. Allowed time windows. Autonomous defense when the venue is closed."
+        "descripcion": "Virtual perimeter fences. Allowed time windows. Autonomous defense when the venue is closed.",
+        "ruta": "/en/cases/retail"
       }
     ]
   },

@@ -1,0 +1,128 @@
+{
+  "municipalidades": {
+    "slug": "municipalities",
+    "hero": {
+      "etiqueta": "USE CASE · MUNICIPALITIES",
+      "titulo": "Autonomous public safety on your existing camera network.",
+      "subtitulo": "We turn cameras that only record into a system that detects, alerts, and dispatches aerial response in real time.",
+      "imagen": "/theme/uploads/ai-robotics/caso-1.jpg"
+    },
+    "problema": {
+      "etiqueta": "THE PROBLEM",
+      "titulo": "Urban cameras record — but they don't prevent.",
+      "descripcion": "Most municipalities already have dozens or hundreds of IP cameras installed. The bottleneck isn't infrastructure — it's that no one can watch all the screens all the time. By the time evidence is reviewed, the crime is already over.",
+      "puntos": [
+        "Limited human operators, 8-hour shifts",
+        "Reactive response: patrol arrives after the fact",
+        "Existing cameras with no intelligent use"
+      ]
+    },
+    "solucion": {
+      "etiqueta": "HOW WE HELP",
+      "titulo": "AI over the existing network + automated aerial response.",
+      "descripcion": "We connect our detection engine to existing IP cameras (RTSP/ONVIF) and activate a response drone when an active threat is detected.",
+      "pasos": [
+        { "titulo": "Continuous detection", "descripcion": "AI analyzes every camera simultaneously. No shifts, no breaks." },
+        { "titulo": "Immediate alert", "descripcion": "Classifies the event (weapon, crowd, intrusion) and notifies control within seconds." },
+        { "titulo": "Drone dispatch", "descripcion": "If policy allows, a drone automatically takes off to the GPS coordinates." },
+        { "titulo": "Human operator decides", "descripcion": "Operator receives live video and authorizes the next action." }
+      ]
+    },
+    "beneficios": [
+      { "titulo": "Response < 1 minute", "descripcion": "Time between detection and drone on target." },
+      { "titulo": "No additional headcount", "descripcion": "One operator covers what used to require 10." },
+      { "titulo": "Uses what you already own", "descripcion": "We don't replace cameras. We empower them." }
+    ],
+    "productos": ["ai-surveillance-system", "defense-drone"],
+    "cta": {
+      "titulo": "Do you lead a municipality or work in public safety?",
+      "descripcion": "Schedule a pilot demo over a zone in your district. No commitment.",
+      "etiqueta": "Request pilot demo",
+      "ruta": "/en/contact?subject=demo"
+    }
+  },
+  "empresas-privadas": {
+    "slug": "private-companies",
+    "hero": {
+      "etiqueta": "USE CASE · PRIVATE COMPANIES",
+      "titulo": "Autonomous defense for large properties beyond human reach.",
+      "subtitulo": "Drones with programmed patrols and perimeter turrets that run 24/7 without permanent night guards.",
+      "imagen": "/theme/uploads/ai-robotics/caso-2.jpg"
+    },
+    "problema": {
+      "etiqueta": "THE PROBLEM",
+      "titulo": "Guarding hectares with people doesn't scale.",
+      "descripcion": "Mines, agribusinesses, factories, and large depots share the same challenge: the perimeter is too vast for guards alone, and every night shift costs.",
+      "puntos": [
+        "Kilometer-scale perimeters, few guards",
+        "Expensive, high-turnover night shifts",
+        "Remote zones with no physical coverage"
+      ]
+    },
+    "solucion": {
+      "etiqueta": "HOW WE HELP",
+      "titulo": "Programmed aerial patrols + deterrent turrets.",
+      "descripcion": "We combine autonomous-route drones with fixed turrets at critical perimeter points, all supervised from a single control post.",
+      "pasos": [
+        { "titulo": "Programmed patrols", "descripcion": "The drone runs automated rounds on defined GPS coordinates." },
+        { "titulo": "Virtual fences", "descripcion": "Invisible lines on the ground; any crossing triggers an alert." },
+        { "titulo": "Turrets at critical points", "descripcion": "Detection and deterrent response at perimeter accesses." },
+        { "titulo": "Single control post", "descripcion": "One operator coordinates drones + turrets + cameras from one dashboard." }
+      ]
+    },
+    "beneficios": [
+      { "titulo": "24/7 coverage", "descripcion": "No shifts, no breaks, no absenteeism." },
+      { "titulo": "Cut night headcount", "descripcion": "One operator replaces multiple physical patrols." },
+      { "titulo": "Active deterrence", "descripcion": "Aerial presence and instant response lower incidents before they occur." }
+    ],
+    "productos": ["defense-drone", "defense-turret"],
+    "cta": {
+      "titulo": "Protecting a large property?",
+      "descripcion": "Tell us the perimeter size and we'll design a patrol + turret configuration for your case.",
+      "etiqueta": "Design my setup",
+      "ruta": "/en/contact?subject=demo"
+    }
+  },
+  "centros-comerciales": {
+    "slug": "retail",
+    "hero": {
+      "etiqueta": "USE CASE · RETAIL & WAREHOUSES",
+      "titulo": "Autonomous defense when the store is closed.",
+      "subtitulo": "Virtual perimeter fences with admitted hours: the system knows when no one should be there — and acts.",
+      "imagen": "/theme/uploads/ai-robotics/caso-3.jpg"
+    },
+    "problema": {
+      "etiqueta": "THE PROBLEM",
+      "titulo": "Break-ins happen after hours.",
+      "descripcion": "Malls, large stores, and logistics warehouses concentrate all value inside — but active surveillance only happens during business hours. At night, the physical fence is no longer enough.",
+      "puntos": [
+        "After-hours break-ins with the store empty",
+        "Physical fence vulnerable to forcing",
+        "Alarm rings but response arrives 15-30 min later"
+      ]
+    },
+    "solucion": {
+      "etiqueta": "HOW WE HELP",
+      "titulo": "Admitted hours + immediate deterrent response.",
+      "descripcion": "The system knows the store's legitimate hours. Any movement outside that window activates the autonomous turret and alerts the operator.",
+      "pasos": [
+        { "titulo": "Admitted hours", "descripcion": "Configure windows when staff is allowed. Anything outside is anomalous by default." },
+        { "titulo": "Virtual perimeter fence", "descripcion": "Digital lines over the store's perimeter, calibrated by software." },
+        { "titulo": "Deterrent response", "descripcion": "The turret emits a deterrent signal (light/audio) before escalating." },
+        { "titulo": "Operator escalation", "descripcion": "If the intruder persists, the remote operator decides with live video." }
+      ]
+    },
+    "beneficios": [
+      { "titulo": "Covers when no one else does", "descripcion": "The most vulnerable window — covered by default." },
+      { "titulo": "Zero daytime false positives", "descripcion": "The system stands down during normal operating hours." },
+      { "titulo": "Evidence + deterrence", "descripcion": "Records, alerts, and acts. Three layers in one system." }
+    ],
+    "productos": ["defense-turret", "ai-surveillance-system"],
+    "cta": {
+      "titulo": "Does your store sit empty at night?",
+      "descripcion": "We design your virtual-fence and admitted-hours configuration on top of your real layout.",
+      "etiqueta": "Request evaluation",
+      "ruta": "/en/contact?subject=demo"
+    }
+  }
+}

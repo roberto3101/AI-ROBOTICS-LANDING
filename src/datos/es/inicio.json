@@ -137,17 +137,20 @@
       {
         "icono": "/iconos/sistema-ia.svg",
         "titulo": "Municipalidades",
-        "descripcion": "Vigilancia inteligente sobre el parque de cámaras urbanas. Respuesta aérea ante atracos en curso."
+        "descripcion": "Vigilancia inteligente sobre el parque de cámaras urbanas. Respuesta aérea ante atracos en curso.",
+        "ruta": "/es/casos/municipalidades"
       },
       {
         "icono": "/iconos/comando.svg",
         "titulo": "Empresas privadas",
-        "descripcion": "Recorridos programados de drones en propiedades extensas. Defensa perimetral con torretas autónomas."
+        "descripcion": "Recorridos programados de drones en propiedades extensas. Defensa perimetral con torretas autónomas.",
+        "ruta": "/es/casos/empresas-privadas"
       },
       {
         "icono": "/iconos/desarrollo.svg",
         "titulo": "Centros comerciales y almacenes",
-        "descripcion": "Cercos perimétricos virtuales. Horarios admitidos. Defensa autónoma cuando el local está cerrado."
+        "descripcion": "Cercos perimétricos virtuales. Horarios admitidos. Defensa autónoma cuando el local está cerrado.",
+        "ruta": "/es/casos/centros-comerciales"
       }
     ]
   },

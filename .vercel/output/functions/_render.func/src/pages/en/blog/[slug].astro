@@ -1,0 +1,57 @@
+---
+import Principal from '@layout/Principal.astro';
+import { obtenerPostPorSlug } from '@helpers/cms';
+
+export const prerender = false;
+
+const idioma = 'en';
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect('/en/blog', 302);
+
+const post = await obtenerPostPorSlug(idioma, slug);
+if (!post) return Astro.redirect('/en/blog', 302);
+
+const formatoFecha = new Intl.DateTimeFormat('en-US', { day: '2-digit', month: 'long', year: 'numeric' });
+---
+
+<Principal
+  idioma={idioma}
+  seo={{
+    titulo: post.seo?.titulo ?? `${post.titulo} \u2014 AI Robotics Blog`,
+    descripcion: post.seo?.descripcion ?? post.resumen,
+    imagen: post.seo?.imagen ?? post.portada,
+    tipo: 'article',
+  }}
+>
+  <article class="bg-[var(--color-carbon)] pt-32 pb-[var(--spacing-seccion)]">
+    <div class="contenedor max-w-3xl">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--ai-teal)] mb-6">
+        [{post.categoria}]
+      </p>
+      <h1 class="titulo-hero mb-6">{post.titulo}</h1>
+      <div class="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-acero-claro)] mb-10">
+        <time datetime={post.fecha}>{formatoFecha.format(new Date(post.fecha))}</time>
+        <span>·</span>
+        <span>{post.lectura}</span>
+        {post.autor && (
+          <>
+            <span>·</span>
+            <span>{post.autor.nombre}</span>
+          </>
+        )}
+      </div>
+
+      {post.portada && (
+        <img src={post.portada} alt="" class="w-full aspect-[16/9] object-cover mb-10" loading="eager" />
+      )}
+
+      <div class="prose-airobotics" set:html={post.contenido}></div>
+
+      <div class="mt-16 pt-8 border-t border-white/10">
+        <a href="/en/blog" class="font-mono text-xs uppercase tracking-[0.18em] text-[var(--ai-teal)]">
+          ← Back to blog
+        </a>
+      </div>
+    </div>
+  </article>
+</Principal>

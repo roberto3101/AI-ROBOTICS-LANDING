@@ -11,6 +11,10 @@ Sitio web institucional de **AI Robotics S.A.C.**, la división de innovación t
 
 ---
 
+## Edición de contenido (no-técnica)
+
+Si solo necesitas cambiar textos o imágenes del sitio **sin tocar consola**, lee [GUIA-EDICION.md](GUIA-EDICION.md) — está pensada para que cualquier miembro del equipo pueda editar desde GitHub web.
+
 ## Requisitos
 
 - Node.js ≥ 20

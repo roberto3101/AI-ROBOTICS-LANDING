@@ -1,0 +1,19 @@
+---
+import Principal from '@layout/Principal.astro';
+
+const idioma = 'es';
+---
+
+<Principal idioma={idioma} seo={{ titulo: 'Página no encontrada', descripcion: 'La página que buscas no existe o fue movida.', noindex: true }}>
+  <section class="min-h-[60vh] grid place-items-center py-24">
+    <div class="contenedor text-center max-w-2xl">
+      <p class="font-mono text-[var(--color-primario)] tracking-widest mb-4">ERROR 404</p>
+      <h1 class="text-5xl md:text-6xl font-semibold leading-tight mb-6">Esta página no existe.</h1>
+      <p class="text-lg text-white/75 mb-10">Es posible que haya sido movida o que el enlace esté roto. Vuelve al inicio o explora nuestros productos.</p>
+      <div class="flex flex-wrap gap-3 justify-center">
+        <a href="/es/" class="boton boton-primario">Ir al inicio</a>
+        <a href="/es/productos" class="boton boton-secundario">Ver productos</a>
+      </div>
+    </div>
+  </section>
+</Principal>
