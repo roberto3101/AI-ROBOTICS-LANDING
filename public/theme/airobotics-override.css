@@ -5,6 +5,14 @@
    acento teal sólo en CTAs y estados activos.
    ========================================================= */
 
+/* Safety net: theme.css tiene `.js-scroll-activate { opacity: 0 }` y confía
+   en un JS externo para revelarlo. Si el JS no se ejecuta (navegación SPA,
+   red lenta, error del bundle) la página queda invisible.
+   Forzamos opacidad 1 para garantizar que el contenido siempre se vea. */
+.js-scroll-activate {
+  opacity: 1 !important;
+}
+
 /* --- Fuentes de marca --- */
 @font-face {
   font-family: "Marseilazi";
