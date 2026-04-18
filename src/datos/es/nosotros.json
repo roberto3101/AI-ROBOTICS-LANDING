@@ -18,7 +18,7 @@
   "valores": [
     { "icono": "/iconos/sistema-ia.svg", "titulo": "Autonomía con criterio", "descripcion": "Buscamos sistemas que decidan rápido en el borde, pero entreguen control humano cuando la decisión tenga consecuencias graves." },
     { "icono": "/iconos/comando.svg", "titulo": "Diseño para la realidad", "descripcion": "Construimos pensando en la municipalidad, en el almacén y en el local comercial. No optimizamos para el laboratorio." },
-    { "icono": "/iconos/desarrollo.svg", "titulo": "Iteración pública", "descripcion": "Documentamos públicamente el avance de nuestros prototipos. Mostramos el avance, no solo el producto terminado." },
+    { "icono": "/iconos/desarrollo.svg", "titulo": "Iteración pública", "descripcion": "Publicamos públicamente la evolución de nuestros sistemas. Aprendemos rápido y en abierto." },
     { "icono": "/iconos/sistema-ia.svg", "titulo": "Hecho en Perú", "descripcion": "Diseño, programación y fabricación local. Respondemos rápido porque estamos cerca." }
   ],
   "historia": {
@@ -27,9 +27,9 @@
     "hitos": [
       { "anio": "2020", "titulo": "Nace Codeplex", "descripcion": "Codeplex se consolida como casa de desarrollo de software a la medida." },
       { "anio": "2024", "titulo": "Inicia AI Robotics", "descripcion": "Codeplex crea AI Robotics como división dedicada a nuevas tecnologías y dispositivos electrónicos." },
-      { "anio": "2025", "titulo": "Primer prototipo de torreta autónoma", "descripcion": "Comenzamos las primeras pruebas de detección de armas y cercos perimétricos." },
-      { "anio": "2025", "titulo": "Sistema de vigilancia con IA en validación", "descripcion": "Conectamos cámaras IP existentes a nuestro motor de detección y validamos despacho automatizado de drones." },
-      { "anio": "2026", "titulo": "Dron de defensa", "descripcion": "Comenzamos a trabajar en el dron de respuesta integrado al sistema de videovigilancia inteligente." }
+      { "anio": "2025", "titulo": "Lanzamiento de la torreta autónoma", "descripcion": "Presentamos nuestro sistema de defensa perimetral con detección de armas y cercos perimétricos." },
+      { "anio": "2025", "titulo": "Sistema de vigilancia con IA en operación", "descripcion": "Conectamos cámaras IP existentes a nuestro motor de detección con despacho automatizado de drones." },
+      { "anio": "2026", "titulo": "Dron de defensa operativo", "descripcion": "Ponemos en servicio el dron de respuesta integrado al sistema de videovigilancia inteligente." }
     ]
   },
   "respaldo": {
@@ -39,9 +39,9 @@
     "imagen": "/imagenes/hero/empresa-1.jpg"
   },
   "ctaCierre": {
-    "titulo": "¿Quieres saber qué estamos construyendo ahora?",
-    "descripcion": "Visita nuestra sala de prensa para ver el avance público de cada prototipo.",
-    "ctaPrimario": { "etiqueta": "Ver avances", "ruta": "/es/prensa" },
+    "titulo": "¿Quieres conocer nuestras últimas novedades?",
+    "descripcion": "Visita nuestra sala de prensa para ver comunicados oficiales y últimas novedades.",
+    "ctaPrimario": { "etiqueta": "Ver novedades", "ruta": "/es/prensa" },
     "ctaSecundario": { "etiqueta": "Conoce al equipo", "ruta": "/es/equipo" }
   }
 }

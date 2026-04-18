@@ -21,8 +21,8 @@
     },
     {
       "nombre": "Hardware team",
-      "cargo": "Mechatronics, electronics and prototyping",
-      "bio": "Designs, assembles and tests the turret and drone. Iterates physical prototypes until operational behavior is validated.",
+      "cargo": "Mechatronics, electronics and hardware",
+      "bio": "Designs, assembles and maintains the turret and drone. Iterates on hardware continuously to improve operational behavior.",
       "foto": "/imagenes/equipo/equipo-3.jpg",
       "categoria": "hardware"
     }
@@ -32,7 +32,7 @@
     "etiqueta": "HOW WE WORK",
     "titulo": "Small teams. Fast iteration. Real-world testing.",
     "principios": [
-      { "titulo": "Build and test in a week", "descripcion": "Every prototype milestone is validated in the real world before moving on." },
+      { "titulo": "Build and test in a week", "descripcion": "Every new version is validated in the real world before we deploy it to clients." },
       { "titulo": "The human operator is part of the system", "descripcion": "We design with the operator's final decision in mind, not to replace them." },
       { "titulo": "Document in public", "descripcion": "We share project progress in our newsroom and on our channels." },
       { "titulo": "Software and hardware at the same table", "descripcion": "Electronics decisions affect the model, and vice versa. We work together." }

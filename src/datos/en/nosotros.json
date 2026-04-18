@@ -18,7 +18,7 @@
   "valores": [
     { "icono": "/iconos/sistema-ia.svg", "titulo": "Autonomy with judgment", "descripcion": "We seek systems that decide fast on the edge but hand control to humans when the decision carries serious consequences." },
     { "icono": "/iconos/comando.svg", "titulo": "Designed for reality", "descripcion": "We build for the municipality, the warehouse and the storefront. We don't optimize for the lab." },
-    { "icono": "/iconos/desarrollo.svg", "titulo": "Iterate in public", "descripcion": "We publicly document the progress of our prototypes. We show progress, not just the finished product." },
+    { "icono": "/iconos/desarrollo.svg", "titulo": "Iterate in public", "descripcion": "We publicly document the evolution of our systems. We learn fast and in the open." },
     { "icono": "/iconos/sistema-ia.svg", "titulo": "Made in Peru", "descripcion": "Local design, programming and manufacturing. We respond fast because we're close." }
   ],
   "historia": {
@@ -27,9 +27,9 @@
     "hitos": [
       { "anio": "2020", "titulo": "Codeplex is born", "descripcion": "Codeplex consolidates as a custom software development house." },
       { "anio": "2024", "titulo": "AI Robotics begins", "descripcion": "Codeplex launches AI Robotics as a division dedicated to new technologies and electronic devices." },
-      { "anio": "2025", "titulo": "First autonomous turret prototype", "descripcion": "We start the first weapon-detection and perimeter-fence tests." },
-      { "anio": "2025", "titulo": "AI surveillance system in validation", "descripcion": "We connect existing IP cameras to our detection engine and validate automated drone dispatch." },
-      { "anio": "2026", "titulo": "Defense drone", "descripcion": "We start work on the response drone integrated with the AI surveillance system." }
+      { "anio": "2025", "titulo": "Autonomous turret launch", "descripcion": "We release our perimeter defense system with weapon detection and virtual fencing." },
+      { "anio": "2025", "titulo": "AI surveillance system in operation", "descripcion": "We connect existing IP cameras to our detection engine with automated drone dispatch." },
+      { "anio": "2026", "titulo": "Defense drone operational", "descripcion": "We bring the response drone online, integrated with the AI surveillance system." }
     ]
   },
   "respaldo": {
@@ -39,9 +39,9 @@
     "imagen": "/imagenes/hero/empresa-1.jpg"
   },
   "ctaCierre": {
-    "titulo": "Want to see what we're building right now?",
-    "descripcion": "Visit our newsroom for a public look at every prototype's progress.",
-    "ctaPrimario": { "etiqueta": "See progress", "ruta": "/en/press" },
+    "titulo": "Want to see our latest news?",
+    "descripcion": "Visit our newsroom for official releases and latest updates.",
+    "ctaPrimario": { "etiqueta": "See news", "ruta": "/en/press" },
     "ctaSecundario": { "etiqueta": "Meet the team", "ruta": "/en/team" }
   }
 }

@@ -10,7 +10,7 @@
       "slugEs": "sistema-vigilancia-ia",
       "slugEn": "ai-surveillance-system",
       "categoria": "Vigilancia",
-      "estado": "En desarrollo",
+      "estado": "Disponible",
       "etiquetaCorta": "DETECCIÓN + RESPUESTA AÉREA",
       "titulo": "Sistema de Vigilancia con IA",
       "tagline": "Convierte cualquier cámara IP en un sensor inteligente conectado a un dron de respuesta.",
@@ -62,7 +62,7 @@
       "slugEs": "dron-defensa",
       "slugEn": "defense-drone",
       "categoria": "Aeronaves autónomas",
-      "estado": "Prototipo",
+      "estado": "Disponible",
       "etiquetaCorta": "RESPUESTA AÉREA AUTÓNOMA",
       "titulo": "Dron de Defensa",
       "tagline": "Sale del hangar sin intervención manual y entrega control en vivo al operador.",
@@ -102,7 +102,7 @@
         }
       ],
       "especificaciones": [
-        { "etiqueta": "Estado", "valor": "Prototipo en pruebas" },
+        { "etiqueta": "Estado", "valor": "Disponible para despliegue" },
         { "etiqueta": "Diseño y fabricación", "valor": "AI Robotics — Lima, Perú" },
         { "etiqueta": "Carga útil", "valor": "Parlante + módulo de neutralización autorizado" },
         { "etiqueta": "Decisión de disparo", "valor": "Requiere confirmación humana" }
@@ -113,7 +113,7 @@
       "slugEs": "torreta-defensa",
       "slugEn": "defense-turret",
       "categoria": "Defensa perimetral",
-      "estado": "En desarrollo",
+      "estado": "Disponible",
       "etiquetaCorta": "DEFENSA AUTÓNOMA",
       "titulo": "Torreta Autónoma",
       "tagline": "30 cm de altura. Procesamiento local. Defiende sin esperar confirmación.",

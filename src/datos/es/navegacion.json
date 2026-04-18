@@ -28,9 +28,8 @@
       "etiqueta": "Novedades",
       "ruta": "/es/prensa",
       "submenu": [
-        { "etiqueta": "Proyectos en curso", "ruta": "/es/prensa", "descripcion": "En qué estamos trabajando ahora mismo: prototipos, hitos y avances técnicos." },
-        { "etiqueta": "Blog", "ruta": "/es/blog", "descripcion": "Artículos técnicos, casos de uso y aprendizajes del equipo." },
-        { "etiqueta": "Notas y comunicados", "ruta": "/es/prensa#comunicados", "descripcion": "Comunicados oficiales y apariciones en medios." }
+        { "etiqueta": "Notas y comunicados", "ruta": "/es/prensa", "descripcion": "Comunicados oficiales y apariciones en medios." },
+        { "etiqueta": "Blog", "ruta": "/es/blog", "descripcion": "Artículos técnicos, casos de uso y aprendizajes del equipo." }
       ]
     },
     {

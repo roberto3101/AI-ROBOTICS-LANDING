@@ -59,7 +59,7 @@
     },
     "prensa": {
       "titulo": "Sala de prensa",
-      "descripcion": "Avances públicos de los prototipos de AI Robotics: torreta autónoma y dron de defensa.",
+      "descripcion": "Comunicados oficiales y últimas novedades de AI Robotics: torreta autónoma, dron de defensa y sistema de vigilancia con IA.",
       "ruta": "/es/prensa"
     },
     "contacto": {

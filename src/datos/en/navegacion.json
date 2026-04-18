@@ -28,9 +28,8 @@
       "etiqueta": "News",
       "ruta": "/en/press",
       "submenu": [
-        { "etiqueta": "Project progress", "ruta": "/en/press", "descripcion": "What we're building right now: prototypes, milestones and technical progress." },
-        { "etiqueta": "Blog", "ruta": "/en/blog", "descripcion": "Technical articles, case studies and team learnings." },
-        { "etiqueta": "Releases", "ruta": "/en/press#releases", "descripcion": "Official releases and media appearances." }
+        { "etiqueta": "Releases", "ruta": "/en/press", "descripcion": "Official releases and media appearances." },
+        { "etiqueta": "Blog", "ruta": "/en/blog", "descripcion": "Technical articles, case studies and team learnings." }
       ]
     },
     {

@@ -1,42 +1,8 @@
 {
   "hero": {
     "etiqueta": "SALA DE PRENSA",
-    "titulo": "Documentamos en público el avance de cada prototipo.",
-    "subtitulo": "Aquí publicamos los avances reales de nuestros proyectos de hardware y software, en lugar de esperar al lanzamiento final."
-  },
-  "proyectosEnCurso": {
-    "etiqueta": "PROYECTOS EN CURSO",
-    "titulo": "Dos prototipos activos. Una hoja de ruta abierta.",
-    "items": [
-      {
-        "id": "torreta",
-        "titulo": "Torreta autónoma de defensa perimetral",
-        "estadoActual": "Validación de detección + cercos perimétricos",
-        "etapa": "Prototipo en pruebas controladas",
-        "descripcion": "Hemos completado el ensamble físico y estamos validando el modelo de detección de armas y la lógica de cercos perimétricos virtuales. Próxima etapa: pruebas en local comercial controlado.",
-        "imagen": "/imagenes/productos/torreta-detalle.png",
-        "video": "/theme/uploads/ai-robotics/cyber-tech.mp4",
-        "siguientesPasos": [
-          "Pruebas en condiciones de baja luz",
-          "Calibración de cercos por software",
-          "Integración con horarios admitidos / restringidos"
-        ]
-      },
-      {
-        "id": "dron",
-        "titulo": "Dron de defensa con respuesta automatizada",
-        "estadoActual": "Diseño electromecánico + integración con sistema de vigilancia",
-        "etapa": "Prototipo en construcción",
-        "descripcion": "Estamos construyendo el primer dron capaz de salir del hangar de forma autónoma cuando la central de videovigilancia detecta una amenaza. Trabajando en el módulo de transmisión y la interfaz para el operador.",
-        "imagen": "/imagenes/productos/dron-defensa-detalle.png",
-        "video": "/theme/uploads/ai-robotics/dron-closeup.mp4",
-        "siguientesPasos": [
-          "Vuelo automatizado a coordenadas GPS",
-          "Transmisión de video al puesto de control",
-          "Interfaz de toma de control por operador"
-        ]
-      }
-    ]
+    "titulo": "Comunicados oficiales y últimas novedades.",
+    "subtitulo": "Notas de prensa, lanzamientos y apariciones en medios de AI Robotics."
   },
   "comunicados": {
     "etiqueta": "COMUNICADOS",

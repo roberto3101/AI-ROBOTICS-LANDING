@@ -29,7 +29,7 @@
     { "nombre": "X / Twitter", "url": "https://x.com/airobotics", "icono": "x" }
   ],
   "estadisticas": [
-    { "valor": "2", "etiqueta": "Productos en desarrollo" },
+    { "valor": "3", "etiqueta": "Sistemas autónomos activos" },
     { "valor": "100%", "etiqueta": "Procesamiento en el borde" },
     { "valor": "24/7", "etiqueta": "Vigilancia autónoma" },
     { "valor": "+15", "etiqueta": "Ingenieros e investigadores" }

@@ -21,8 +21,8 @@
     },
     {
       "nombre": "Equipo de Hardware",
-      "cargo": "Mecatrónica, electrónica y prototipado",
-      "bio": "Diseñan, ensamblan y prueban la torreta y el dron. Iteran prototipos físicos hasta validar comportamiento operativo.",
+      "cargo": "Mecatrónica, electrónica y hardware",
+      "bio": "Diseñan, ensamblan y mantienen la torreta y el dron. Iteran el hardware continuamente para mejorar su comportamiento operativo.",
       "foto": "/imagenes/equipo/equipo-3.jpg",
       "categoria": "hardware"
     }
@@ -32,7 +32,7 @@
     "etiqueta": "CÓMO TRABAJAMOS",
     "titulo": "Pequeños equipos. Iteración rápida. Pruebas reales.",
     "principios": [
-      { "titulo": "Construye y prueba en una semana", "descripcion": "Cada hito de prototipo se valida en la realidad antes de pasar a la siguiente etapa." },
+      { "titulo": "Construye y prueba en una semana", "descripcion": "Cada nueva versión se valida en la realidad antes de desplegarse a clientes." },
       { "titulo": "El operador humano es parte del sistema", "descripcion": "Diseñamos pensando en cómo el operador toma la decisión final, no en reemplazarlo." },
       { "titulo": "Documentamos en público", "descripcion": "Compartimos el avance del proyecto en nuestra sala de prensa y redes." },
       { "titulo": "Software y hardware en la misma mesa", "descripcion": "Las decisiones de electrónica afectan al modelo, y viceversa. Trabajamos juntos." }

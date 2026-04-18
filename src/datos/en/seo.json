@@ -59,7 +59,7 @@
     },
     "prensa": {
       "titulo": "Newsroom",
-      "descripcion": "Public progress updates on AI Robotics' prototypes: autonomous turret and defense drone.",
+      "descripcion": "Official releases and latest news from AI Robotics: autonomous turret, defense drone and AI surveillance system.",
       "ruta": "/en/press"
     },
     "contacto": {

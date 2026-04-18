@@ -20,7 +20,7 @@
     "secciones": [
       { "titulo": "Intellectual property", "contenido": "All content on this site (texts, images, video, design and code) is the property of AI Robotics S.A.C. and is protected by Peruvian and international copyright law." },
       { "titulo": "Permitted use", "contenido": "You may browse and consume the site's content for personal use and commercial evaluation. Total or partial reproduction without our express authorization is prohibited." },
-      { "titulo": "Products in development", "contenido": "The products described on this site are at different stages of development. Images and specifications may correspond to prototypes and are subject to change. Any commercial commitment requires a specific written agreement." },
+      { "titulo": "Product updates", "contenido": "The products described on this site evolve continuously. Images and specifications may be updated. Any commercial commitment requires a specific written agreement." },
       { "titulo": "Limitation of liability", "contenido": "AI Robotics S.A.C. is not responsible for damages derived from the use of the information published on this site. Information is provided for general informational and commercial purposes." },
       { "titulo": "Jurisdiction", "contenido": "These terms are governed by the laws of the Republic of Peru. Any controversy will be resolved before the courts of the Lima judicial district." }
     ]

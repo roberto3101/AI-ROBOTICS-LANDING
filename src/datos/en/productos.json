@@ -10,7 +10,7 @@
       "slugEs": "sistema-vigilancia-ia",
       "slugEn": "ai-surveillance-system",
       "categoria": "Surveillance",
-      "estado": "In development",
+      "estado": "Available",
       "etiquetaCorta": "DETECTION + AERIAL RESPONSE",
       "titulo": "AI Surveillance System",
       "tagline": "Turns any IP camera into an intelligent sensor connected to a response drone.",
@@ -62,7 +62,7 @@
       "slugEs": "dron-defensa",
       "slugEn": "defense-drone",
       "categoria": "Autonomous aircraft",
-      "estado": "Prototype",
+      "estado": "Available",
       "etiquetaCorta": "AUTONOMOUS AERIAL RESPONSE",
       "titulo": "Defense Drone",
       "tagline": "Leaves the hangar without manual input and hands live control to the operator.",
@@ -102,7 +102,7 @@
         }
       ],
       "especificaciones": [
-        { "etiqueta": "Status", "valor": "Prototype in testing" },
+        { "etiqueta": "Status", "valor": "Ready for deployment" },
         { "etiqueta": "Design and manufacturing", "valor": "AI Robotics — Lima, Peru" },
         { "etiqueta": "Payload", "valor": "Speaker + authorized neutralization module" },
         { "etiqueta": "Fire decision", "valor": "Requires human confirmation" }
@@ -113,7 +113,7 @@
       "slugEs": "torreta-defensa",
       "slugEn": "defense-turret",
       "categoria": "Perimeter defense",
-      "estado": "In development",
+      "estado": "Available",
       "etiquetaCorta": "AUTONOMOUS DEFENSE",
       "titulo": "Autonomous Turret",
       "tagline": "30 cm tall. Edge processing. Defends without waiting for confirmation.",
