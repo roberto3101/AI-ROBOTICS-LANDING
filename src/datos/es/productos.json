@@ -52,7 +52,7 @@
       ],
       "especificaciones": [
         { "etiqueta": "Procesamiento", "valor": "En servidor central; conecta vía IP a cámaras existentes" },
-        { "etiqueta": "Cámaras compatibles", "valor": "Cualquier cámara IP RTSP/ONVIF" },
+        { "etiqueta": "Cámaras compatibles", "valor": "Cualquier cámara IP del mercado" },
         { "etiqueta": "Latencia detección", "valor": "< 1 segundo" },
         { "etiqueta": "Dron despachado", "valor": "AI Robotics — Dron de Defensa" }
       ]

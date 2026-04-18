@@ -52,7 +52,7 @@
       ],
       "especificaciones": [
         { "etiqueta": "Processing", "valor": "Central server; connects via IP to existing cameras" },
-        { "etiqueta": "Compatible cameras", "valor": "Any RTSP/ONVIF IP camera" },
+        { "etiqueta": "Compatible cameras", "valor": "Any standard IP camera" },
         { "etiqueta": "Detection latency", "valor": "< 1 second" },
         { "etiqueta": "Dispatched drone", "valor": "AI Robotics — Defense Drone" }
       ]

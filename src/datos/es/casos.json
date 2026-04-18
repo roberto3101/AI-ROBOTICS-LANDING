@@ -20,7 +20,7 @@
     "solucion": {
       "etiqueta": "CÓMO AYUDAMOS",
       "titulo": "IA sobre la red actual + respuesta aérea automática.",
-      "descripcion": "Conectamos nuestro motor de detección a las cámaras IP existentes (RTSP/ONVIF) y activamos un dron de respuesta cuando se detecta una amenaza en curso.",
+      "descripcion": "Conectamos nuestro motor de detección a las cámaras IP existentes y activamos un dron de respuesta cuando se detecta una amenaza en curso.",
       "pasos": [
         { "titulo": "Detección continua", "descripcion": "IA analiza todas las cámaras simultáneamente. Sin turnos, sin pausas." },
         { "titulo": "Alerta inmediata", "descripcion": "Clasifica el evento (arma, tumulto, intrusión) y notifica al puesto de control en segundos." },

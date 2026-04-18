@@ -20,7 +20,7 @@
     "solucion": {
       "etiqueta": "HOW WE HELP",
       "titulo": "AI over the existing network + automated aerial response.",
-      "descripcion": "We connect our detection engine to existing IP cameras (RTSP/ONVIF) and activate a response drone when an active threat is detected.",
+      "descripcion": "We connect our detection engine to existing IP cameras and activate a response drone when an active threat is detected.",
       "pasos": [
         { "titulo": "Continuous detection", "descripcion": "AI analyzes every camera simultaneously. No shifts, no breaks." },
         { "titulo": "Immediate alert", "descripcion": "Classifies the event (weapon, crowd, intrusion) and notifies control within seconds." },
