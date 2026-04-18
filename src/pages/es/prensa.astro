@@ -2,7 +2,6 @@
 import Principal from '@layout/Principal.astro';
 import HeroNosotros from '@componentes/nosotros/HeroNosotros.astro';
 import EncabezadoSeccion from '@componentes/ui/EncabezadoSeccion.astro';
-import ProyectoEnCurso from '@componentes/prensa/ProyectoEnCurso.astro';
 import { cargarDatos } from '@helpers/idiomas';
 
 const idioma = 'es';
@@ -23,17 +22,6 @@ const seo = await cargarDatos<any>(idioma, 'seo');
     subtitulo={datos.hero.subtitulo}
     imagen="/imagenes/hero/empresa-2.jpg"
   />
-
-  <section class="bg-[var(--color-carbon-claro)] py-[var(--spacing-seccion)] border-y border-white/5">
-    <div class="contenedor">
-      <EncabezadoSeccion etiqueta={datos.proyectosEnCurso.etiqueta} titulo={datos.proyectosEnCurso.titulo} />
-      <div class="mt-14 flex flex-col gap-8">
-        {datos.proyectosEnCurso.items.map((p: any, idx: number) => (
-          <ProyectoEnCurso proyecto={p} invertir={idx % 2 === 1} textoSiguientes="Siguientes pasos" />
-        ))}
-      </div>
-    </div>
-  </section>
 
   <section id="comunicados" class="bg-[var(--color-carbon)] py-[var(--spacing-seccion)]">
     <div class="contenedor">
