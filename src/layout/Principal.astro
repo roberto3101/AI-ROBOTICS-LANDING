@@ -58,10 +58,14 @@ const rutaInicio = `/${idioma}/`;
     <link rel="stylesheet" href="/theme/airobotics-override.css?v=3" />
 
     <!-- Inline safety net: evita que el contenido quede invisible si el JS
-         del tema externo falla al revelar .js-scroll-activate y .aparecer. -->
+         del tema externo falla al revelar .js-scroll-activate, .aparecer o
+         inicializar el slider Slick del hero (lo que dejaba la home en negro). -->
     <style is:inline>
       .js-scroll-activate { opacity: 1 !important; }
       .aparecer { opacity: 1 !important; transform: none !important; }
+      /* Slick slides sin inicializar: mostrar siempre el primero (resto lo esconde Slick tras init) */
+      .slick-slide { display: block !important; }
+      .js-rotate-arrow-slider:not(.slick-initialized) > li:not(:first-child) { display: none !important; }
     </style>
 
     <EtiquetasPagina seo={seoComputado} siteName={seoData.global.siteName} twitter={seoData.global.twitter} />
