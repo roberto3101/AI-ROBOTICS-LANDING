@@ -229,12 +229,14 @@ const rutaInicio = `/${idioma}/`;
         paint();
 
         /* Lógica del retículo custom:
-           - VISIBLE (clase .learn) por default en toda la página (texto,
-             fondo, imágenes, video, hero).
-           - OCULTO sobre elementos interactivos (links, botones, inputs)
-             → ahí manda el cursor nativo (pointer del OS).
+           - VISIBLE (clase .learn) SOLO cuando el puntero está dentro
+             de una zona marcada con [data-cursor-zone] (el video de
+             presentación del hero).
+           - OCULTO en el resto de la página y sobre elementos
+             interactivos dentro de la zona (links, botones) → ahí
+             manda el cursor nativo del OS.
            Delegación document-level para sobrevivir a toda navegación. */
-        var INTERACTIVE_SELECTOR = '#js-header, header.header, a, button, [role="button"], input, textarea, select, label, summary, [data-theme-toggle], .theme-toggle, .selector-idioma, .header__cta, .js-toggle-nav, .js-toggle-sub';
+        var INTERACTIVE_SELECTOR = 'a, button, [role="button"], input, textarea, select, label, summary';
         function setLearn(on) {
           var el = cursor || document.getElementById('js-cursor');
           if (!el) return;
@@ -243,14 +245,14 @@ const rutaInicio = `/${idioma}/`;
         function onOver(e) {
           var t = e.target;
           if (!t || !t.closest) return;
-          setLearn(!t.closest(INTERACTIVE_SELECTOR));
+          var inZone = !!t.closest('[data-cursor-zone]');
+          var onInteractive = !!t.closest(INTERACTIVE_SELECTOR);
+          setLearn(inZone && !onInteractive);
         }
-        // Estado inicial: learn on (cursor visible en todo el body).
-        setLearn(true);
+        // Estado inicial: oculto hasta que entre a una zona marcada.
+        setLearn(false);
         document.addEventListener('pointerover', onOver, { passive: true });
-        // Al entrar/salir de la ventana: al entrar, asumir default (learn on);
-        // al salir, limpiar para que no quede la clase colgada.
-        document.addEventListener('pointerenter', function () { setLearn(true); }, { passive: true });
+        // Al salir de la ventana, limpiar el estado.
         document.addEventListener('pointerleave', function () { setLearn(false); }, { passive: true });
       })();
     </script>

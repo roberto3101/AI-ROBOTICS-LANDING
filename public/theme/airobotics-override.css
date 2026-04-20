@@ -232,28 +232,17 @@ select.campo-input option:focus {
    Z-index altísimo para que nunca quede detrás de overlays/hero/modales.
    ================================================================ */
 @media (hover: hover) and (pointer: fine) {
-  html, body, main, section, article, header, footer, nav, aside, div,
-  p, h1, h2, h3, h4, h5, h6, span, img, video, picture, svg, figure {
+  /* Solo dentro de la zona marcada (video hero de presentación) se
+     oculta el cursor nativo y aparece el retículo custom. En el resto
+     de la página manda el cursor nativo del OS. */
+  [data-cursor-zone], [data-cursor-zone] * {
     cursor: none !important;
   }
-  /* Toda la zona del header usa cursor nativo (auto = el que el
-     navegador elegiría: pointer sobre links, arrow sobre el resto).
-     El retículo custom se esconde por JS al entrar aquí. */
-  #js-header, #js-header *,
-  header.header, header.header * {
-    cursor: auto !important;
-  }
-  a, button, [role="button"], input, select, label, summary,
-  [data-theme-toggle], .theme-toggle, .selector-idioma, .header__cta,
-  .js-toggle-nav, .js-toggle-sub,
-  #js-header a, #js-header button,
-  header.header a, header.header button {
+  /* Dentro de la zona, si hay elementos interactivos (CTA del hero,
+     scroll down, etc.), devolvemos cursor nativo pointer. */
+  [data-cursor-zone] a, [data-cursor-zone] button,
+  [data-cursor-zone] [role="button"] {
     cursor: pointer !important;
-  }
-  input[type="text"], input[type="email"], input[type="search"],
-  input[type="tel"], input[type="url"], input[type="password"],
-  input[type="number"], textarea {
-    cursor: text !important;
   }
   #js-cursor.cursor { z-index: 2147483646 !important; }
   .arrow-cursor       { z-index: 2147483647 !important; }

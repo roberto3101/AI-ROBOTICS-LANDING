@@ -13,7 +13,7 @@ interface Props {
 const { etiqueta, titulo, subtitulo, ctas, video, imagenFallback, altVideo = 'Video de fondo' } = Astro.props;
 ---
 
-<section class="relative min-h-[88vh] lg:min-h-[100vh] flex items-end overflow-hidden">
+<section class="relative min-h-[88vh] lg:min-h-[100vh] flex items-end overflow-hidden" data-cursor-zone>
   {video ? (
     <video
       class="absolute inset-0 w-full h-full object-cover"
