@@ -300,15 +300,62 @@ const rutaInicio = `/${idioma}/`;
             el.classList.add('hidden');
           });
           // Disparador con estado "activo" (si el theme lo marca)
-          document.querySelectorAll('.js-toggle-nav.is-active, .js-toggle-nav.active').forEach(function (el) {
-            el.classList.remove('is-active');
-            el.classList.remove('active');
+          document.querySelectorAll('.js-toggle-nav.is-active, .js-toggle-nav.active, .js-toggle-nav.is-opened').forEach(function (el) {
+            el.classList.remove('is-active', 'active', 'is-opened');
           });
-          // Menú hamburguesa mobile por si estaba abierto
-          document.body.classList.remove('nav-open', 'menu-open');
-          document.documentElement.classList.remove('nav-open', 'menu-open');
+          // Menú hamburguesa mobile: clases del theme shield.ai
+          var menu = document.getElementById('js-menu');
+          if (menu) menu.classList.remove('is-shown');
+          var header = document.getElementById('js-header');
+          if (header) header.classList.remove('is-opened');
+          document.documentElement.classList.remove('is-locked', 'nav-open', 'menu-open');
+          document.body.classList.remove('is-locked', 'nav-open', 'menu-open');
         }
         document.addEventListener('astro:before-preparation', closeAll);
+        document.addEventListener('astro:after-swap', closeAll);
+      })();
+
+      // Handler propio del hamburguesa mobile: el jQuery del theme solo
+      // se bindea una vez en la carga inicial; tras una navegación del
+      // ClientRouter los elementos nuevos no tienen listener y el menú
+      // queda inutilizable. Usamos delegación en document para sobrevivir
+      // a todos los swaps.
+      (function bindMobileMenu() {
+        // En la carga inicial, el jQuery del theme ya maneja el hamburguesa.
+        // Solo activamos nuestra delegación tras la primera navegación del
+        // ClientRouter (cuando el binding del theme se perdió con el swap).
+        var activo = false;
+        document.addEventListener('astro:after-swap', function () { activo = true; });
+        function onClick(e) {
+          if (!activo) return;
+          var toggle = e.target && e.target.closest && e.target.closest('.js-toggle-nav');
+          if (!toggle) {
+            // Cerrar el menú al tocar un link dentro de #js-menu
+            var link = e.target && e.target.closest && e.target.closest('#js-menu a[href]');
+            if (link && !link.classList.contains('js-toggle-sub') && link.getAttribute('href') !== '#') {
+              var m0 = document.getElementById('js-menu');
+              var h0 = document.getElementById('js-header');
+              if (m0) m0.classList.remove('is-shown');
+              if (h0) h0.classList.remove('is-opened');
+              document.documentElement.classList.remove('is-locked');
+              document.body.classList.remove('is-locked');
+            }
+            return;
+          }
+          // Solo tratamos como hamburguesa cuando NO es un item del nav
+          // desktop (que usa la misma clase para sus mega-menús).
+          if (!toggle.classList.contains('header__hamburger')) return;
+          e.preventDefault();
+          var menu = document.getElementById('js-menu');
+          var header = document.getElementById('js-header');
+          if (!menu || !header) return;
+          var abierto = menu.classList.toggle('is-shown');
+          header.classList.toggle('is-opened', abierto);
+          toggle.classList.toggle('is-opened', abierto);
+          document.documentElement.classList.toggle('is-locked', abierto);
+          document.body.classList.toggle('is-locked', abierto);
+        }
+        document.addEventListener('click', onClick);
       })();
     </script>
 
