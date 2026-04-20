@@ -239,6 +239,30 @@ const rutaInicio = `/${idioma}/`;
     </script>
 
     <script is:inline>
+      // Cierra submenús del header ANTES de que Astro tome el snapshot
+      // "old" para la view-transition. Si no, el dropdown abierto queda
+      // congelado en el snapshot y se ve como "render stale" bajo la
+      // máscara del polygon-gradient.
+      (function closeHeaderDropdownsBeforeNav() {
+        function closeAll() {
+          // Submenús del theme: visibles cuando NO tienen .hidden
+          document.querySelectorAll('.header__nav--alt').forEach(function (el) {
+            el.classList.add('hidden');
+          });
+          // Disparador con estado "activo" (si el theme lo marca)
+          document.querySelectorAll('.js-toggle-nav.is-active, .js-toggle-nav.active').forEach(function (el) {
+            el.classList.remove('is-active');
+            el.classList.remove('active');
+          });
+          // Menú hamburguesa mobile por si estaba abierto
+          document.body.classList.remove('nav-open', 'menu-open');
+          document.documentElement.classList.remove('nav-open', 'menu-open');
+        }
+        document.addEventListener('astro:before-preparation', closeAll);
+      })();
+    </script>
+
+    <script is:inline>
       (function initThemeToggle() {
         function bind() {
           document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
