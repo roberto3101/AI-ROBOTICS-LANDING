@@ -527,22 +527,33 @@ html.light .eyecatch--dark .text-white {
   color: #0c1220 !important;
 }
 
-/* Hero sections: mantener fondo oscuro para que las imágenes con opacity
-   se vean igual en dark y light mode (la opacity mezcla con el bg). */
+/* Hero sections: mantener fondo oscuro para que las imágenes/videos con
+   opacity se vean igual en dark y light mode (la opacity mezcla con el bg).
+   Cubre <img> y <video> de hero, y cualquier media absoluta con opacity. */
 html.light section.hero-dark-bg,
 html.light section.hero-dark-bg.bg-carbon,
 html.light section:has(> img.w-full.h-screen.object-cover.absolute),
-html.light section:has(> img[class*="opacity-60"].absolute) {
+html.light section:has(> video.w-full.h-screen.object-cover.absolute),
+html.light section:has(> img[class*="opacity-"].absolute),
+html.light section:has(> video[class*="opacity-"].absolute) {
   background-color: #0c0c10 !important;
 }
 html.light section:has(> img.w-full.h-screen.object-cover.absolute) h1,
 html.light section:has(> img.w-full.h-screen.object-cover.absolute) h2,
 html.light section:has(> img.w-full.h-screen.object-cover.absolute) p,
 html.light section:has(> img.w-full.h-screen.object-cover.absolute) .sub-title,
-html.light section:has(> img[class*="opacity-60"].absolute) h1,
-html.light section:has(> img[class*="opacity-60"].absolute) h2,
-html.light section:has(> img[class*="opacity-60"].absolute) p,
-html.light section:has(> img[class*="opacity-60"].absolute) .sub-title {
+html.light section:has(> video.w-full.h-screen.object-cover.absolute) h1,
+html.light section:has(> video.w-full.h-screen.object-cover.absolute) h2,
+html.light section:has(> video.w-full.h-screen.object-cover.absolute) p,
+html.light section:has(> video.w-full.h-screen.object-cover.absolute) .sub-title,
+html.light section:has(> img[class*="opacity-"].absolute) h1,
+html.light section:has(> img[class*="opacity-"].absolute) h2,
+html.light section:has(> img[class*="opacity-"].absolute) p,
+html.light section:has(> img[class*="opacity-"].absolute) .sub-title,
+html.light section:has(> video[class*="opacity-"].absolute) h1,
+html.light section:has(> video[class*="opacity-"].absolute) h2,
+html.light section:has(> video[class*="opacity-"].absolute) p,
+html.light section:has(> video[class*="opacity-"].absolute) .sub-title {
   color: #ffffff !important;
 }
 
