@@ -245,7 +245,9 @@ select.campo-input option:focus {
     cursor: pointer !important;
   }
   #js-cursor.cursor { z-index: 2147483646 !important; }
-  .arrow-cursor       { z-index: 2147483647 !important; }
+  /* El tema activa un segundo cursor (.arrow-cursor) al entrar en el
+     slider del hero — nos quedamos solo con el retículo principal. */
+  .arrow-cursor { display: none !important; }
 }
 
 /* ================================================================
