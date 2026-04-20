@@ -39,7 +39,7 @@ const anuncioTexto = navegacion.anuncio?.texto ?? (idioma === 'es'
 const anuncioRuta = navegacion.anuncio?.ruta ?? `/${idioma}/prensa`;
 ---
 
-<header class="header fixed w-full z-20" id="js-header">
+<header class="header fixed w-full z-20" id="js-header" transition:persist>
   <div class="container flex items-center justify-between pt-6 lg:pt-10 pb-6 lg:pb-6">
     <a href={`/${idioma}/`} class="logo-airobotics w-[180px] lg:w-[240px] block">
       <img src={navegacion.logo.src} alt={navegacion.logo.alt} class="logo-airobotics__img logo-airobotics__img--dark w-full h-auto" />

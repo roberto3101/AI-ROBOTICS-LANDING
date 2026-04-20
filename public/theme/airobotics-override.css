@@ -223,6 +223,43 @@ select.campo-input option:focus {
 .header__banner-text { color: #ffffff; }
 
 /* ================================================================
+   Custom cursor — comportamiento final.
+   - Zonas NO interactivas (texto, hero, fondo, imágenes): se oculta
+     el cursor nativo y se muestra el retículo custom (el JS aplica
+     la clase .learn a #js-cursor por delegación document-level).
+   - Zonas interactivas (a, button, input, toggle tema, selector de
+     idioma, etc.): cursor nativo (pointer/text), el JS quita .learn.
+   Z-index altísimo para que nunca quede detrás de overlays/hero/modales.
+   ================================================================ */
+@media (hover: hover) and (pointer: fine) {
+  html, body, main, section, article, header, footer, nav, aside, div,
+  p, h1, h2, h3, h4, h5, h6, span, img, video, picture, svg, figure {
+    cursor: none !important;
+  }
+  /* Toda la zona del header usa cursor nativo (auto = el que el
+     navegador elegiría: pointer sobre links, arrow sobre el resto).
+     El retículo custom se esconde por JS al entrar aquí. */
+  #js-header, #js-header *,
+  header.header, header.header * {
+    cursor: auto !important;
+  }
+  a, button, [role="button"], input, select, label, summary,
+  [data-theme-toggle], .theme-toggle, .selector-idioma, .header__cta,
+  .js-toggle-nav, .js-toggle-sub,
+  #js-header a, #js-header button,
+  header.header a, header.header button {
+    cursor: pointer !important;
+  }
+  input[type="text"], input[type="email"], input[type="search"],
+  input[type="tel"], input[type="url"], input[type="password"],
+  input[type="number"], textarea {
+    cursor: text !important;
+  }
+  #js-cursor.cursor { z-index: 2147483646 !important; }
+  .arrow-cursor       { z-index: 2147483647 !important; }
+}
+
+/* ================================================================
    Navegación: indicador propio (subrayado animado gradient teal)
    Neutraliza el "rectángulo raro" que dibuja el tema shield.ai
    con .button__top / .button__bottom en los enlaces del header.
@@ -245,9 +282,17 @@ select.campo-input option:focus {
 
 /* El <a> es inline por default → el ::after con width:100% no cubre el
    texto completo (en inline, el containing block de un abs-positioned
-   child no cubre bien el ancho del texto). Forzamos inline-block. */
+   child no cubre bien el ancho del texto). Forzamos inline-block y
+   ampliamos el área clickable (padding vertical) para que pulsar el
+   item del navbar no sea una diana de 1px. Compensamos con margen
+   negativo para no mover la altura del header. */
 .header__main > ul > li > a {
   display: inline-block;
+  padding: 10px 6px;
+  margin: -10px -6px;
+}
+.header__main > ul > li {
+  line-height: 1;
 }
 
 /* Nuevo indicador: línea teal que crece desde el centro en hover */

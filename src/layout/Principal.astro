@@ -1,5 +1,6 @@
 ---
 import '@estilos/global.css';
+import '@estilos/transiciones-pagina.css';
 
 import BarraNavegacion from '@componentes/navegacion/BarraNavegacion.astro';
 import PieDePagina from '@componentes/navegacion/PieDePagina.astro';
@@ -226,6 +227,31 @@ const rutaInicio = `/${idioma}/`;
         window.addEventListener('pageshow', rebindCursor);
 
         paint();
+
+        /* Lógica del retículo custom:
+           - VISIBLE (clase .learn) por default en toda la página (texto,
+             fondo, imágenes, video, hero).
+           - OCULTO sobre elementos interactivos (links, botones, inputs)
+             → ahí manda el cursor nativo (pointer del OS).
+           Delegación document-level para sobrevivir a toda navegación. */
+        var INTERACTIVE_SELECTOR = '#js-header, header.header, a, button, [role="button"], input, textarea, select, label, summary, [data-theme-toggle], .theme-toggle, .selector-idioma, .header__cta, .js-toggle-nav, .js-toggle-sub';
+        function setLearn(on) {
+          var el = cursor || document.getElementById('js-cursor');
+          if (!el) return;
+          el.classList.toggle('learn', !!on);
+        }
+        function onOver(e) {
+          var t = e.target;
+          if (!t || !t.closest) return;
+          setLearn(!t.closest(INTERACTIVE_SELECTOR));
+        }
+        // Estado inicial: learn on (cursor visible en todo el body).
+        setLearn(true);
+        document.addEventListener('pointerover', onOver, { passive: true });
+        // Al entrar/salir de la ventana: al entrar, asumir default (learn on);
+        // al salir, limpiar para que no quede la clase colgada.
+        document.addEventListener('pointerenter', function () { setLearn(true); }, { passive: true });
+        document.addEventListener('pointerleave', function () { setLearn(false); }, { passive: true });
       })();
     </script>
 
