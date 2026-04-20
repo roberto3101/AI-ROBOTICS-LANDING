@@ -4,6 +4,7 @@ import '@estilos/global.css';
 import BarraNavegacion from '@componentes/navegacion/BarraNavegacion.astro';
 import PieDePagina from '@componentes/navegacion/PieDePagina.astro';
 import EtiquetasPagina from '@componentes/seo/EtiquetasPagina.astro';
+import { ClientRouter } from 'astro:transitions';
 
 import { cargarDatos, cargarTextosUi, LOCALES_HTML, type Idioma } from '@helpers/idiomas';
 import { calcularSeo, organizacionJsonLd, type DatosSeo } from '@helpers/seo';
@@ -71,6 +72,23 @@ const rutaInicio = `/${idioma}/`;
     <EtiquetasPagina seo={seoComputado} siteName={seoData.global.siteName} twitter={seoData.global.twitter} />
 
     <slot name="head" />
+
+    <ClientRouter />
+
+    <script is:inline>
+      // Persistencia de tema — corre ANTES del render para evitar flash.
+      // Default: oscuro (no se añade ninguna clase). Solo "light" activa la clase.
+      (function () {
+        try {
+          var saved = localStorage.getItem('tema');
+          if (saved === 'light') {
+            document.documentElement.classList.add('light');
+          } else {
+            document.documentElement.classList.remove('light');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body class={`home ${claseBody}`}>
     <BarraNavegacion
@@ -114,5 +132,140 @@ const rutaInicio = `/${idioma}/`;
       };
     </script>
     <script src="/theme/app.js" is:inline></script>
+
+    <!-- Cursor: tomamos el control total del posicionamiento de #js-cursor.
+         NO tocamos su tamaño ni visibilidad (eso lo sigue controlando el
+         theme: base 0x0 / .learn 220x220). SÍ aplicamos el transform cada
+         frame con translate(-50%,-50%) para que el CENTRO del retículo
+         quede exactamente bajo el puntero. Esto también soluciona el
+         "stuck en la esquina superior izquierda" porque siempre parkeamos
+         el cursor fuera de pantalla hasta el primer pointermove. -->
+    <script is:inline>
+      (function ownCursor() {
+        if (matchMedia('(pointer: coarse)').matches) return;
+
+        var cursor = document.getElementById('js-cursor');
+        if (!cursor) return;
+
+        var mx = -9999, my = -9999, gotMove = false;
+
+        function writeTransform(el) {
+          if (!el) return;
+          el.style.setProperty(
+            'transform',
+            'translate3d(' + mx + 'px,' + my + 'px,0) translate(-50%,-50%)',
+            'important'
+          );
+        }
+
+        function paint() {
+          writeTransform(cursor);
+          requestAnimationFrame(paint);
+        }
+
+        function onMove(e) {
+          mx = e.clientX; my = e.clientY;
+          if (!gotMove) gotMove = true;
+          // Escritura inmediata (además del RAF) para evitar cualquier
+          // frame con posición desactualizada.
+          writeTransform(cursor);
+        }
+        function onLeave() {
+          // Al salir de la ventana, parkeamos fuera de pantalla para que
+          // no aparezca "stuck" en una esquina.
+          mx = -9999; my = -9999;
+          gotMove = false;
+          writeTransform(cursor);
+        }
+
+        document.addEventListener('pointermove', onMove, { passive: true, capture: true });
+        document.addEventListener('pointerdown',  onMove, { passive: true, capture: true });
+        document.addEventListener('mouseleave',   onLeave);
+        window.addEventListener('blur',           onLeave);
+
+        // ClientRouter de Astro reemplaza el DOM en cada navegación.
+        // Interceptamos ambos eventos: ANTES del swap parkeamos el nuevo
+        // cursor inline (si ya existe en el HTML que llega), y DESPUÉS
+        // reasignamos la referencia y forzamos la escritura inmediata.
+        function rebindCursor() {
+          var nuevo = document.getElementById('js-cursor');
+          if (nuevo) cursor = nuevo;
+          // Park si nunca hubo movimiento real en esta sesión
+          if (!gotMove) { mx = -9999; my = -9999; }
+          // Escribir AL MISMO TIEMPO que tomamos la referencia nueva,
+          // ANTES de que el navegador pinte el primer frame con el
+          // elemento nuevo sin transform → elimina el flash top-left.
+          writeTransform(cursor);
+        }
+        document.addEventListener('astro:before-swap', rebindCursor);
+        document.addEventListener('astro:after-swap',  rebindCursor);
+        document.addEventListener('astro:page-load',   rebindCursor);
+        // Cubrimos también el caso del restore desde bfcache
+        window.addEventListener('pageshow', rebindCursor);
+
+        paint();
+      })();
+    </script>
+
+    <script is:inline>
+      // Re-aplica el tema tras cada navegación del ClientRouter, porque
+      // Astro reemplaza las clases del <html> con las que vienen del HTML
+      // de la nueva página (donde no hay .light aunque el usuario lo tenga).
+      (function persistThemeAcrossNavigation() {
+        function apply() {
+          try {
+            var saved = localStorage.getItem('tema');
+            if (saved === 'light') {
+              document.documentElement.classList.add('light');
+            } else {
+              document.documentElement.classList.remove('light');
+            }
+          } catch (e) {}
+        }
+        // antes del paint del nuevo DOM → sin flash
+        document.addEventListener('astro:before-swap', function (e) {
+          try {
+            var saved = localStorage.getItem('tema');
+            if (e.newDocument && e.newDocument.documentElement) {
+              if (saved === 'light') e.newDocument.documentElement.classList.add('light');
+              else e.newDocument.documentElement.classList.remove('light');
+            }
+          } catch (err) {}
+        });
+        document.addEventListener('astro:after-swap', apply);
+        document.addEventListener('astro:page-load', apply);
+        window.addEventListener('pageshow', apply);
+      })();
+    </script>
+
+    <script is:inline>
+      (function initThemeToggle() {
+        function bind() {
+          document.querySelectorAll('[data-theme-toggle]').forEach(function (btn) {
+            if (btn.dataset.bound) return;
+            btn.dataset.bound = '1';
+            function syncIcons() {
+              var light = document.documentElement.classList.contains('light');
+              var sun  = btn.querySelector('.theme-toggle__icon--sun');
+              var moon = btn.querySelector('.theme-toggle__icon--moon');
+              if (sun)  sun.style.display  = light ? 'none'  : 'inline';
+              if (moon) moon.style.display = light ? 'inline' : 'none';
+            }
+            syncIcons();
+            btn.addEventListener('click', function () {
+              var toggle = function () {
+                document.documentElement.classList.toggle('light');
+                try { localStorage.setItem('tema', document.documentElement.classList.contains('light') ? 'light' : 'dark'); } catch (e) {}
+                syncIcons();
+              };
+              if (!document.startViewTransition) { toggle(); return; }
+              document.startViewTransition(toggle);
+            });
+          });
+        }
+        bind();
+        document.addEventListener('astro:page-load', bind);
+      })();
+    </script>
   </body>
 </html>

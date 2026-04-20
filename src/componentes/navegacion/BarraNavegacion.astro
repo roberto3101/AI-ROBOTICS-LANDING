@@ -40,25 +40,10 @@ const anuncioRuta = navegacion.anuncio?.ruta ?? `/${idioma}/prensa`;
 ---
 
 <header class="header fixed w-full z-20" id="js-header">
-  <div class="header__banner w-full pl-5 lg:pr-5 py-3 bg-[#050506] border-b border-b-[#363636] border-opacity-100" id="js-top-banner">
-    <div class="lg:grid lg:grid-cols-3 items-center">
-      <p class="sub-title text-[13px] lg:text-sm text-steel mb-0 pl-4 opacity-100 relative">{anuncioEtiqueta}</p>
-      <div class="header__banner-marquee relative mt-5 lg:mt-0 overflow-hidden lg:overflow-visible lg:text-center">
-        <a href={anuncioRuta} class="header__banner-link lg:text-center text-[15px] lg:text-[16px] relative block w-max lg:-ml-8 lg:w-auto pr-5 lg:pr-0 text-white text-pretty">
-          <span class="header__banner-text">{anuncioTexto}</span>
-          <div class="button__top button__top--banner"></div>
-        </a>
-      </div>
-      <a href="#" class="schedule-demo__close schedule-demo__close--banner absolute lg:relative top-2.5 lg:top-0 right-4 lg:right-0 ml-auto" id="js-hide-banner">
-        <i></i>
-        <div class="button__top"></div>
-        <div class="button__bottom"></div>
-      </a>
-    </div>
-  </div>
   <div class="container flex items-center justify-between pt-6 lg:pt-10 pb-6 lg:pb-6">
-    <a href={`/${idioma}/`} class="w-[180px] lg:w-[240px] block">
-      <img src={navegacion.logo.src} alt={navegacion.logo.alt} class="w-full h-auto" />
+    <a href={`/${idioma}/`} class="logo-airobotics w-[180px] lg:w-[240px] block">
+      <img src={navegacion.logo.src} alt={navegacion.logo.alt} class="logo-airobotics__img logo-airobotics__img--dark w-full h-auto" />
+      <img src="/imagenes/logos/airobotics-oscuro.svg" alt={navegacion.logo.alt} class="logo-airobotics__img logo-airobotics__img--light w-full h-auto" />
     </a>
     <nav class="header__main">
       <ul class="relative gap-x-7 hidden lg:flex">
@@ -102,19 +87,23 @@ const anuncioRuta = navegacion.anuncio?.ruta ?? `/${idioma}/prensa`;
       </ul>
     </nav>
     <div class="header__right flex items-center gap-3">
+      <button type="button" class="theme-toggle" aria-label="Cambiar tema" data-theme-toggle>
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
       <a
         href={rutaOtro}
-        class="selector-idioma"
+        class="selector-idioma inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 text-[12px] font-mono uppercase tracking-wider transition"
         aria-label={textoCambio}
         hreflang={otroIdioma}
         title={textoCambio}
       >
-        <img class="selector-idioma__desde" src={banderaActual} alt="" aria-hidden="true" />
+        <img class="selector-idioma__desde h-3.5 w-5 rounded-sm object-cover" src={banderaActual} alt="" aria-hidden="true" />
         <span class="selector-idioma__label">{idioma.toUpperCase()}</span>
-        <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5h10M7 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <img src={banderaOtro} alt="" aria-hidden="true" />
+        <svg width="10" height="8" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5h10M7 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <img src={banderaOtro} alt="" aria-hidden="true" class="h-3.5 w-5 rounded-sm object-cover" />
       </a>
-      <a href={navegacion.ctaPrincipal.ruta} class="button button--red px-6 py-[1.05rem] text-[12px] hidden lg:block">
+      <a href={navegacion.ctaPrincipal.ruta} class="header__cta hidden lg:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 text-[12px] font-mono uppercase tracking-wider transition">
         {navegacion.ctaPrincipal.etiqueta}
       </a>
     </div>

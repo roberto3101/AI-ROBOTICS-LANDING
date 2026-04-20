@@ -256,3 +256,779 @@ body {
   }
   .marquee-track { animation: none; }
 }
+
+/* Hover global unificado para botones/enlaces del header y CTAs */
+.selector-idioma,
+.header__cta {
+  background-color: rgba(255,255,255,0.02);
+  color: #ffffff;
+}
+.selector-idioma:hover,
+.header__cta:hover {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: #ffffff;
+}
+
+/* Logo grande del footer: hover colorido del texto */
+.footer-logo-grande {
+  transition: filter .3s ease;
+}
+.footer-logo-grande:hover {
+  animation: airobotics-rainbow 3s linear infinite;
+  filter: hue-rotate(0deg);
+}
+@keyframes airobotics-rainbow {
+  0%   { filter: hue-rotate(0deg)   saturate(1.4); }
+  50%  { filter: hue-rotate(180deg) saturate(1.8); }
+  100% { filter: hue-rotate(360deg) saturate(1.4); }
+}
+
+/* Footer: columnas más ordenadas y con aire */
+.footer .middle ul { padding-right: 1rem; }
+.footer .middle ul li + li { margin-top: .25rem; }
+
+/* Hero/productos: overlay negro + texto blanco al hover sobre tarjetas de imagen */
+.tarjeta-media {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.tarjeta-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 100%);
+  opacity: 1;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+.tarjeta-media:hover::after { opacity: 1; background: rgba(0,0,0,0.55); }
+.tarjeta-media .tarjeta-media__label {
+  position: absolute;
+  left: 1rem; right: 1rem; bottom: 1rem;
+  color: #fff;
+  z-index: 2;
+  transform: translateY(6px);
+  opacity: .85;
+  transition: transform .3s ease, opacity .3s ease, color .3s ease;
+}
+.tarjeta-media:hover .tarjeta-media__label {
+  transform: translateY(0);
+  opacity: 1;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,.6);
+}
+
+/* =========================================================
+   Mega wordmark del footer: efecto "linterna / glowy hover"
+   Dos capas stackeadas. La base es apagada. La overlay es un
+   gradiente multicolor que solo se revela por una máscara
+   radial que sigue al cursor.
+   ========================================================= */
+.footer-mega-wrap {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.footer-mega-wrap > .footer-mega-wordmark {
+  grid-area: 1 / 1;
+}
+.footer-mega-wordmark {
+  font-family: var(--font-display, "DM Sans"), system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  font-size: clamp(3rem, 14vw, 16rem);
+  color: rgba(12, 18, 32, 0.18);
+  text-align: center;
+  pointer-events: none;
+  transition: color .3s ease;
+}
+html.light .footer-mega-wordmark {
+  color: rgba(12, 18, 32, 0.15);
+}
+/* Overlay: mismas letras, encima, con gradiente brillante y máscara
+   radial alrededor del cursor. */
+.footer-mega-wordmark--overlay {
+  background: linear-gradient(
+    90deg,
+    #ff3b30 0%,
+    #ff9500 16%,
+    #ffcc00 32%,
+    #34c759 50%,
+    #5ac8fa 66%,
+    #5856d6 82%,
+    #ff2d55 100%
+  );
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  /* El overlay siempre está a opacity 1. Lo que controla la visibilidad
+     es la máscara radial: radio 0 = nada visible, crece al hover. */
+  opacity: 1;
+  -webkit-mask: radial-gradient(
+    var(--r, 0px) var(--r, 0px) at var(--x, 50%) var(--y, 50%),
+    #000 0%,
+    rgba(0,0,0,0.8) 55%,
+    transparent 100%
+  );
+          mask: radial-gradient(
+    var(--r, 0px) var(--r, 0px) at var(--x, 50%) var(--y, 50%),
+    #000 0%,
+    rgba(0,0,0,0.8) 55%,
+    transparent 100%
+  );
+  transition: -webkit-mask .35s ease, mask .35s ease;
+  will-change: mask;
+}
+/* Respeta reduce-motion: se ve siempre encendido suavemente */
+@media (prefers-reduced-motion: reduce) {
+  .footer-mega-wordmark--overlay {
+    -webkit-mask: none;
+            mask: none;
+    opacity: 0.25;
+  }
+}
+
+/* Footer compacto */
+.footer { padding-top: 5rem !important; padding-bottom: 0 !important; }
+@media (min-width: 1024px) { .footer { padding-top: 7rem !important; } }
+.footer .container { padding-left: 2rem; padding-right: 2rem; }
+.footer .middle ul li a { display: inline-block; padding: 2px 0; }
+
+/* =========================================================
+   Fix: submenu del header también accesible con hover
+   (complemento al toggle por click del tema externo)
+   ========================================================= */
+.header__main > ul > li { position: relative; }
+.header__main > ul > li:hover > .js-nav-item,
+.header__main > ul > li:focus-within > .js-nav-item {
+  display: block !important;
+}
+.js-nav-item { transition: opacity .2s ease; }
+
+/* =========================================================
+   Theme toggle effect (rudrodip/theme-toggle-effect — circle-blur-top-left)
+   ========================================================= */
+:root {
+  --expo-in: linear(
+    0 0%, 0.0085 31.26%, 0.0167 40.94%,
+    0.0289 48.86%, 0.0471 55.92%,
+    0.0717 61.99%, 0.1038 67.32%,
+    0.1443 72.07%, 0.1989 76.7%,
+    0.2659 80.89%, 0.3465 84.71%,
+    0.4419 88.22%, 0.554 91.48%,
+    0.6835 94.51%, 0.8316 97.34%, 1 100%
+  );
+  --expo-out: linear(
+    0 0%, 0.1684 2.66%, 0.3165 5.49%,
+    0.446 8.52%, 0.5581 11.78%,
+    0.6535 15.29%, 0.7341 19.11%,
+    0.8011 23.3%, 0.8557 27.93%,
+    0.8962 32.68%, 0.9283 38.01%,
+    0.9529 44.08%, 0.9711 51.14%,
+    0.9833 59.06%, 0.9915 68.74%, 1 100%
+  );
+}
+::view-transition-group(root) {
+  animation-timing-function: var(--expo-out);
+}
+::view-transition-new(root) {
+  mask: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="0" cy="0" r="18" fill="white" filter="url(%23blur)"/></svg>') top left / 0 no-repeat;
+  mask-origin: content-box;
+  animation: tt-scale 1s;
+  animation-fill-mode: both;
+  transform-origin: top left;
+}
+::view-transition-old(root),
+.dark::view-transition-old(root) {
+  animation: tt-scale 1s;
+  animation-fill-mode: both;
+  transform-origin: top left;
+  z-index: -1;
+}
+@keyframes tt-scale {
+  to { mask-size: 350vmax; }
+}
+
+/* Paleta clara cuando .light está en <html> (default es oscuro) */
+html.light {
+  background-color: #f4f6f5;
+  color: #0c1220;
+}
+html.light body { background-color: #f4f6f5; color: #0c1220; }
+html.light .footer { background: #ffffff; }
+/* Header en light: SIN fondo sólido — solo cambian los colores del texto */
+html.light .header a,
+html.light .header__main a { color: #0c1220; }
+html.light .selector-idioma,
+html.light .header__cta { color: #0c1220; border-color: rgba(0,0,0,0.15); }
+html.light .footer-mega-wordmark { color: #0c1220; }
+
+/* Botón del tema: mismo estilo pill que idioma/CTA */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.02);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.theme-toggle:hover {
+  background: var(--color-primario);
+  border-color: var(--color-primario);
+  color: #fff;
+}
+html.light .theme-toggle { color: #0c1220; border-color: rgba(0,0,0,0.15); }
+
+/* =========================================================
+   LIGHT MODE — cobertura global (html.light)
+   Invierte backgrounds oscuros hardcodeados y textos claros
+   para que nada se pierda por falta de contraste.
+   ========================================================= */
+
+/* Base */
+html.light,
+html.light body {
+  background-color: #f4f6f5 !important;
+  color: #0c1220 !important;
+}
+
+/* Backgrounds oscuros -> superficies claras */
+html.light .bg-carbon,
+html.light [class*="bg-[#050506]"],
+html.light [class*="bg-[#050507]"],
+html.light [class*="bg-[#363636]"] {
+  background-color: #f4f6f5 !important;
+}
+
+/* Eyecatch dark: en light mode, fondo claro + texto oscuro. */
+html.light .eyecatch.eyecatch--dark,
+html.light .eyecatch--dark.bg-carbon {
+  background-color: #f4f6f5 !important;
+}
+html.light .eyecatch--dark,
+html.light .eyecatch--dark h1,
+html.light .eyecatch--dark h2,
+html.light .eyecatch--dark h3,
+html.light .eyecatch--dark h4,
+html.light .eyecatch--dark p,
+html.light .eyecatch--dark .sub-title,
+html.light .eyecatch--dark .text-white {
+  color: #0c1220 !important;
+}
+
+/* Hero sections: mantener fondo oscuro para que las imágenes con opacity
+   se vean igual en dark y light mode (la opacity mezcla con el bg). */
+html.light section.hero-dark-bg,
+html.light section.hero-dark-bg.bg-carbon,
+html.light section:has(> img.w-full.h-screen.object-cover.absolute),
+html.light section:has(> img[class*="opacity-60"].absolute) {
+  background-color: #0c0c10 !important;
+}
+html.light section:has(> img.w-full.h-screen.object-cover.absolute) h1,
+html.light section:has(> img.w-full.h-screen.object-cover.absolute) h2,
+html.light section:has(> img.w-full.h-screen.object-cover.absolute) p,
+html.light section:has(> img.w-full.h-screen.object-cover.absolute) .sub-title,
+html.light section:has(> img[class*="opacity-60"].absolute) h1,
+html.light section:has(> img[class*="opacity-60"].absolute) h2,
+html.light section:has(> img[class*="opacity-60"].absolute) p,
+html.light section:has(> img[class*="opacity-60"].absolute) .sub-title {
+  color: #ffffff !important;
+}
+
+/* bg-cloud ya es claro, no tocar */
+
+/* Texto blanco -> texto oscuro */
+html.light .text-white,
+html.light .text-cloud,
+html.light [class*="text-white"] {
+  color: #0c1220 !important;
+}
+
+/* Bordes blancos -> oscuros suaves */
+html.light [class*="border-white"],
+html.light .border-b-carbon,
+html.light [class*="border-b-[#"],
+html.light [class*="border-r-[#505051]"],
+html.light [class*="border-t-[#505051]"] {
+  border-color: rgba(0,0,0,0.14) !important;
+}
+
+/* Header/menu */
+/* Header en light: transparente (como en dark), solo letras cambian */
+html.light .header a,
+html.light .header__main a,
+html.light .menu a,
+html.light .menu p { color: #0c1220 !important; }
+html.light .header__nav--alt .bg-carbon { background-color: #ffffff !important; }
+
+/* Cards / tarjetas */
+html.light .peek-block__container.bg-cloud { background-color: #ffffff !important; }
+html.light .tarjeta,
+html.light [class*="bg-[var(--color-carbon-claro)]"] {
+  background-color: #ffffff !important;
+  color: #0c1220 !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+/* Botones white-on-dark -> dark-on-light */
+html.light .button,
+html.light .button--white {
+  color: #0c1220 !important;
+  border-color: rgba(0,0,0,0.2);
+}
+html.light .button--red { color: #fff !important; }
+
+/* Inputs */
+html.light .campo-input {
+  background-color: rgba(0,0,0,0.04);
+  color: #0c1220;
+  border-color: rgba(0,0,0,0.14);
+}
+html.light .campo-input::placeholder { color: rgba(0,0,0,0.5); }
+
+/* Footer */
+html.light .footer { background: #ffffff !important; color: #0c1220 !important; }
+html.light .footer a { color: #0c1220 !important; }
+html.light .footer-mega-wordmark { color: #0c1220; }
+
+/* Scrollbar */
+html.light ::-webkit-scrollbar-track { background: #eceff1; }
+html.light ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.18); }
+html.light ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.3); }
+
+/* Blockquote/manifiesto en bg-cloud ya es negro; en dark el bg es oscuro y texto
+   cloud. Garantizamos contraste en ambos sentidos: */
+.text-cloud { color: #e8edee; }
+html.light .text-cloud { color: #0c1220 !important; }
+
+/* =========================================================
+   Aseguro dark mode (default): cubrir zonas con bg-cloud
+   que tienen texto negro — se mantiene porque bg-cloud es
+   claro por diseño en AMBOS modos.
+   ========================================================= */
+
+/* =========================================================
+   Carrusel de productos (home): items un poco más pequeños
+   + fallback visible si Slick no inicializa
+   ========================================================= */
+.js-rotate-arrow-slider[data-type="centered"] {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0 1rem;
+}
+.js-rotate-arrow-slider[data-type="centered"] > li {
+  flex: 0 0 auto;
+  width: min(260px, 70vw);
+  scroll-snap-align: start;
+  list-style: none;
+}
+.js-rotate-arrow-slider[data-type="centered"] > li video {
+  width: 100%;
+  border-radius: 8px;
+}
+/* Cuando Slick sí inicializa, su CSS toma control (display:block en slides) */
+.slick-initialized.js-rotate-arrow-slider[data-type="centered"] {
+  display: block;
+  overflow: visible;
+  padding: 0;
+}
+.slick-initialized.js-rotate-arrow-slider[data-type="centered"] > li {
+  width: auto;
+}
+
+/* Carrusel post-Slick: slides un poco más pequeños */
+.slick-initialized.js-rotate-arrow-slider[data-type="centered"] .slick-slide {
+  transform: scale(.88);
+  transform-origin: center;
+  transition: transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.slick-initialized.js-rotate-arrow-slider[data-type="centered"] .slick-slide.slick-current,
+.slick-initialized.js-rotate-arrow-slider[data-type="centered"] .slick-slide.slick-center {
+  transform: scale(.95);
+}
+
+/* Menu móvil: en light, invertir fondo */
+html.light .menu { background-color: #ffffff !important; color: #0c1220 !important; }
+html.light .menu a, html.light .menu p { color: #0c1220 !important; }
+
+/* Header al hacer scroll en light: aseguramos contraste */
+/* Header en light siempre transparente */
+html.light .theme-toggle,
+html.light .selector-idioma,
+html.light .header__cta { color: #0c1220 !important; border-color: rgba(0,0,0,0.18) !important; }
+html.light .header__main a { color: #0c1220 !important; }
+
+/* =========================================================
+   Redes sociales: iconos circulares con flip en hover
+   (adaptado del snippet que pasó el usuario)
+   ========================================================= */
+.redes-sociales { list-style: none; padding: 0; margin: 0; }
+.redes-sociales li { list-style: none; }
+.redes-sociales li a {
+  display: block;
+  width: 44px;
+  height: 44px;
+  background-color: #ffffff;
+  text-align: center;
+  line-height: 44px;
+  font-size: 18px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #ffffff;
+  z-index: 1;
+  color: #262626;
+  text-decoration: none;
+}
+.redes-sociales li a .icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: #262626;
+  transition: color .5s ease, transform .5s ease;
+  z-index: 3;
+}
+.redes-sociales li a .icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.redes-sociales li a:hover .icon {
+  color: #ffffff;
+  transform: rotateY(360deg);
+}
+.redes-sociales li a:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: top .5s ease;
+  z-index: 2;
+  background: var(--color-primario, #f00);
+}
+.redes-sociales li a:hover:before { top: 0; }
+/* Colores por red (orden: LinkedIn, YouTube, Instagram, X/Twitter) */
+.redes-sociales li:nth-child(1) a:before { background: #0077b5; } /* LinkedIn */
+.redes-sociales li:nth-child(2) a:before { background: #ff0000; } /* YouTube */
+.redes-sociales li:nth-child(3) a:before { background: #e1306c; } /* Instagram */
+.redes-sociales li:nth-child(4) a:before { background: #000000; } /* X */
+
+/* En light, el fondo del círculo puede ser oscuro para mejor contraste del icono */
+html.light .redes-sociales li a {
+  background-color: #0c1220;
+  border-color: #0c1220;
+  color: #ffffff;
+}
+html.light .redes-sociales li a .icon { color: #ffffff; }
+
+/* =========================================================
+   Texto sobre videos: siempre blanco, con glow sutil,
+   y overlay oscuro de seguridad en light mode
+   ========================================================= */
+.js-rotate-arrow-slider[data-type="hero"] *,
+.js-rotate-arrow-slider[data-type="hero"] h1,
+.js-rotate-arrow-slider[data-type="hero"] p,
+.js-rotate-arrow-slider[data-type="hero"] .sub-title,
+.js-rotate-arrow-slider[data-type="hero"] .button,
+.js-rotate-arrow-slider[data-type="hero"] .button--white,
+html.light .js-rotate-arrow-slider[data-type="hero"] *,
+html.light .js-rotate-arrow-slider[data-type="hero"] .button,
+html.light .js-rotate-arrow-slider[data-type="hero"] .button--white {
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,0.85) !important;
+}
+/* Fondo del botón del hero: transparente en ambos modos para que el
+   texto blanco se vea sobre el video y no sobre un botón claro. */
+.js-rotate-arrow-slider[data-type="hero"] .button,
+html.light .js-rotate-arrow-slider[data-type="hero"] .button {
+  background-color: transparent !important;
+}
+.js-rotate-arrow-slider[data-type="hero"] h1,
+.js-rotate-arrow-slider[data-type="hero"] p {
+  text-shadow: 0 2px 18px rgba(0,0,0,0.55);
+}
+/* En light, los videos pueden perder contraste — aseguramos una cortina
+   oscura sobre el video para que el texto blanco se siga leyendo. */
+html.light .js-rotate-arrow-slider[data-type="hero"] > li::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.15) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* =========================================================
+   Carrusel de productos: AUTOSCROLL continuo tipo marquee
+   — desactivamos el Slick aquí y hacemos CSS animation.
+   ========================================================= */
+.productos-marquee {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  mask-image: linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%);
+}
+.productos-marquee__track {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  animation: productos-marquee-loop 40s linear infinite;
+}
+.productos-marquee:hover .productos-marquee__track { animation-play-state: paused; }
+.productos-marquee__item {
+  flex: 0 0 auto;
+  width: clamp(220px, 22vw, 320px);
+  list-style: none;
+}
+.productos-marquee__item video,
+.productos-marquee__item img {
+  width: 100%;
+  aspect-ratio: .841 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+.productos-marquee__item h4 {
+  margin-top: 0.75rem;
+  color: inherit;
+  font-size: clamp(1rem, 1.3vw, 1.25rem);
+}
+@keyframes productos-marquee-loop {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .productos-marquee__track { animation: none; }
+}
+
+/* =========================================================
+   Header dropdown: marco invisible + items uniformes
+   (NO se tocan los estilos visuales del tema)
+   ========================================================= */
+.header__main > ul > li { position: relative; }
+
+/* Marco invisible SOLO para los items que tienen submenu.
+   Cubre la franja entre la nav y el submenu (sin tapar los
+   propios anchors de los items del header ni el de "Contacto"). */
+.header__main > ul > li:has(.js-nav-item):hover::after,
+.header__main > ul > li:has(.js-nav-item):focus-within::after {
+  content: "";
+  position: absolute;
+  left: -12px;
+  right: -12px;
+  top: 100%;
+  height: 130px;
+  z-index: 18;
+  background: transparent;
+  pointer-events: auto;
+}
+/* Además, puente dentro del propio submenu por arriba. */
+.header__main .header__nav--alt::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 120px;
+  background: transparent;
+  pointer-events: auto;
+}
+
+/* Todos los items de TODOS los dropdowns al mismo ancho (fijo en px)
+   para que 2 y 3 items luzcan del mismo tamaño, sin huecos a la derecha. */
+.header__main .header__nav--alt .rhs > li.group {
+  width: 399px !important;
+  flex: 0 0 399px !important;
+}
+
+/* El panel oscuro ajusta su ancho al número de items. */
+.header__main .header__nav--alt .flex.bg-carbon {
+  width: fit-content !important;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.header__main .header__nav--alt .rhs {
+  width: auto;
+  flex-wrap: nowrap;
+}
+
+/* Leve reducción de tipografía dentro de las tarjetas */
+.header__main .header__nav--alt .rhs > li > a h4 {
+  font-size: 18px;
+}
+.header__main .header__nav--alt .rhs > li > a p {
+  font-size: 13px;
+}
+
+/* =========================================================
+   Bloque CTA enterprise: respeta tema (no más bg-cloud fijo)
+   ========================================================= */
+.bloque-cta-enterprise {
+  background-color: #050506;
+  color: #e8edee;
+}
+.bloque-cta-enterprise .sub-title,
+.bloque-cta-enterprise .sub-title--black {
+  color: #8a95a5 !important;
+}
+.bloque-cta-enterprise h3 { color: #ffffff; }
+.bloque-cta-enterprise .button--white {
+  background-color: #ffffff;
+  color: #0c1220 !important;
+  border-color: #ffffff;
+}
+.bloque-cta-enterprise .button--white:hover {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: #ffffff !important;
+}
+html.light .bloque-cta-enterprise {
+  background-color: #f6f6f6;
+  color: #0c1220;
+}
+html.light .bloque-cta-enterprise h3 { color: #0c1220; }
+html.light .bloque-cta-enterprise .sub-title,
+html.light .bloque-cta-enterprise .sub-title--black {
+  color: #4a5568 !important;
+}
+html.light .bloque-cta-enterprise .button--white {
+  background-color: #0c1220;
+  color: #ffffff !important;
+  border-color: #0c1220;
+}
+html.light .bloque-cta-enterprise .button--white:hover {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   Header logo: swap entre variante clara y oscura según tema
+   ========================================================= */
+.logo-airobotics__img--dark  { display: block; }
+.logo-airobotics__img--light { display: none; }
+html.light .logo-airobotics__img--dark  { display: none; }
+html.light .logo-airobotics__img--light { display: block; }
+
+/* =========================================================
+   Cursor personalizado — SOLO corrige:
+   1) El bug de "stuck top-left" cuando aún no hubo movimiento.
+   2) El offset del círculo para que su centro quede bajo el puntero.
+   NO toca el tamaño ni la visibilidad: eso lo sigue controlando el
+   theme (p. ej. .cursor.learn al hover sobre ciertos elementos).
+   ========================================================= */
+
+/* =========================================================
+   Zona footer + peek-blocks + mega wordmark: adaptación dark
+   (en light ya se veía bien; aquí oscurecemos cuando no hay .light)
+   ========================================================= */
+/* Fondo de la sección peek-blocks (casos de uso encima del footer)
+   y fondo del footer principal — ambos usan bg-cloud en el markup */
+html:not(.light) section.bg-cloud,
+html:not(.light) footer.footer {
+  background-color: #0a0c10 !important;
+  color: #e8edee !important;
+}
+html:not(.light) footer.footer { background-color: #0a0c10 !important; }
+html:not(.light) .peek-block__container.bg-cloud {
+  background-color: #0a0c10 !important;
+  color: #e8edee !important;
+}
+html:not(.light) section.bg-cloud h1,
+html:not(.light) section.bg-cloud h2,
+html:not(.light) section.bg-cloud h3,
+html:not(.light) section.bg-cloud h4,
+html:not(.light) section.bg-cloud p,
+html:not(.light) footer.footer h1,
+html:not(.light) footer.footer h2,
+html:not(.light) footer.footer h3,
+html:not(.light) footer.footer h4,
+html:not(.light) footer.footer p,
+html:not(.light) footer.footer li,
+html:not(.light) footer.footer a,
+html:not(.light) footer.footer small {
+  color: #e8edee !important;
+}
+html:not(.light) footer.footer a { color: #c9d1d9 !important; }
+html:not(.light) footer.footer a:hover { color: #ffffff !important; }
+/* Separadores de peek-blocks en dark */
+html:not(.light) section.bg-cloud [class*="border-t-[#505051]"],
+html:not(.light) section.bg-cloud [class*="border-r-[#505051]"],
+html:not(.light) section.bg-cloud [class*="border-b-[#505051]"] {
+  border-color: rgba(255,255,255,0.1) !important;
+}
+/* Arrow-link en dark sobre fondo oscuro */
+html:not(.light) .arrow-link--black {
+  color: #e8edee !important;
+}
+
+/* Mega wordmark: color base según tema */
+.footer-mega-wordmark {
+  color: rgba(255, 255, 255, 0.12); /* dark por defecto */
+}
+html.light .footer-mega-wordmark {
+  color: rgba(12, 18, 32, 0.18);
+}
+
+/* =========================================================
+   Light mode: header con fondo transparente pero con un gradiente
+   suave blanco arriba para garantizar contraste del texto oscuro
+   sobre videos oscuros del hero. El gradiente se desvanece rápido
+   (no es un fondo sólido) y no afecta el look transparente.
+   ========================================================= */
+html.light .header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(244, 246, 245, 0.92) 0%,
+    rgba(244, 246, 245, 0.75) 55%,
+    rgba(244, 246, 245, 0) 100%
+  );
+  z-index: -1;
+}
+html.light .header {
+  position: fixed;
+  isolation: isolate;
+}
+
+/* Letras del header en light: un toque de text-shadow claro para
+   reforzar la lectura aunque el fondo detrás tenga video oscuro. */
+html.light .header a,
+html.light .header__main a,
+html.light .selector-idioma,
+html.light .header__cta {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+/* =========================================================
+   Cursor: posición default FUERA DE PANTALLA para evitar el flash
+   en (0,0) durante cargas o transiciones de ClientRouter, antes de
+   que nuestro RAF asigne la posición real. El JS luego override vía
+   inline style (inline !important > stylesheet !important).
+   ========================================================= */
+#js-cursor.cursor {
+  transform: translate3d(-9999px, -9999px, 0) translate(-50%, -50%) !important;
+}

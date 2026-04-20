@@ -4,11 +4,11 @@ import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// https://astro.build/config
 export default defineConfig({
   site: 'https://airobotics.com.pe',
   output: 'server',
   adapter: vercel(),
+
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
@@ -17,6 +17,7 @@ export default defineConfig({
       redirectToDefaultLocale: true,
     },
   },
+
   integrations: [
     sitemap({
       i18n: {
@@ -25,9 +26,15 @@ export default defineConfig({
       },
     }),
   ],
+
   vite: {
+      server: {
+      host: '0.0.0.0',
+      allowedHosts: ['.tunnelmole.net']
+    },
     plugins: [tailwindcss()],
   },
+
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport',

@@ -37,7 +37,7 @@
     "cta": {
       "titulo": "¿Diriges una municipalidad o trabajas con seguridad ciudadana?",
       "descripcion": "Agenda una demo piloto sobre una zona de tu distrito. Sin compromiso.",
-      "etiqueta": "Solicitar demo piloto",
+      "etiqueta": "Contáctanos",
       "ruta": "/es/contacto?asunto=demo"
     }
   },
@@ -121,7 +121,7 @@
     "cta": {
       "titulo": "¿Tu local queda vacío en la noche?",
       "descripcion": "Diseñamos tu configuración de cerco virtual y horarios admitidos sobre tu layout real.",
-      "etiqueta": "Solicitar evaluación",
+      "etiqueta": "Contáctanos",
       "ruta": "/es/contacto?asunto=demo"
     }
   }

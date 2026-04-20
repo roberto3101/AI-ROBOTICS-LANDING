@@ -38,8 +38,8 @@
     }
   ],
   "ctaPrincipal": {
-    "etiqueta": "Solicitar demo",
-    "ruta": "/es/contacto?asunto=demo"
+    "etiqueta": "Iniciar sesión",
+    "ruta": "/es/contacto?asunto=acceso"
   },
   "selectorIdioma": {
     "etiqueta": "Idioma",

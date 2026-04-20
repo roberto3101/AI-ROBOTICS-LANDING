@@ -37,7 +37,7 @@
     "cta": {
       "titulo": "Do you lead a municipality or work in public safety?",
       "descripcion": "Schedule a pilot demo over a zone in your district. No commitment.",
-      "etiqueta": "Request pilot demo",
+      "etiqueta": "Contact us",
       "ruta": "/en/contact?subject=demo"
     }
   },
@@ -121,7 +121,7 @@
     "cta": {
       "titulo": "Does your store sit empty at night?",
       "descripcion": "We design your virtual-fence and admitted-hours configuration on top of your real layout.",
-      "etiqueta": "Request evaluation",
+      "etiqueta": "Contact us",
       "ruta": "/en/contact?subject=demo"
     }
   }

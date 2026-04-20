@@ -11,12 +11,16 @@ interface Seccion {
 
 interface Props {
   seccion: Seccion;
-  variante?: 'oscuro' | 'claro';
+  variante?: 'oscuro' | 'claro' | 'oscuro-suave';
 }
 
 const { seccion, variante = 'oscuro' } = Astro.props;
-const esOscuro = variante === 'oscuro';
-const fondo = esOscuro ? 'bg-[#050506] text-white' : 'bg-cloud text-black relative z-[3]';
+const esOscuro = variante === 'oscuro' || variante === 'oscuro-suave';
+const fondo = variante === 'oscuro'
+  ? 'bg-[#050506] text-white'
+  : variante === 'oscuro-suave'
+    ? 'bg-[var(--color-carbon-claro)] text-white'
+    : 'bg-cloud text-black relative z-[3]';
 ---
 
 <section class={`${fondo} py-20 lg:py-32`}>
@@ -54,7 +58,7 @@ const fondo = esOscuro ? 'bg-[#050506] text-white' : 'bg-cloud text-black relati
     {seccion.tipo === 'lista' && seccion.items && (
       <ul class="mt-12 grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-4xl">
         {(seccion.items as string[]).map((it) => (
-          <li class={`flex items-start gap-3 text-base ${esOscuro ? 'text-white/90' : 'text-[var(--ai-navy-profundo)]'}`}>
+          <li class={`flex items-start gap-3 text-base ${esOscuro ? 'text-white' : 'text-[var(--ai-navy-profundo)]'}`} style={esOscuro ? 'color:#f5f5f7;opacity:1;' : ''}>
             <span class="flex-shrink-0 mt-2 w-1.5 h-1.5 rounded-full" style={`background-color:${esOscuro ? 'var(--ai-teal)' : 'var(--ai-teal-sombra)'}`} aria-hidden="true"></span>
             <span>{it}</span>
           </li>

@@ -5,7 +5,7 @@
     "subtitulo": "We build drones, turrets and AI video surveillance systems designed to respond, not just observe.",
     "ctas": [
       { "etiqueta": "Explore our products", "ruta": "/en/products", "estilo": "primario" },
-      { "etiqueta": "Schedule a demo", "ruta": "/en/contact?subject=demo", "estilo": "secundario" }
+      { "etiqueta": "Contact us", "ruta": "/en/contact", "estilo": "secundario" }
     ],
     "video": "/theme/uploads/ai-robotics/hero-aerial.mp4",
     "videoFallback": "/imagenes/hero/hero-vigilancia.jpg",
@@ -158,7 +158,7 @@
     "etiqueta": "TAKE THE NEXT STEP",
     "titulo": "Let's design an autonomous defense scheme together.",
     "descripcion": "Tell us what you protect and we'll design a demo in your own operational environment.",
-    "ctaPrimario": { "etiqueta": "Request a demo", "ruta": "/en/contact?subject=demo" },
+    "ctaPrimario": { "etiqueta": "Contact us", "ruta": "/en/contact" },
     "ctaSecundario": { "etiqueta": "Meet the team", "ruta": "/en/team" },
     "imagen": "/imagenes/hero/cta.jpg"
   }

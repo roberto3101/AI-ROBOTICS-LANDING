@@ -10,7 +10,7 @@
   "ctaFinal": {
     "titulo": "Ready to take your security to the next level?",
     "descripcion": "Let's talk about how our autonomous systems can protect your organization.",
-    "etiquetaBoton": "Schedule a demo",
+    "etiquetaBoton": "Contact us",
     "ruta": "/en/contact?subject=demo"
   },
   "columnas": [

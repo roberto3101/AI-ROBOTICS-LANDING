@@ -5,7 +5,7 @@
     "subtitulo": "Desarrollamos drones, torretas y sistemas de videovigilancia con inteligencia artificial diseñados para responder, no solo observar.",
     "ctas": [
       { "etiqueta": "Conoce nuestros productos", "ruta": "/es/productos", "estilo": "primario" },
-      { "etiqueta": "Agendar una demo", "ruta": "/es/contacto?asunto=demo", "estilo": "secundario" }
+      { "etiqueta": "Contáctanos", "ruta": "/es/contacto", "estilo": "secundario" }
     ],
     "video": "/theme/uploads/ai-robotics/hero-aerial.mp4",
     "videoFallback": "/imagenes/hero/hero-vigilancia.jpg",
@@ -158,7 +158,7 @@
     "etiqueta": "DAR EL SIGUIENTE PASO",
     "titulo": "Construyamos juntos un esquema de defensa autónomo.",
     "descripcion": "Cuéntanos qué proteges y diseñaremos una demo en tu propio entorno operativo.",
-    "ctaPrimario": { "etiqueta": "Solicitar demo", "ruta": "/es/contacto?asunto=demo" },
+    "ctaPrimario": { "etiqueta": "Contáctanos", "ruta": "/es/contacto" },
     "ctaSecundario": { "etiqueta": "Conoce el equipo", "ruta": "/es/equipo" },
     "imagen": "/imagenes/hero/cta.jpg"
   }

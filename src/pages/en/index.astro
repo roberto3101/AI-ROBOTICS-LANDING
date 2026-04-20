@@ -66,17 +66,15 @@ const carruselProductos = [
       <a href={`/${idioma}/products`} class="button mt-8 lg:mt-0">View products</a>
     </div>
 
-    <div class="mt-14 lg:mt-20 relative js-rotate-arrow-container">
-      <ul class="w-full js-rotate-arrow-slider" data-type="centered">
-        {carruselProductos.map((p) => (
-          <li>
-            <video src={p.video} class="aspect-[.841/1] object-cover" autoplay muted playsinline loop></video>
-            <h4 class="lg:text-3.5xl text-white mt-4 lg:mt-8">{p.titulo}</h4>
+    <div class="mt-14 lg:mt-20 productos-marquee">
+      <ul class="productos-marquee__track">
+        {[...carruselProductos, ...carruselProductos].map((p) => (
+          <li class="productos-marquee__item">
+            <video src={p.video} autoplay muted playsinline loop></video>
+            <h4>{p.titulo}</h4>
           </li>
         ))}
       </ul>
-      <div class="hidden lg:block w-[45%] h-screen absolute top-0 left-0 z-[1] js-slider-trigger js-slider-prev"></div>
-      <div class="hidden lg:block w-[45%] h-screen absolute top-0 right-0 z-[1] js-slider-trigger js-slider-next"></div>
     </div>
   </div>
 
@@ -96,19 +94,17 @@ const carruselProductos = [
   </div>
 
 
-  <div class="bg-cloud py-12 lg:pt-80 lg:pb-32 text-black relative z-[3]">
-    <div class="container flex flex-wrap justify-between items-start js-scroll-activate">
+  <div class="bloque-cta-enterprise py-16 lg:py-20 relative z-[3]">
+    <div class="container flex flex-wrap justify-between items-center gap-y-8 js-scroll-activate">
       <div class="lg:w-1/2">
         <p class="sub-title sub-title--black">[ENTERPRISE CONTACT]</p>
-        <h3 class="section-title mt-6 lg:mt-10 text-balance">{inicio.ctaCierre.titulo}</h3>
+        <h3 class="section-title mt-4 lg:mt-6 text-balance">{inicio.ctaCierre.titulo}</h3>
       </div>
-      <a href={inicio.ctaCierre.ctaPrimario.ruta} class="button button--white mt-12 lg:mt-0">
+      <a href={inicio.ctaCierre.ctaPrimario.ruta} class="button button--white">
         {inicio.ctaCierre.ctaPrimario.etiqueta.toUpperCase()}
       </a>
     </div>
   </div>
-
-  <div class="-mt--160 lg:-mt--320"></div>
 
   <section class="bg-cloud relative z-[3] text-black pt-10 overflow-hidden">
     <div class="container lg:mt-24 js-scroll-activate">

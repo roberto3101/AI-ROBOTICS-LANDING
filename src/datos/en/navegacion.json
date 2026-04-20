@@ -38,8 +38,8 @@
     }
   ],
   "ctaPrincipal": {
-    "etiqueta": "Request a demo",
-    "ruta": "/en/contact?subject=demo"
+    "etiqueta": "Sign in",
+    "ruta": "/en/contact?subject=access"
   },
   "selectorIdioma": {
     "etiqueta": "Language",
