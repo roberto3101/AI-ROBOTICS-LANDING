@@ -243,6 +243,13 @@ select.campo-input option:focus {
   display: none !important;
 }
 
+/* El <a> es inline por default → el ::after con width:100% no cubre el
+   texto completo (en inline, el containing block de un abs-positioned
+   child no cubre bien el ancho del texto). Forzamos inline-block. */
+.header__main > ul > li > a {
+  display: inline-block;
+}
+
 /* Nuevo indicador: línea teal que crece desde el centro en hover */
 .header__main > ul > li > a::after {
   content: "";
