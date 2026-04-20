@@ -674,6 +674,21 @@ html.light .text-cloud { color: #0c1220 !important; }
 /* Menu móvil: en light, invertir fondo */
 html.light .menu { background-color: #ffffff !important; color: #0c1220 !important; }
 html.light .menu a, html.light .menu p { color: #0c1220 !important; }
+/* Bordes de los items del menú mobile (border-b-carbon es carbon oscuro -> casi invisible en light) */
+html.light .menu .border-b-carbon,
+html.light .menu [class*="border-b-carbon"] { border-color: rgba(0,0,0,0.12) !important; }
+
+/* Hamburger/close button del header mobile: por default usa var(--color-carbon)
+   (negro) con flecha clara. En light lo invertimos para que no quede un cuadrado
+   negro flotando sobre el menú blanco. */
+html.light .header__hamburger {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0,0,0,0.12);
+}
+html.light .header__hamburger::before {
+  border-right-color: #0c1220 !important;
+  border-top-color: #0c1220 !important;
+}
 
 /* Header al hacer scroll en light: aseguramos contraste */
 /* Header en light siempre transparente */
