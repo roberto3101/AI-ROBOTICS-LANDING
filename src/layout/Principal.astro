@@ -325,7 +325,10 @@ const rutaInicio = `/${idioma}/`;
         // Solo activamos nuestra delegación tras la primera navegación del
         // ClientRouter (cuando el binding del theme se perdió con el swap).
         var activo = false;
-        document.addEventListener('astro:after-swap', function () { activo = true; });
+        // before-preparation dispara solo en navegaciones reales (nunca en
+        // la carga inicial). Tras la primera nav, el DOM se reemplaza y el
+        // binding del theme desaparece, entonces tomamos control.
+        document.addEventListener('astro:before-preparation', function () { activo = true; });
         function onClick(e) {
           if (!activo) return;
           var toggle = e.target && e.target.closest && e.target.closest('.js-toggle-nav');
