@@ -105,13 +105,13 @@ const rutaInicio = `/${idioma}/`;
 
     <PieDePagina footer={footerData} idioma={idioma} />
 
-    <div class="cursor u-flex u-flex--center" id="js-cursor">
+    <div class="cursor u-flex u-flex--center" id="js-cursor" transition:persist>
       <div class="cursor__circle flex justify-center items-center">
         <span class="cursor__text block text-center"></span>
       </div>
     </div>
 
-    <div class="arrow-cursor">
+    <div class="arrow-cursor" transition:persist>
       <div class="cursor__circle flex items-center justify-center">
         <svg class="arrow-cursor__icon" width="26" height="32" viewBox="0 0 26 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g style="mix-blend-mode:screen">
@@ -187,9 +187,28 @@ const rutaInicio = `/${idioma}/`;
         // Interceptamos ambos eventos: ANTES del swap parkeamos el nuevo
         // cursor inline (si ya existe en el HTML que llega), y DESPUÉS
         // reasignamos la referencia y forzamos la escritura inmediata.
+        function resetCursorState() {
+          // Tras navegar con ClientRouter, los elementos que dispararon
+          // mouseenter fueron reemplazados → el theme nunca recibe el
+          // mouseleave correspondiente y el cursor queda "atascado" en
+          // estados como .learn (220x220), .video, .link, etc.
+          // Limpiamos manualmente y dejamos que el próximo mouseenter real
+          // re-establezca el estado correcto.
+          var c = document.getElementById('js-cursor');
+          if (c) {
+            c.classList.remove('learn', 'link', 'video', 'drag', 'play', 'close', 'view', 'is-active', 'active', 'is-hover');
+          }
+          var arrow = document.querySelector('.arrow-cursor');
+          if (arrow) {
+            arrow.classList.remove('learn', 'active', 'is-active', 'is-hover');
+          }
+          document.body.classList.remove('cursor-learn', 'cursor-link');
+        }
+
         function rebindCursor() {
           var nuevo = document.getElementById('js-cursor');
           if (nuevo) cursor = nuevo;
+          resetCursorState();
           // Park si nunca hubo movimiento real en esta sesión
           if (!gotMove) { mx = -9999; my = -9999; }
           // Escribir AL MISMO TIEMPO que tomamos la referencia nueva,
@@ -197,6 +216,9 @@ const rutaInicio = `/${idioma}/`;
           // elemento nuevo sin transform → elimina el flash top-left.
           writeTransform(cursor);
         }
+        // Reset también ANTES de la preparación, para que el snapshot
+        // "old" de la view-transition no congele el cursor en 220x220.
+        document.addEventListener('astro:before-preparation', resetCursorState);
         document.addEventListener('astro:before-swap', rebindCursor);
         document.addEventListener('astro:after-swap',  rebindCursor);
         document.addEventListener('astro:page-load',   rebindCursor);
