@@ -142,3 +142,55 @@ const anuncioRuta = navegacion.anuncio?.ruta ?? `/${idioma}/prensa`;
     </a>
   </div>
 </div>
+
+<script is:inline>
+  (function () {
+    if (window.__airoNavBound) return;
+    window.__airoNavBound = true;
+
+    document.addEventListener('click', function (e) {
+      var hamb = e.target.closest('.header__hamburger');
+      if (hamb) {
+        var menu = document.getElementById('js-menu');
+        var header = document.getElementById('js-header');
+        if (!menu || !header) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var willOpen = !menu.classList.contains('is-shown');
+        menu.classList.toggle('is-shown', willOpen);
+        header.classList.toggle('is-opened', willOpen);
+        hamb.classList.toggle('is-opened', willOpen);
+        return;
+      }
+
+      var trigger = e.target.closest('.js-toggle-sub');
+      if (trigger && trigger.closest('#js-menu')) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var parent = trigger.parentElement;
+        var sub = parent && parent.querySelector('.js-menu-sub');
+        if (!sub) return;
+        var open = sub.classList.toggle('is-open');
+        sub.style.display = open ? 'block' : 'none';
+        trigger.classList.toggle('is-opened', open);
+      }
+    }, true);
+
+    function resetMenu() {
+      var menu = document.getElementById('js-menu');
+      var header = document.getElementById('js-header');
+      if (menu) menu.classList.remove('is-shown');
+      if (header) header.classList.remove('is-opened');
+      var hamb = document.querySelector('.header__hamburger');
+      if (hamb) hamb.classList.remove('is-opened');
+      document.querySelectorAll('.js-menu-sub').forEach(function (el) {
+        el.classList.remove('is-open');
+        el.style.display = '';
+      });
+      document.querySelectorAll('.js-toggle-sub.is-opened').forEach(function (el) {
+        el.classList.remove('is-opened');
+      });
+    }
+    document.addEventListener('astro:after-swap', resetMenu);
+  })();
+</script>
