@@ -38,8 +38,8 @@
     }
   ],
   "ctaPrincipal": {
-    "etiqueta": "Sign in",
-    "ruta": "/en/contact?subject=access"
+    "etiqueta": "Sign in / Sign up",
+    "ruta": "https://ai-roboticsperu.com/login"
   },
   "selectorIdioma": {
     "etiqueta": "Language",

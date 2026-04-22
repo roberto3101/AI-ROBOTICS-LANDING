@@ -263,19 +263,6 @@ body {
   background-color: rgba(255,255,255,0.02);
   color: #ffffff;
 }
-.header__cta {
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 9999px;
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 12px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: background-color .2s, color .2s, border-color .2s;
-}
 .selector-idioma:hover,
 .header__cta:hover {
   background-color: var(--color-primario);
@@ -1072,4 +1059,72 @@ html.light .header__cta {
   transform: translate3d(-9999px, -9999px, 0) translate(-50%, -50%) !important;
 }
 
-/* View Transitions → src/estilos/transiciones-pagina.css */
+/* =========================================================
+   View Transitions — efecto "polygon-gradient".
+   Aplica a navegaciones full-page del <ClientRouter/> de Astro
+   y también al toggle light/dark (startViewTransition).
+   Basado en: https://github.com/rudrodip/theme-toggle-effect
+   ========================================================= */
+:root {
+  --expo-in: linear(
+    0 0%, 0.0085 31.26%, 0.0167 40.94%,
+    0.0289 48.86%, 0.0471 55.92%,
+    0.0717 61.99%, 0.1038 67.32%,
+    0.1443 72.07%, 0.1989 76.7%,
+    0.2659 80.89%, 0.3465 84.71%,
+    0.4419 88.22%, 0.554 91.48%,
+    0.6835 94.51%, 0.8316 97.34%, 1 100%
+  );
+  --expo-out: linear(
+    0 0%, 0.1684 2.66%, 0.3165 5.49%,
+    0.446 8.52%, 0.5581 11.78%,
+    0.6535 15.29%, 0.7341 19.11%,
+    0.8011 23.3%, 0.8557 27.93%,
+    0.8962 32.68%, 0.9283 38.01%,
+    0.9529 44.08%, 0.9711 51.14%,
+    0.9833 59.06%, 0.9915 68.74%, 1 100%
+  );
+}
+
+::view-transition-group(root) {
+  animation-duration: 1.4s !important;
+  animation-timing-function: var(--expo-out) !important;
+}
+
+::view-transition-new(root) {
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="white" stop-opacity="1"/><stop offset="55%" stop-color="white" stop-opacity="0.85"/><stop offset="100%" stop-color="white" stop-opacity="0"/></linearGradient></defs><polygon points="0,0 40,0 40,40 0,40" fill="url(%23g)"/></svg>') top left / 0 no-repeat;
+  mask-origin: content-box;
+  animation: vt-polygon-gradient-scale 2.4s !important;
+  animation-fill-mode: both !important;
+  animation-timing-function: var(--expo-out) !important;
+  z-index: 1;
+}
+
+/* Snapshot viejo: se desvanece durante la transición para evitar el
+   "render precargado" (submenús abiertos, contenido stale, etc). */
+::view-transition-old(root),
+.dark::view-transition-old(root) {
+  animation: vt-polygon-gradient-fade 1.4s !important;
+  animation-fill-mode: both !important;
+  animation-timing-function: var(--expo-out) !important;
+  transform-origin: top left;
+}
+
+@keyframes vt-polygon-gradient-scale {
+  to {
+    mask-size: 200vmax;
+  }
+}
+
+@keyframes vt-polygon-gradient-fade {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-new(root),
+  ::view-transition-old(root) {
+    animation: none !important;
+  }
+}

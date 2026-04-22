@@ -37,6 +37,7 @@ const anuncioTexto = navegacion.anuncio?.texto ?? (idioma === 'es'
   ? 'Nuevo sistema autónomo de vigilancia con IA disponible para municipalidades.'
   : 'New AI-powered autonomous surveillance system available for municipalities.');
 const anuncioRuta = navegacion.anuncio?.ruta ?? `/${idioma}/prensa`;
+const ctaEsExterno = /^https?:\/\//i.test(navegacion.ctaPrincipal.ruta);
 ---
 
 <header class="header fixed w-full z-20" id="js-header">
@@ -103,7 +104,12 @@ const anuncioRuta = navegacion.anuncio?.ruta ?? `/${idioma}/prensa`;
         <svg width="10" height="8" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5h10M7 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <img src={banderaOtro} alt="" aria-hidden="true" class="h-3.5 w-5 rounded-sm object-cover" />
       </a>
-      <a href={navegacion.ctaPrincipal.ruta} class="header__cta hidden lg:inline-flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 text-[12px] font-mono uppercase tracking-wider transition">
+      <a
+        href={navegacion.ctaPrincipal.ruta}
+        class="header__cta hidden lg:inline-flex lg:flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 text-[12px] font-mono uppercase tracking-wider transition"
+        target={ctaEsExterno ? '_blank' : undefined}
+        rel={ctaEsExterno ? 'noopener noreferrer' : undefined}
+      >
         {navegacion.ctaPrincipal.etiqueta}
       </a>
     </div>
@@ -136,8 +142,23 @@ const anuncioRuta = navegacion.anuncio?.ruta ?? `/${idioma}/prensa`;
           {otroIdioma === 'en' ? 'English' : 'Español'}
         </a>
       </li>
+      <li class="py-7 border-b border-b-carbon border-opacity-100">
+        <a
+          href={navegacion.ctaPrincipal.ruta}
+          class="sub-title text-[15px] tracking-[.11em] opacity-100"
+          target={ctaEsExterno ? '_blank' : undefined}
+          rel={ctaEsExterno ? 'noopener noreferrer' : undefined}
+        >
+          {navegacion.ctaPrincipal.etiqueta}
+        </a>
+      </li>
     </ul>
-    <a href={navegacion.ctaPrincipal.ruta} class="button button--red w-full mt-10 px-6 py-[1.05rem] text-[13px]">
+    <a
+      href={navegacion.ctaPrincipal.ruta}
+      class="button button--red w-full mt-10 px-6 py-[1.05rem] text-[13px]"
+      target={ctaEsExterno ? '_blank' : undefined}
+      rel={ctaEsExterno ? 'noopener noreferrer' : undefined}
+    >
       {navegacion.ctaPrincipal.etiqueta}
     </a>
   </div>
