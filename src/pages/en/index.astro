@@ -8,10 +8,34 @@ const seo = await cargarDatos<{ paginas: { inicio: { titulo: string; descripcion
 
 const diapositivas = inicio.hero.diapositivas ?? [];
 const carruselProductos = [
-  { titulo: 'AI Surveillance System', video: '/theme/uploads/ai-robotics/camara-seguridad.mp4' },
-  { titulo: 'Defense Drone', video: '/theme/uploads/ai-robotics/dron-closeup.mp4' },
-  { titulo: 'Autonomous Turret', video: '/theme/uploads/ai-robotics/cyber-tech.mp4' },
-  { titulo: 'Command Center', video: '/theme/uploads/ai-robotics/centro-datos.mp4' },
+  {
+    etiqueta: 'DETECTION + RESPONSE',
+    titulo: 'AI Surveillance System',
+    descripcion: 'Processes any IP camera and dispatches a response when threats are detected.',
+    video: '/theme/uploads/ai-robotics/camara-seguridad.mp4',
+    ruta: '/en/products/ai-surveillance-system',
+  },
+  {
+    etiqueta: 'AUTONOMOUS AERIAL RESPONSE',
+    titulo: 'Defense Drone',
+    descripcion: 'Autonomous deployment in under a minute with live operator control.',
+    video: '/theme/uploads/ai-robotics/dron-closeup.mp4',
+    ruta: '/en/products/defense-drone',
+  },
+  {
+    etiqueta: 'PERIMETER DEFENSE',
+    titulo: 'Autonomous Turret',
+    descripcion: 'Local processing. Detects weapons and perimeter breaches without delay.',
+    video: '/theme/uploads/ai-robotics/cyber-tech.mp4',
+    ruta: '/en/products/defense-turret',
+  },
+  {
+    etiqueta: 'COMMAND & CONTROL',
+    titulo: 'Command Center',
+    descripcion: 'A single post centralizes cameras, drones and turrets in real time.',
+    video: '/theme/uploads/ai-robotics/centro-datos.mp4',
+    ruta: '/en/products',
+  },
 ];
 ---
 
@@ -58,25 +82,42 @@ const carruselProductos = [
     </div>
   </div>
 
-  <div class="bg-[#050506] pt-12 lg:pt-40 pb-24 lg:pb-32 overflow-hidden relative z-[3] js-scroll-activate">
-    <div class="container flex flex-wrap justify-between items-start">
-      <div class="lg:w-1/2">
+  <section class="productos-seccion bg-[#050506] relative z-[3] js-scroll-activate">
+    <div class="container productos-seccion__head">
+      <div class="productos-seccion__intro">
+        <span class="productos-seccion__eyebrow">[ PRODUCTS ]</span>
         <h3 class="section-title text-balance">{inicio.productosDestacados.titulo}</h3>
+        <p class="productos-seccion__desc">{inicio.productosDestacados.descripcion}</p>
       </div>
-      <a href={`/${idioma}/products`} class="button mt-8 lg:mt-0">View products</a>
+      <a href={`/${idioma}/products`} class="button productos-seccion__cta">View products</a>
     </div>
 
-    <div class="mt-14 lg:mt-20 productos-marquee">
+    <div class="productos-marquee" data-productos-marquee>
       <ul class="productos-marquee__track">
-        {[...carruselProductos, ...carruselProductos].map((p) => (
-          <li class="productos-marquee__item">
-            <video src={p.video} autoplay muted playsinline loop></video>
-            <h4>{p.titulo}</h4>
+        {[...carruselProductos, ...carruselProductos].map((p, i) => (
+          <li class="productos-marquee__item" aria-hidden={i >= carruselProductos.length ? 'true' : undefined}>
+            <a href={p.ruta} class="producto-card">
+              <span class="producto-card__media">
+                <video src={p.video} autoplay muted playsinline loop preload="metadata"></video>
+                <span class="producto-card__noise" aria-hidden="true"></span>
+                <span class="producto-card__grid" aria-hidden="true"></span>
+              </span>
+              <span class="producto-card__content">
+                <span class="producto-card__tag">{p.etiqueta}</span>
+                <span class="producto-card__title">{p.titulo}</span>
+                <span class="producto-card__desc">{p.descripcion}</span>
+                <span class="producto-card__arrow" aria-hidden="true">
+                  <svg width="28" height="12" viewBox="0 0 28 12" fill="none">
+                    <path d="M1 6h25m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+                  </svg>
+                </span>
+              </span>
+            </a>
           </li>
         ))}
       </ul>
     </div>
-  </div>
+  </section>
 
   <div class="py-20 lg:py-40 bg-[#050506] relative z-[1]">
     <div class="container js-scroll-activate">

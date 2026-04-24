@@ -8,10 +8,34 @@ const seo = await cargarDatos<{ paginas: { inicio: { titulo: string; descripcion
 
 const diapositivas = inicio.hero.diapositivas ?? [];
 const carruselProductos = [
-  { titulo: 'Sistema de Vigilancia IA', video: '/theme/uploads/ai-robotics/camara-seguridad.mp4' },
-  { titulo: 'Dron de Defensa', video: '/theme/uploads/ai-robotics/dron-closeup.mp4' },
-  { titulo: 'Torreta Autónoma', video: '/theme/uploads/ai-robotics/cyber-tech.mp4' },
-  { titulo: 'Centro de Comando', video: '/theme/uploads/ai-robotics/centro-datos.mp4' },
+  {
+    etiqueta: 'DETECCIÓN + RESPUESTA',
+    titulo: 'Sistema de Vigilancia IA',
+    descripcion: 'Procesa cualquier cámara IP y despacha respuesta al detectar amenazas.',
+    video: '/theme/uploads/ai-robotics/camara-seguridad.mp4',
+    ruta: '/es/productos/sistema-vigilancia-ia',
+  },
+  {
+    etiqueta: 'RESPUESTA AÉREA AUTÓNOMA',
+    titulo: 'Dron de Defensa',
+    descripcion: 'Despliegue autónomo en menos de un minuto con control vivo del operador.',
+    video: '/theme/uploads/ai-robotics/dron-closeup.mp4',
+    ruta: '/es/productos/dron-defensa',
+  },
+  {
+    etiqueta: 'DEFENSA PERIMETRAL',
+    titulo: 'Torreta Autónoma',
+    descripcion: 'Procesamiento local. Detecta armas y cruce de perímetro sin esperar.',
+    video: '/theme/uploads/ai-robotics/cyber-tech.mp4',
+    ruta: '/es/productos/torreta-defensa',
+  },
+  {
+    etiqueta: 'COMANDO & CONTROL',
+    titulo: 'Centro de Comando',
+    descripcion: 'Un único puesto centraliza cámaras, drones y torretas en tiempo real.',
+    video: '/theme/uploads/ai-robotics/centro-datos.mp4',
+    ruta: '/es/productos',
+  },
 ];
 ---
 
@@ -61,27 +85,44 @@ const carruselProductos = [
   </div>
 
   <!-- PRODUCTOS EN CARRUSEL -->
-  <div class="bg-[#050506] pt-12 lg:pt-40 pb-24 lg:pb-32 overflow-hidden relative z-[3] js-scroll-activate">
-    <div class="container flex flex-wrap justify-between items-start">
-      <div class="lg:w-1/2">
+  <section class="productos-seccion bg-[#050506] relative z-[3] js-scroll-activate">
+    <div class="container productos-seccion__head">
+      <div class="productos-seccion__intro">
+        <span class="productos-seccion__eyebrow">[ PRODUCTOS ]</span>
         <h3 class="section-title text-balance">{inicio.productosDestacados.titulo}</h3>
+        <p class="productos-seccion__desc">{inicio.productosDestacados.descripcion}</p>
       </div>
-      <a href={`/${idioma}/productos`} class="button mt-8 lg:mt-0">
+      <a href={`/${idioma}/productos`} class="button productos-seccion__cta">
         {idioma === 'es' ? 'Ver productos' : 'View products'}
       </a>
     </div>
 
-    <div class="mt-14 lg:mt-20 productos-marquee">
+    <div class="productos-marquee" data-productos-marquee>
       <ul class="productos-marquee__track">
         {[...carruselProductos, ...carruselProductos].map((p, i) => (
-          <li class="productos-marquee__item">
-            <video src={p.video} autoplay muted playsinline loop></video>
-            <h4>{p.titulo}</h4>
+          <li class="productos-marquee__item" aria-hidden={i >= carruselProductos.length ? 'true' : undefined}>
+            <a href={p.ruta} class="producto-card">
+              <span class="producto-card__media">
+                <video src={p.video} autoplay muted playsinline loop preload="metadata"></video>
+                <span class="producto-card__noise" aria-hidden="true"></span>
+                <span class="producto-card__grid" aria-hidden="true"></span>
+              </span>
+              <span class="producto-card__content">
+                <span class="producto-card__tag">{p.etiqueta}</span>
+                <span class="producto-card__title">{p.titulo}</span>
+                <span class="producto-card__desc">{p.descripcion}</span>
+                <span class="producto-card__arrow" aria-hidden="true">
+                  <svg width="28" height="12" viewBox="0 0 28 12" fill="none">
+                    <path d="M1 6h25m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+                  </svg>
+                </span>
+              </span>
+            </a>
           </li>
         ))}
       </ul>
     </div>
-  </div>
+  </section>
 
   <!-- MISIÓN / AUTONOMÍA -->
   <div class="py-20 lg:py-40 bg-[#050506] relative z-[1]">

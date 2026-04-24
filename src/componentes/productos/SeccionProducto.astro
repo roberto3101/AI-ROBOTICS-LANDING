@@ -42,13 +42,15 @@ const fondo = variante === 'oscuro'
     )}
 
     {seccion.tipo === 'grid' && seccion.items && (
-      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mt-14">
+      <ul class="feature-grid mt-14 lg:mt-20">
         {(seccion.items as ItemGrid[]).map((it) => (
-          <li class={`${esOscuro ? 'bg-carbon' : 'bg-carbon text-white'} p-8 lg:p-10 min-h-[260px] flex flex-col justify-between`}>
-            <img src={it.icono} alt="" class="w-12 h-12 object-contain" loading="lazy" />
-            <div class="mt-8">
-              <h4 class="text-white">{it.titulo}</h4>
-              <p class="mt-3 text-[15px] opacity-80">{it.descripcion}</p>
+          <li class="feature-card">
+            <div class="feature-card__icon">
+              <img src={it.icono} alt="" loading="lazy" />
+            </div>
+            <div class="feature-card__body">
+              <h4 class="feature-card__title">{it.titulo}</h4>
+              <p class="feature-card__desc">{it.descripcion}</p>
             </div>
           </li>
         ))}

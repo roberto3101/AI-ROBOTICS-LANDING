@@ -2,18 +2,215 @@
 interface Paso { numero: string; titulo: string; descripcion: string; }
 interface Props {
   pasos: Paso[];
+  conector?: boolean; /* muestra línea entre cards en desktop */
 }
 
-const { pasos } = Astro.props;
+const { pasos, conector = true } = Astro.props;
 ---
 
-<ol class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+<ol class="pasos-grid" style={`--total: ${pasos.length}`}>
   {pasos.map((paso, idx) => (
-    <li class="relative pl-0 pt-8 border-t border-white/15">
-      <span class="absolute -top-px left-0 right-0 h-px bg-[var(--color-primario)]" style={`width: ${((idx + 1) / pasos.length) * 100}%`} aria-hidden="true"></span>
-      <div class="font-mono text-xs text-[var(--color-acero-claro)] mb-3">{paso.numero}</div>
-      <h3 class="text-lg lg:text-xl font-semibold mb-2">{paso.titulo}</h3>
-      <p class="text-sm text-white/70 leading-relaxed">{paso.descripcion}</p>
+    <li class="paso-card" style={`--i: ${idx + 1}`}>
+      {/* Barra accent en top — crece progresivamente */}
+      <span class="paso-card__bar" aria-hidden="true"></span>
+
+      {/* Número watermark — decorativo, fondo */}
+      <span class="paso-card__watermark" aria-hidden="true">{paso.numero}</span>
+
+      {/* Contenido */}
+      <div class="paso-card__body">
+        <div class="paso-card__header">
+          <span class="paso-card__num">{paso.numero}</span>
+          {conector && idx < pasos.length - 1 && (
+            <span class="paso-card__arrow" aria-hidden="true">
+              <svg width="20" height="8" viewBox="0 0 20 8" fill="none">
+                <path d="M1 4h17m0 0-3.5-3M18 4l-3.5 3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          )}
+        </div>
+        <h3 class="paso-card__title">{paso.titulo}</h3>
+        <p class="paso-card__desc">{paso.descripcion}</p>
+      </div>
     </li>
   ))}
 </ol>
+
+<style>
+  /* ── Grid con hairline-gap ── */
+  .pasos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 1px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    /* El background del grid se convierte en el color de los hairline gaps */
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  :global(html.light) .pasos-grid {
+    background: rgba(1, 76, 96, 0.1);
+    border-color: rgba(1, 76, 96, 0.1);
+  }
+
+  /* ── Card base ── */
+  .paso-card {
+    position: relative;
+    background: #0c0c10;
+    padding: clamp(1.5rem, 2.2vw, 2rem) clamp(1.25rem, 2vw, 1.75rem) clamp(1.75rem, 2.5vw, 2.25rem);
+    overflow: hidden;
+    transition: background 360ms ease;
+    cursor: default;
+  }
+
+  :global(html.light) .paso-card {
+    background: #f4f6f5;
+  }
+
+  .paso-card:hover {
+    background: rgba(0, 211, 205, 0.055);
+  }
+
+  :global(html.light) .paso-card:hover {
+    background: rgba(0, 211, 205, 0.07);
+  }
+
+  /* ── Barra superior (teal progresiva) ── */
+  .paso-card__bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    /* Ancho: (índice / total) × 100% — calculado con CSS custom properties */
+    width: calc(var(--i) / var(--total) * 100%);
+    background: linear-gradient(90deg, var(--ai-teal, #00D3CD), var(--ai-teal-suave, #4DE3DE));
+    opacity: 0.9;
+    border-radius: 0 2px 2px 0;
+    transition: opacity 300ms ease;
+  }
+
+  .paso-card:hover .paso-card__bar {
+    opacity: 1;
+  }
+
+  /* ── Watermark numérico ── */
+  .paso-card__watermark {
+    position: absolute;
+    bottom: -0.25em;
+    right: 0.1em;
+    font-size: clamp(5rem, 7vw, 8rem);
+    font-weight: 800;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    line-height: 1;
+    color: var(--ai-teal, #00D3CD);
+    opacity: 0.05;
+    user-select: none;
+    pointer-events: none;
+    transition: opacity 360ms ease;
+  }
+
+  .paso-card:hover .paso-card__watermark {
+    opacity: 0.09;
+  }
+
+  :global(html.light) .paso-card__watermark {
+    opacity: 0.07;
+  }
+
+  :global(html.light) .paso-card:hover .paso-card__watermark {
+    opacity: 0.12;
+  }
+
+  /* ── Header: número + flecha ── */
+  .paso-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .paso-card__num {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--ai-teal, #00D3CD);
+    padding: 0.3em 0.7em;
+    border: 1px solid rgba(0, 211, 205, 0.3);
+    border-radius: 999px;
+    background: rgba(0, 211, 205, 0.07);
+    line-height: 1;
+  }
+
+  .paso-card__arrow {
+    color: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+    display: none; /* Solo visible en ≥ md */
+    transition: color 300ms ease, transform 300ms ease;
+  }
+
+  :global(html.light) .paso-card__arrow {
+    color: rgba(1, 76, 96, 0.2);
+  }
+
+  @media (min-width: 768px) {
+    .paso-card__arrow { display: flex; }
+  }
+
+  .paso-card:hover .paso-card__arrow {
+    color: rgba(0, 211, 205, 0.5);
+    transform: translateX(3px);
+  }
+
+  /* ── Título ── */
+  .paso-card__title {
+    font-size: clamp(1rem, 1.15vw, 1.2rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: #ffffff;
+    margin: 0 0 0.65rem;
+    letter-spacing: -0.01em;
+  }
+
+  :global(html.light) .paso-card__title {
+    color: #012938; /* --ai-navy-profundo */
+  }
+
+  /* ── Descripción ── */
+  .paso-card__desc {
+    font-size: clamp(0.82rem, 0.9vw, 0.9rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+  }
+
+  :global(html.light) .paso-card__desc {
+    color: rgba(1, 41, 56, 0.65);
+  }
+
+  /* ── Cuerpo ── */
+  .paso-card__body {
+    position: relative; /* encima del watermark */
+    z-index: 1;
+  }
+
+  /* ── Mobile: grid de 1 columna con menos padding ── */
+  @media (max-width: 639.98px) {
+    .pasos-grid {
+      grid-template-columns: 1fr;
+      border-radius: 10px;
+    }
+    .paso-card__arrow { display: none; }
+  }
+
+  /* ── 2 columnas en sm-md ── */
+  @media (min-width: 640px) and (max-width: 1023.98px) {
+    .pasos-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
