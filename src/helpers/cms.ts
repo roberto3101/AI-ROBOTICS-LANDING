@@ -58,12 +58,51 @@ const CODIGO_SITIO = import.meta.env.CODEPLEX_SITIO_CODIGO ?? 'AIROBOTICS';
 const escaparHtml = (texto: string): string =>
   texto.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+const construirEmbedYoutube = (urlVideo: string): string | null => {
+  const coincideId = urlVideo.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+  if (!coincideId) return null;
+  return `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${coincideId[1]}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+};
+
+const construirEmbedVimeo = (urlVideo: string): string | null => {
+  const coincideId = urlVideo.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (!coincideId) return null;
+  return `<div class="video-embed"><iframe src="https://player.vimeo.com/video/${coincideId[1]}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+};
+
 const aplicarInline = (linea: string): string =>
   escaparHtml(linea)
     .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+const esLineaImagen = (linea: string): boolean => /^!\[[^\]]*\]\([^)]+\)$/.test(linea.trim());
+const esLineaVideo = (linea: string): boolean => /^@(youtube|vimeo|video):/.test(linea.trim());
+
+const renderizarLineaVideo = (linea: string): string => {
+  const limpia = linea.trim();
+  if (limpia.startsWith('@youtube:')) {
+    const url = limpia.slice('@youtube:'.length).trim();
+    return construirEmbedYoutube(url) ?? `<p><a href="${url}" target="_blank" rel="noopener">${url}</a></p>`;
+  }
+  if (limpia.startsWith('@vimeo:')) {
+    const url = limpia.slice('@vimeo:'.length).trim();
+    return construirEmbedVimeo(url) ?? `<p><a href="${url}" target="_blank" rel="noopener">${url}</a></p>`;
+  }
+  if (limpia.startsWith('@video:')) {
+    const url = limpia.slice('@video:'.length).trim();
+    return `<div class="video-embed"><video controls preload="metadata"><source src="${url}" /></video></div>`;
+  }
+  return '';
+};
+
+const renderizarLineaImagen = (linea: string): string => {
+  const coincide = linea.trim().match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+  if (!coincide) return '';
+  return `<figure class="figura-post"><img src="${coincide[2]}" alt="${coincide[1]}" loading="lazy" />${coincide[1] ? `<figcaption>${coincide[1]}</figcaption>` : ''}</figure>`;
+};
 
 const renderizarMarkdownLigero = (markdown: string): string => {
   const lineas = markdown.split('\n');
@@ -79,9 +118,12 @@ const renderizarMarkdownLigero = (markdown: string): string => {
   };
 
   for (const linea of lineas) {
-    if (/^### (.+)/.test(linea)) { cerrarParrafo(); cerrarLista(); bloques.push(`<h3>${aplicarInline(linea.replace(/^### /, ''))}</h3>`); }
+    if (esLineaImagen(linea)) { cerrarParrafo(); cerrarLista(); bloques.push(renderizarLineaImagen(linea)); }
+    else if (esLineaVideo(linea)) { cerrarParrafo(); cerrarLista(); bloques.push(renderizarLineaVideo(linea)); }
+    else if (/^### (.+)/.test(linea)) { cerrarParrafo(); cerrarLista(); bloques.push(`<h3>${aplicarInline(linea.replace(/^### /, ''))}</h3>`); }
     else if (/^## (.+)/.test(linea)) { cerrarParrafo(); cerrarLista(); bloques.push(`<h2>${aplicarInline(linea.replace(/^## /, ''))}</h2>`); }
     else if (/^# (.+)/.test(linea)) { cerrarParrafo(); cerrarLista(); bloques.push(`<h1>${aplicarInline(linea.replace(/^# /, ''))}</h1>`); }
+    else if (/^> (.+)/.test(linea)) { cerrarParrafo(); cerrarLista(); bloques.push(`<blockquote>${aplicarInline(linea.replace(/^> /, ''))}</blockquote>`); }
     else if (/^[-*] (.+)/.test(linea)) { cerrarParrafo(); listaBuffer.push(linea.replace(/^[-*] /, '')); }
     else if (linea.trim() === '') { cerrarParrafo(); cerrarLista(); }
     else { cerrarLista(); parrafoBuffer.push(linea); }
@@ -100,6 +142,15 @@ const estimarLectura = (texto: string): string => {
 const extraerNombre = (item: unknown): string =>
   typeof item === 'string' ? item : (item as { nombre?: string })?.nombre ?? '';
 
+const extraerPrimeraImagen = (markdown: string): string | undefined => {
+  const lineas = markdown.split('\n');
+  for (const linea of lineas) {
+    const coincide = linea.trim().match(/^!\[[^\]]*\]\(([^)]+)\)$/);
+    if (coincide) return coincide[1];
+  }
+  return undefined;
+};
+
 const aResumen = (crudo: PostCrudoCms): PostResumen => {
   const categorias = (crudo.categorias ?? []).map(extraerNombre).filter(Boolean);
   return {
@@ -109,6 +160,7 @@ const aResumen = (crudo: PostCrudoCms): PostResumen => {
     categoria: categorias[0] ?? 'General',
     fecha: (crudo.publicado_en ?? crudo.creado_en).slice(0, 10),
     lectura: estimarLectura(crudo.contenido),
+    portada: extraerPrimeraImagen(crudo.contenido),
   };
 };
 
@@ -119,6 +171,7 @@ const aCompleto = (crudo: PostCrudoCms): PostCompleto => ({
   seo: {
     titulo: crudo.seo_titulo || undefined,
     descripcion: crudo.seo_descripcion || undefined,
+    imagen: extraerPrimeraImagen(crudo.contenido),
   },
 });
 
