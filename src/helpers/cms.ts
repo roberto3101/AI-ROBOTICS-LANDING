@@ -245,9 +245,18 @@ export async function obtenerCategoriasConConteo(_idioma: Idioma, posts: PostRes
   );
   if (!datos) return [];
   const elementos = Array.isArray(datos) ? datos : datos.elementos ?? [];
-  return elementos.map((c) => ({
-    nombre: c.nombre,
-    slug: c.slug,
-    cantidad: posts.filter((p) => p.categoria.toLowerCase() === c.nombre.toLowerCase()).length,
-  }));
+  const vistas = new Set<string>();
+  return elementos
+    .filter((c) => {
+      const clave = c.nombre.trim().toLowerCase();
+      if (!clave || vistas.has(clave)) return false;
+      vistas.add(clave);
+      return true;
+    })
+    .map((c) => ({
+      nombre: c.nombre,
+      slug: c.slug,
+      cantidad: posts.filter((p) => p.categoria.toLowerCase() === c.nombre.toLowerCase()).length,
+    }))
+    .sort((a, b) => b.cantidad - a.cantidad);
 }
