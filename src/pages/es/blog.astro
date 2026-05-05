@@ -45,8 +45,11 @@ const formatoFecha = new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: '
                   {p.portada ? (
                     <img src={p.portada} alt={p.titulo} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   ) : (
-                    <div class="w-full h-full grid place-items-center bg-gradient-to-br from-[#0c0c10] to-[#1a1a22]">
-                      <span class="font-mono text-xs uppercase tracking-[0.2em] text-white/30">[Sin imagen]</span>
+                    <div class="w-full h-full relative overflow-hidden bg-gradient-to-br from-[#0a1f24] via-[#0c0c10] to-[#1a0a28]">
+                      <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 20% 30%, rgba(0,211,205,0.5) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(120,80,200,0.35) 0%, transparent 50%);"></div>
+                      <div class="absolute inset-0 grid place-items-center px-6">
+                        <p class="font-mono text-2xl font-bold tracking-wide text-white/25 uppercase text-center">{p.categoria}</p>
+                      </div>
                     </div>
                   )}
                 </div>
