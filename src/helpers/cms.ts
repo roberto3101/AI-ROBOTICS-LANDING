@@ -151,6 +151,18 @@ const extraerPrimeraImagen = (markdown: string): string | undefined => {
   return undefined;
 };
 
+const removerPrimeraImagenDelContenido = (markdown: string): string => {
+  const lineas = markdown.split('\n');
+  const indice = lineas.findIndex((l) => /^!\[[^\]]*\]\([^)]+\)$/.test(l.trim()));
+  if (indice === -1) return markdown;
+  const filtradas = [...lineas];
+  filtradas.splice(indice, 1);
+  if (indice > 0 && indice < filtradas.length && filtradas[indice - 1].trim() === '' && filtradas[indice].trim() === '') {
+    filtradas.splice(indice, 1);
+  }
+  return filtradas.join('\n');
+};
+
 const aResumen = (crudo: PostCrudoCms): PostResumen => {
   const categorias = (crudo.categorias ?? []).map(extraerNombre).filter(Boolean);
   return {
@@ -164,16 +176,20 @@ const aResumen = (crudo: PostCrudoCms): PostResumen => {
   };
 };
 
-const aCompleto = (crudo: PostCrudoCms): PostCompleto => ({
-  ...aResumen(crudo),
-  contenido: crudo.formato_contenido === 'MARKDOWN' ? renderizarMarkdownLigero(crudo.contenido) : crudo.contenido,
-  etiquetas: (crudo.etiquetas ?? []).map(extraerNombre).filter(Boolean),
-  seo: {
-    titulo: crudo.seo_titulo || undefined,
-    descripcion: crudo.seo_descripcion || undefined,
-    imagen: extraerPrimeraImagen(crudo.contenido),
-  },
-});
+const aCompleto = (crudo: PostCrudoCms): PostCompleto => {
+  const portada = extraerPrimeraImagen(crudo.contenido);
+  const contenidoSinPortada = portada ? removerPrimeraImagenDelContenido(crudo.contenido) : crudo.contenido;
+  return {
+    ...aResumen(crudo),
+    contenido: crudo.formato_contenido === 'MARKDOWN' ? renderizarMarkdownLigero(contenidoSinPortada) : crudo.contenido,
+    etiquetas: (crudo.etiquetas ?? []).map(extraerNombre).filter(Boolean),
+    seo: {
+      titulo: crudo.seo_titulo || undefined,
+      descripcion: crudo.seo_descripcion || undefined,
+      imagen: portada,
+    },
+  };
+};
 
 const consultar = async <T>(ruta: string): Promise<T | null> => {
   try {

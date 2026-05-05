@@ -37,26 +37,59 @@ const formatoFecha = new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: '
           <a href="/es/contacto?asunto=general" class="boton boton-primario mt-8 inline-flex">Avísame cuando publiquen</a>
         </div>
       ) : (
-        <ul class="mt-12 grid gap-6 md:grid-cols-2">
+        <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((p) => (
-            <li class="tarjeta p-6 lg:p-8 flex flex-col gap-3">
-              <div class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-acero-claro)]">
-                <span class="text-[var(--ai-teal)]">{p.categoria}</span>
-                <span>·</span>
-                <time datetime={p.fecha}>{formatoFecha.format(new Date(p.fecha))}</time>
-                <span>·</span>
-                <span>{p.lectura}</span>
+            <li class="tarjeta-blog flex flex-col">
+              <a href={`/es/blog/${p.slug}`} class="block group">
+                <div class="aspect-[16/10] overflow-hidden bg-[var(--color-carbon)] border-b border-white/10">
+                  {p.portada ? (
+                    <img src={p.portada} alt={p.titulo} loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  ) : (
+                    <div class="w-full h-full grid place-items-center bg-gradient-to-br from-[#0c0c10] to-[#1a1a22]">
+                      <span class="font-mono text-xs uppercase tracking-[0.2em] text-white/30">[Sin imagen]</span>
+                    </div>
+                  )}
+                </div>
+              </a>
+              <div class="p-6 flex-1 flex flex-col gap-3">
+                <div class="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-acero-claro)] flex-wrap">
+                  <span class="text-[#00D3CD]">[{p.categoria}]</span>
+                  <span>·</span>
+                  <time datetime={p.fecha}>{formatoFecha.format(new Date(p.fecha))}</time>
+                  <span>·</span>
+                  <span>{p.lectura}</span>
+                </div>
+                <a href={`/es/blog/${p.slug}`} class="block">
+                  <h3 class="text-xl font-semibold leading-tight text-white hover:text-[#00D3CD] transition-colors">{p.titulo}</h3>
+                </a>
+                <p class="text-sm text-white/70 leading-relaxed line-clamp-3">{p.resumen}</p>
+                <a href={`/es/blog/${p.slug}`} class="font-mono text-xs uppercase tracking-[0.18em] text-[#00D3CD] mt-auto inline-flex items-center gap-2 hover:gap-3 transition-all">
+                  Leer artículo →
+                </a>
               </div>
-              <a href={`/es/blog/${p.slug}`} class="block">
-                <h3 class="text-xl lg:text-2xl font-semibold leading-tight text-white hover:text-[var(--ai-teal)] transition-colors">{p.titulo}</h3>
-              </a>
-              <p class="text-sm text-white/75 leading-relaxed">{p.resumen}</p>
-              <a href={`/es/blog/${p.slug}`} class="font-mono text-xs uppercase tracking-[0.18em] text-[var(--ai-teal)] mt-auto inline-flex items-center gap-2">
-                Leer artículo →
-              </a>
             </li>
           ))}
         </ul>
+
+        <style>
+          .tarjeta-blog {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: border-color 240ms ease, transform 240ms ease;
+          }
+          .tarjeta-blog:hover {
+            border-color: rgba(0, 211, 205, 0.4);
+            transform: translateY(-2px);
+          }
+          .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+        </style>
       )}
     </div>
   </section>
