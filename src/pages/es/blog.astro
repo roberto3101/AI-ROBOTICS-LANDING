@@ -2,10 +2,18 @@
 import Principal from '@layout/Principal.astro';
 import HeroNosotros from '@componentes/nosotros/HeroNosotros.astro';
 import EncabezadoSeccion from '@componentes/ui/EncabezadoSeccion.astro';
-import { obtenerPosts } from '@helpers/cms';
+import { obtenerPosts, obtenerCategoriasConConteo } from '@helpers/cms';
+
+export const prerender = false;
 
 const idioma = 'es';
-const posts = await obtenerPosts(idioma, { limite: 12 });
+const url = new URL(Astro.request.url);
+const filtroCat = url.searchParams.get('cat') ?? '';
+const todos = await obtenerPosts(idioma, { limite: 50 });
+const categorias = await obtenerCategoriasConConteo(idioma, todos);
+const posts = filtroCat
+  ? todos.filter((p) => p.categoria.toLowerCase() === filtroCat.toLowerCase())
+  : todos;
 const formatoFecha = new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: 'short', year: 'numeric' });
 ---
 
@@ -26,6 +34,19 @@ const formatoFecha = new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: '
   <section class="bg-[var(--color-carbon-claro)] py-[var(--spacing-seccion)] border-y border-white/5">
     <div class="contenedor">
       <EncabezadoSeccion etiqueta="[ÚLTIMAS ENTRADAS]" titulo="Qué estamos escribiendo." />
+
+      {categorias.length > 0 && (
+        <div class="mt-8 flex flex-wrap gap-2">
+          <a href="/es/blog" class={`chip-cat ${!filtroCat ? 'chip-cat-activa' : ''}`}>
+            Todas <span class="opacity-60">({todos.length})</span>
+          </a>
+          {categorias.filter((c) => c.cantidad > 0).map((c) => (
+            <a href={`/es/blog?cat=${encodeURIComponent(c.nombre)}`} class={`chip-cat ${filtroCat.toLowerCase() === c.nombre.toLowerCase() ? 'chip-cat-activa' : ''}`}>
+              {c.nombre} <span class="opacity-60">({c.cantidad})</span>
+            </a>
+          ))}
+        </div>
+      )}
 
       {posts.length === 0 ? (
         <div class="mt-12 tarjeta p-10 lg:p-14 text-center max-w-2xl mx-auto">
@@ -85,6 +106,30 @@ const formatoFecha = new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: '
           .tarjeta-blog:hover {
             border-color: rgba(0, 211, 205, 0.4);
             transform: translateY(-2px);
+          }
+          .chip-cat {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            font-family: ui-monospace, SFMono-Regular, monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 200ms ease;
+          }
+          .chip-cat:hover {
+            color: #00D3CD;
+            border-color: rgba(0, 211, 205, 0.5);
+          }
+          .chip-cat-activa {
+            color: #00D3CD;
+            border-color: #00D3CD;
+            background: rgba(0, 211, 205, 0.08);
           }
           .line-clamp-3 {
             display: -webkit-box;

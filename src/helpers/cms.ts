@@ -224,6 +224,12 @@ export async function obtenerPostPorSlug(idioma: Idioma, slug: string): Promise<
   return aCompleto(crudo);
 }
 
+export interface CategoriaResumen {
+  nombre: string;
+  slug: string;
+  cantidad: number;
+}
+
 export async function obtenerCategorias(_idioma: Idioma): Promise<string[]> {
   const datos = await consultar<{ nombre: string }[] | { elementos: { nombre: string }[] }>(
     `/publico/sitios/${CODIGO_SITIO}/categorias`,
@@ -231,4 +237,17 @@ export async function obtenerCategorias(_idioma: Idioma): Promise<string[]> {
   if (!datos) return [];
   const elementos = Array.isArray(datos) ? datos : datos.elementos ?? [];
   return elementos.map((c) => c.nombre);
+}
+
+export async function obtenerCategoriasConConteo(_idioma: Idioma, posts: PostResumen[]): Promise<CategoriaResumen[]> {
+  const datos = await consultar<{ nombre: string; slug: string }[] | { elementos: { nombre: string; slug: string }[] }>(
+    `/publico/sitios/${CODIGO_SITIO}/categorias`,
+  );
+  if (!datos) return [];
+  const elementos = Array.isArray(datos) ? datos : datos.elementos ?? [];
+  return elementos.map((c) => ({
+    nombre: c.nombre,
+    slug: c.slug,
+    cantidad: posts.filter((p) => p.categoria.toLowerCase() === c.nombre.toLowerCase()).length,
+  }));
 }
